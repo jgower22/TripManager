@@ -1,0 +1,21 @@
+{
+  "name": "gowerjacksonproject1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jackson Gower",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^17.0.0",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "luxon": "^3.0.4",
+    "method-override": "^3.0.0",
+    "mongoose": "^6.6.6",
+    "morgan": "^1.10.0",
+    "pdfkit": "^0.13.0"
+  }
+}

@@ -1,0 +1,35 @@
+<%- include('../partials/header.ejs')%>
+    <main>
+        <div id="main_content_centered">
+            <div id="form_container">
+                <form action="/trips/<%=trip._id%>/new?_method=PUT" method="POST">
+
+                    <input type="hidden" id="name" name="name" value="<%=trip.name%>">
+                    <input type="hidden" id="location" name="location" value="<%=trip.location%>">
+                    <input type="hidden" id="startDate" name="startDate" value="<%=trip.startDate%>">
+                    <input type="hidden" id="endDate" name="endDate" value="<%=trip.endDate%>">
+                    <input type="hidden" id="details" name="details" value="<%=trip.details%>"></textarea>
+                    <input type="hidden" id="image" name="image" value="<%=trip.image%>">
+                    <input type="hidden" name="days" value="<%=JSON.stringify(trip.days)%>">
+
+                    <label class="required" for="day[][number]">Number:</label>
+                    <input type="number" name="day[][number]" placeholder="Number" required>
+
+                    <label class="required" for="day[][location]">Location:</label>
+                    <input type="text" name="day[][location]" placeholder="Location" required>
+
+                    <label class="required" for="day[][date]">Date:</label>
+                    <input type="date" name="day[][date]" required>
+
+                    <label class="required" for="day[][details]">Details:</label>
+                    <textarea name="day[][details]" placeholder="Description of Day" rows="4" required></textarea>
+
+                    <label for="day[][image]">Image URL:</label>
+                    <input type="url" name="day[][image]" placeholder="Image URL">
+
+                    <input type="submit" value="Create Day" id="trip_submit">
+                </form>
+            </div>
+        </div>
+    </main>
+<%- include('../partials/footer.ejs')%>

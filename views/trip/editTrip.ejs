@@ -1,0 +1,53 @@
+<%- include('../partials/header.ejs')%>
+    <main>
+        <script defer src="/javascript/formValidation.js"></script>
+        <div id="main_content_centered">
+            <div id="form_container">
+                <form action="/trips/<%=trip._id%>?_method=PUT" method="POST">
+                    <label class="required" for="name">Trip Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Trip Name" value="<%=trip.name%>" required>
+
+                    <label class="required" for="location">Location:</label>
+                    <input type="text" id="location" name="location" placeholder="Location" value="<%=trip.location%>" required>
+
+                    <label class="required" for="startDate">Start Date:</label>
+                    <input type="date" id="startDate" name="startDate" value="<%=trip.startDate%>" required>
+
+                    <label class="required" for="endDate">End Date:</label>
+                    <input type="date" id="endDate" name="endDate" value="<%=trip.endDate%>" required>
+
+                    <label class="required" for="details">Details:</label>
+                    <textarea id="details" name="details" placeholder="Description of Trip" rows="7" required><%=trip.details%></textarea>
+
+                    <label class="required" for="access">Who should have access?</label><br>
+                    <select name="access" id="access">
+                        <%let accessType = trip.access;
+                        switch (accessType) {
+                            case 'private':%>
+                                <option value="private" selected>Just Me</option>
+                                <option value="friends">Friends</option>
+                                <option value="public">Anyone</option>
+                                <%break;
+                            case 'friends':%>
+                                <option value="private">Just Me</option>
+                                <option value="friends" selected>Friends</option>
+                                <option value="public">Anyone</option>
+                                <%break;
+                            case 'public':%>
+                                <option value="private">Just Me</option>
+                                <option value="friends">Friends</option>
+                                <option value="public" selected>Anyone</option>
+                        <%}%>
+                    </select><br>
+
+                    <label for="image">Image URL:</label>
+                    <input type="url" id="image" name="image" placeholder="Image URL" value="<%=trip.image%>">
+
+
+                    <input value="Cancel" id="cancel">
+                    <input type="submit" value="Save Trip" id="trip_submit">
+                </form>
+            </div>
+        </div>
+    </main>
+<%- include('../partials/footer.ejs')%>

@@ -1,0 +1,71 @@
+<%- include('../partials/header.ejs')%>
+    <main>
+        <div id="main_content">
+            <%
+            let sortOrder = ['Ongoing Trips', 'Upcoming Trips', 'Previous Trips'];
+            function sortByName(a, b) {
+                return sortOrder.indexOf(a.group) - sortOrder.indexOf(b.group);
+            }
+
+            function sortByStartDate(a, b) {
+                a = a.startDate;
+                b = b.startDate;
+                if (a > b) {
+                    return 1;
+                }
+                if (a < b) {
+                    return -1;
+                }
+                return 0;
+            }
+
+            //Sort by start date
+            trips.sort(sortByStartDate);
+
+            //Determine if trip is in previous, ongoing or upcoming
+            for (let i = 0; i < trips.length; i++) {
+                let trip = trips[i];
+                let startDate = new Date(trip.startDate.replace('-', '/'));
+                let endDate = new Date(trip.endDate.replace('-', '/'));
+                let dateNow = new Date().setHours(0, 0, 0, 0);
+                if (endDate < dateNow) {
+                    trip.group = 'Previous Trips';
+                } else if (startDate <= dateNow && endDate >= dateNow) {
+                    trip.group = 'Ongoing Trips';
+                } else if (startDate > dateNow) {
+                    trip.group = 'Upcoming Trips';
+                }
+            } 
+            
+            if(trips.length) {
+                trips.sort(sortByName);
+                let prevGroup = null;
+                for (let i = 0; i < trips.length; i++) {
+                    let trip = trips[i];
+                    if (prevGroup === null) {%>
+                        <h1><%=trip.group%></h1>
+                        <ul>
+                        <li><a href="trips/<%=trip._id%>" class="link_underline"><%=trip.name%></a></li>
+                        <%prevGroup = trip.group;
+                        if (i === trips.length - 1) {%>
+                            </ul>
+                        <%}
+                        continue;
+                    }
+                    if (prevGroup !== trip.group) {%>
+                        </ul>
+                        <h1><%=trip.group%></h1>
+                        <ul>
+                    <%}%>
+                    <li><a href="trips/<%=trip._id%>" class="link_underline"><%=trip.name%></a></li>
+                    <%if (i === trips.length - 1) {%>
+                        </ul>
+                    <%}
+                    prevGroup = trip.group;
+                }
+            } else {%>
+                <p>There are no trips to display.</p>
+            <%}%>
+        </div>
+    </main>
+<%- include('../partials/footer.ejs')%>

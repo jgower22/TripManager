@@ -1,0 +1,327 @@
+:root {
+    --lineHeight: 1.5;
+}
+
+body {
+    margin: 0 auto;
+    background-color: white;
+    min-height: 100vh;
+    word-wrap: break-word;
+}
+
+header {
+    width: 100%;
+    background-color: black;
+}
+
+#top_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5%;
+    border-bottom: 2px solid green;
+}
+
+#bottom_header {
+    display: flex;
+    padding: 0 3%;
+}
+
+#user_nav li {
+    display: inline-block;
+    padding-left: 25px;
+}
+
+.links {
+    color: white;
+    text-decoration: none;
+    font-size: 22px;
+}
+
+.links:hover {
+    opacity: 0.7;
+}
+
+.link_underline:hover {
+    text-decoration: underline;
+}
+
+.hyperlinks {
+    color: blue;
+}
+
+.hyperlinks:hover {
+    text-decoration: underline;
+}
+
+#general_nav {
+    margin-right: auto;
+}
+
+#general_nav li {
+    display: inline-block;
+}
+
+#logo {
+    padding-bottom: 0px;
+    height: 135px;
+    width: 175px;
+    margin-right: auto;
+}
+
+main {
+    width: 100%;
+    margin: 0 auto;
+}
+
+#main_content_text_centered {
+    padding: 50px 0px;
+    text-align: center;
+}
+
+#main_content_text_centered p {
+    font-size: 22px;
+}
+
+#main_content_centered {
+    padding: 50px 0px;
+    display: flex;
+    justify-content: center;
+}
+
+#main_content {
+    padding: 50px 50px;
+}
+
+#main_content p {
+    font-size: 22px;
+}
+
+#main_content li, a{
+    list-style: none;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+}
+
+.list {
+    list-style: none;
+    text-decoration: none;
+    padding: 5px;
+}
+
+.day_links{
+    color: black;
+    font-size: 20px;
+}
+
+#main_content li {
+    padding-bottom: 10px;
+}
+
+#trip_container{
+    width: 50%;
+}
+
+#form_container {
+    width: 40%;
+}
+
+#trip_image, #day_image {
+    height: 150px;
+    width: 200px;
+}
+
+#image {
+    float: left;
+    padding-right: 30px;
+}
+
+#top_trip {
+    padding-bottom: 10px;
+}
+
+#locationHeader {
+    padding-top: 35px;
+}
+
+#buttons_container {
+    float: right;
+}
+
+.button {
+    background-color: black;
+    color: white;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.button:disabled {
+    opacity: 0;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+#days_container p {
+    font-size: 20px;
+}
+
+#days_container {
+    word-wrap: break-word;
+}
+
+#days li:first-of-type {
+    margin-top: 30px;
+}
+
+#showMessage {
+    margin-bottom: 7px;
+}
+
+#maxDaysSelect{
+    margin-top: 0;
+    float: right;
+    border-radius: 25px;
+    background-color: black;
+    color: white;
+    height: 25px;
+    width: 120px;
+}
+
+#access {
+    margin: 8px 0;
+    border-radius: 7px;
+    border: 1px solid #ccc;
+    background-color: white;
+    text-align: center;
+    color: black;
+    height: 25px;
+    width: 100px;
+}
+
+#addDayButton {
+    float: right;
+}
+
+#days {
+    max-width: 100%;
+    width: fit-content;
+}
+
+#left_button {
+    float: left;
+}
+
+#right_button {
+    float: right;
+}
+
+#description {
+    padding-top: 10px;
+}
+
+#day_description {
+    padding-top: 40px;
+}
+
+#day_description p {
+    font-size: 22px;
+    white-space: pre-line;
+    line-height: 1.5;
+}
+
+#description p {
+    font-size: 22px;
+    white-space: pre-line;
+    line-height: 1.5;
+}
+
+#prevNextButtons {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+label {
+    font-size: 18px;
+}
+
+input, textarea {
+    margin: 7px 0px;
+    padding: 7px 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;   
+}
+
+.required:after {
+    content:" *";
+    color: red;
+}
+
+#trip_submit {
+    width: 25%;
+    background-color: #04AA6D;
+    color: white;
+    border: none;
+    font-size: 1vw;
+    cursor: pointer;
+    float: right;
+}
+
+#cancel {
+    width: 15%;
+    background-color: #04AA6D;
+    color: white;
+    border: none;
+    font-size: 1vw;
+    cursor: pointer;
+    float: left;
+    text-align: center;
+  }
+
+footer {
+    background-color: black;
+    color: white;
+    height: 70px;
+    position: sticky;
+    top: 100%;
+    margin-bottom: 0;
+}
+
+@media only screen and (max-width: 590px) {
+    #right_footer, .footer_links {
+        display: none;
+    }
+}
+
+#left_footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    float: left;
+    font-size: 22px;
+    padding-left: 10px;
+}
+
+#right_footer {
+    float: right;
+}
+
+.icons {
+    height: 30px;
+    width: 30px;
+    padding-top: 20px;
+    padding-right: 10px;
+}
+
+#footer_nav li {
+    display: inline-block;
+    padding-right: 20px;
+}

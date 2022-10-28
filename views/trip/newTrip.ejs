@@ -1,0 +1,38 @@
+<%- include('../partials/header.ejs')%>
+    <main>
+        <script defer src="/javascript/formValidation.js"></script>
+        <div id="main_content_centered">
+            <div id="form_container">
+                <form action="/trips" method="POST">
+                    <label class="required" for="name">Trip Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Trip Name" required>
+
+                    <label class="required" for="location">Location:</label>
+                    <input type="text" id="location" name="location" placeholder="Location" required>
+
+                    <label class="required" for="startDate">Start Date:</label>
+                    <input type="date" id="startDate" name="startDate" required>
+
+                    <label class="required" for="endDate">End Date:</label>
+                    <input type="date" id="endDate" name="endDate" required>
+
+                    <label class="required" for="details">Details:</label>
+                    <textarea id="details" name="details" placeholder="Description of Trip" rows="4" required></textarea>
+
+                    <label class="required" for="access">Who should have access?</label><br>
+                    <select name="access" id="access">
+                        <option value="private">Just Me</option>
+                        <option value="friends">Friends</option>
+                        <option value="public">Anyone</option>
+                    </select><br>
+
+                    <label for="image">Image URL:</label>
+                    <input type="url" id="image" name="image" placeholder="Image URL">
+
+                    <input value="Cancel" id="cancel">
+                    <input type="submit" value="Create Trip" id="trip_submit">
+                </form>
+            </div>
+        </div>
+    </main>
+<%- include('../partials/footer.ejs')%>

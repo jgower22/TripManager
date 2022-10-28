@@ -1,0 +1,28 @@
+<%- include('../partials/header.ejs')%>
+    <main>
+        <script defer src="/javascript/formValidation.js"></script>
+        <div id="main_content_centered">
+            <div id="form_container">
+                <form action="/trips/<%=trip._id%>/<%=day.number%>?_method=PUT" method="POST">
+                    <label class="required" for="number">Day Number:</label>
+                    <input type="text" id="number" name="number" value="<%=day.number%>" disabled>
+
+                    <label class="required" for="location">Location:</label>
+                    <input type="text" id="location" name="location" value="<%=day.location%>" required>
+
+                    <label class="required" for="date">Date:</label>
+                    <input type="date" id="date" name="date" value="<%=day.date%>" disabled>
+
+                    <label class="required" for="details">Details:</label>
+                    <textarea id="details" name="details" placeholder="12:00PM - Arrive at airport&#10;2:00PM - Go to hotel" rows="10" required><%=day.details%></textarea>
+
+                    <label for="image">Image URL:</label>
+                    <input type="url" id="image" name="image" placeholder="Image URL" value="<%=day.image%>">
+
+                    <input value="Cancel" id="cancel">
+                    <input type="submit" value="Save Day" id="trip_submit">
+                </form>
+            </div>
+        </div>
+    </main>
+<%- include('../partials/footer.ejs')%>
