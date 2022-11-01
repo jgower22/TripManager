@@ -327,7 +327,6 @@ exports.updateTrip = (req, res, next) => {
 
                         currentDay.date = formattedDate;
                     }
-
                 }
                 //Update trip when number of days stays the same 
                 if (newNumDays === currentNumDays) {
@@ -509,8 +508,6 @@ exports.generatePDF = (req, res, next) => {
     model.findById(id)
         .then(trip => {
             if (trip) {
-                console.log('TRIP: ' + trip);
-                //Generate PDF with trip data
                 const pdf = require('../public/javascript/generatePDF.js');
                 const stream = res.writeHead(200, {
                     'Content-Type': 'application/pdf',
