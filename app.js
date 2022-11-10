@@ -17,7 +17,8 @@ const app = express();
 //configure app
 let port = 8084;
 let host = 'localhost';
-let url = 'mongodb://localhost:27017/trips';
+let url = 'mongodb+srv://ezYCoVwNqUYpADr3eOqgx:awD9i0uSHIIcbsJwtKd79RRpjNTBMqlGMCIJdNFL9ZnxL@trips.jiospgv.mongodb.net/trips';
+//let url = 'mongodb://localhost:27017/trips';
 app.set('view engine', 'ejs');
 
 //connect to MongoDB
