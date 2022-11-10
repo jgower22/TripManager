@@ -16,7 +16,7 @@ const app = express();
 
 //configure app
 let port = process.env.PORT || 8084;
-let host = 'tripsmanager.herokuapp.com';
+let host = 'tripmanager177.onrender.com';
 let url = 'mongodb+srv://ezYCoVwNqUYpADr3eOqgx:awD9i0uSHIIcbsJwtKd79RRpjNTBMqlGMCIJdNFL9ZnxL@trips.jiospgv.mongodb.net/trips';
 //let url = 'mongodb://localhost:27017/trips';
 app.set('view engine', 'ejs');
