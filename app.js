@@ -3,8 +3,13 @@ const express = require('express');
 const morgan = require('morgan');
 const tripRoutes = require('./routes/tripRoutes');
 const mainRoutes = require('./routes/mainRoutes');
+const userRoutes = require('./routes/userRoutes');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const flash = require('connect-flash');
+const User = require('./models/user');
 
 //create app
 const app = express();
@@ -35,7 +40,7 @@ app.use(trimmer);
 function trimmer(req, res, next) {
     if (req.method === 'POST' || req.method === 'PUT') {
         //Escape <script> and </script> on inputted data
-        var message = 'L';
+        var message = '';
         var searchStr = 'script';
         var regEx = new RegExp(searchStr, "ig");
         //For trips only
@@ -70,9 +75,26 @@ function trimmer(req, res, next) {
     next();
 }
 
+app.use(session({
+    secret: 'kdjfwkjdkfjdjfdk',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {maxAge: 60 * 60 * 1000},
+    store: new MongoStore({mongoUrl: url})
+}));
+
+app.use(flash());
+
+app.use((req, res, next) => {
+    res.locals.successMessages = req.flash('success');
+    res.locals.errorMessages = req.flash('error');
+    next();
+});
+
 //set up routes
 app.use('/', mainRoutes);
 app.use('/trips', tripRoutes);
+app.use('/users', userRoutes);
 
 app.use((req, res, next) => {
     let err = new Error('The server cannot locate resource ' + req.url);
@@ -87,16 +109,23 @@ app.use((err, req, res, next) => {
     } 
     res.status(err.status);
     console.log(err.stack);
-    res.render('error', {error: err});
+    let id = req.session.user;
+    User.findById(id)
+    .then(user => {
+        res.render('./error/serverError', {user, error: err});
+    })
+    .catch(err=>next(err));
 });
 
 //TO DO
 //Display hyperlinks as different colors -- DONE
 //Sort trips by Ongoing, Upcoming, Previous -- DONE
 //Generate a PDF for trip showing all day details -- DONE
-//Alert user when days will be removed when num of days shrinks when editing trip
+//Alert user when days will be removed when num of days shrinks when editing trip -- PARTIALLY DONE, need to display the days that will be removed
 //Fix placeholders on forms (12:00 PM)
 //Add go to last day button on showDays.ejs
 //Storing an image without URL
-//Changing time stamp display - maybe split it, convert to 12 hour time
 //Search bar on trips page
+//If user needs to login to access page, redirect to last page user was on after they login
+//Adding viewers / editors for everything related to trips
+//Add a copy trip button -- Will say "Copy of (trip name)"

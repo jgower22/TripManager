@@ -19,17 +19,10 @@
                     <label class="required" for="details">Details:</label>
                     <textarea id="details" name="details" placeholder="Description of Trip" rows="4" required></textarea>
 
-                    <label class="required" for="access">Who should have access?</label><br>
-                    <select name="access" id="access">
-                        <option value="private">Just Me</option>
-                        <option value="friends">Friends</option>
-                        <option value="public">Anyone</option>
-                    </select><br>
-
                     <label for="image">Image URL:</label>
                     <input type="url" id="image" name="image" placeholder="Image URL">
 
-                    <input value="Cancel" id="cancel">
+                    <input value="Cancel" id="cancel" readonly="readonly">
                     <input type="submit" value="Create Trip" id="trip_submit">
                 </form>
             </div>

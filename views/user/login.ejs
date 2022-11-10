@@ -1,0 +1,20 @@
+<%- include('../partials/header.ejs')%>
+    <main>
+        <div id="main_content_centered">
+            <div id="login_container">
+                <form action="/users/login" method="POST">
+                    <label class="required" for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Email Address" required>
+
+                    <label class="required" for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+
+                    <a href="/">
+                        <input value="Cancel" id="cancel" disabled>
+                    </a>
+                    <input type="submit" value="Log In" id="trip_submit">
+                </form>
+            </div>
+        </div>
+    </main>
+<%- include('../partials/footer.ejs')%>

@@ -12,7 +12,7 @@ router.get('/new', controller.newTrip);
 //POST /trips: create a new trip
 router.post('/', controller.createTrip);
 
-//GET /trips/:id: send details of connection of specified id
+//GET /trips/:id: send details of trip of specified id
 router.get('/:id', controller.showTrip);
 
 //GET /trips/:id/edit: send html form for editing an existing trip
@@ -26,6 +26,9 @@ router.delete('/:id', controller.deleteTrip);
 
 //GET /trips/:id/pdf: generate a PDF of the trip of the specified id
 router.get('/:id/pdf', controller.generatePDF);
+
+//GET /trips/:id/share: send sharing details of specified trip id
+router.get('/:id/share', controller.share);
 
 //GET /trips/:id/:dayId: show the day with the specified trip id and day number
 router.get('/:id/:dayId', controller.showDay);

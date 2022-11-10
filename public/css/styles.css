@@ -24,6 +24,7 @@ header {
 
 #bottom_header {
     display: flex;
+    justify-content: space-between;
     padding: 0 3%;
 }
 
@@ -54,7 +55,7 @@ header {
     text-decoration: underline;
 }
 
-#general_nav {
+#general_nav ul li:first-child{
     margin-right: auto;
 }
 
@@ -67,6 +68,119 @@ header {
     height: 135px;
     width: 175px;
     margin-right: auto;
+}
+
+#user_profile {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin-top: 5px;
+    margin-right: 20px;
+}
+
+#user_profile {
+    float: right;
+}
+
+.sub_menu_wrapper {
+    position: absolute;
+    width: 320px;
+    right: 0;
+    margin-right: 3.8%;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 0.5s;
+}
+
+.sub_menu_wrapper.open_menu{
+    max-height: 400px;
+}
+
+.sub_menu {
+    background: black;
+    padding: 20px;
+    margin: 10px;
+}
+
+.sub_menu hr {
+    border: 0;
+    height: 1px;
+    width: 100%;
+    background: green;
+    margin: 15px 0 10px;
+}
+
+.sub_menu_links {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    margin: 12px 0;
+}
+
+.sub_menu_links p {
+    width: 100%;
+}
+
+.sub_menu_links:hover p {
+    font-weight: 600;
+}
+
+.sub_menu_links img {
+    width: 40px;
+    background: white;
+    border-radius: 50%;
+    padding: 8px;
+    margin-right: 15px;
+}
+
+.sub_menu_links span {
+    font-size: 22px;
+    transition: transform 0.5s;
+}
+
+.sub_menu_links:hover span {
+    transform: translateX(5px);
+}
+
+.user_info {
+    display: flex;
+    align-items: center;
+}
+
+.user_info h3 {
+    font-weight: 500px;
+    color: white;
+}
+
+.user_info img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+#flash_messages {
+    display: flex;
+    justify-content: center;
+}
+
+.success {
+    background: green;
+    color: #fff;
+    width: 30%;
+    text-align: center;
+    padding: 10px 10px;
+    margin-top: 20px;
+  }
+  
+.error {
+    background: red;
+    color: #fff;
+    width: 30%;
+    text-align: center;
+    padding: 10px 10px;
+    margin-top: 20px;
 }
 
 main {
@@ -121,6 +235,10 @@ main {
 
 #trip_container{
     width: 50%;
+}
+
+#login_container {
+    width: 30%;
 }
 
 #form_container {
@@ -190,7 +308,7 @@ button:hover {
     width: 120px;
 }
 
-#access {
+/*#access {
     margin: 8px 0;
     border-radius: 7px;
     border: 1px solid #ccc;
@@ -199,7 +317,7 @@ button:hover {
     color: black;
     height: 25px;
     width: 100px;
-}
+}*/
 
 #addDayButton {
     float: right;
@@ -275,6 +393,16 @@ textarea {
     float: right;
 }
 
+.access {
+    width: fit-content;
+}
+.access p{
+}
+
+.access button {
+    float: right;
+}
+
 #cancel {
     width: 15%;
     background-color: #04AA6D;
@@ -284,7 +412,21 @@ textarea {
     cursor: pointer;
     float: left;
     text-align: center;
-  }
+}
+
+.error_buttons {
+    height: 30px;
+    background-color: #04AA6D;
+    color: white;
+    border: none;
+    font-size: 1vw;
+    cursor: pointer;
+    float: left;
+    text-align: center;
+    border-radius: 7px;
+    padding: 0 20px;
+    margin-right: 10px;
+}
 
 footer {
     background-color: black;

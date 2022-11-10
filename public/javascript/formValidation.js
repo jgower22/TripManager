@@ -65,6 +65,7 @@ document.getElementById('trip_submit').addEventListener('click', function(event)
 });
 
 document.getElementById('cancel').addEventListener('click', function(event) {
+    console.log('Test');
     event.preventDefault();
     let currentURL = window.location.href;
     let index = currentURL.lastIndexOf('/');

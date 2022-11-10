@@ -1,0 +1,17 @@
+<%- include('../partials/header.ejs')%>
+    <main>
+        <div id="main_content">
+            <h2>Who Has Access</h2>
+            <%for (let i = 0; i < trip.access.length; i++) {
+                if (i === 0) {%>
+                    <p><%=trip.access[i]%> (you)</p>
+                <%} else {%>
+                    <div class="access">
+                        <p><%=trip.access[i]%></p>
+                        <button>Remove</button>
+                    </div>
+                <%}
+            }%>
+        </div>
+    </main>
+<%- include('../partials/footer.ejs')%>

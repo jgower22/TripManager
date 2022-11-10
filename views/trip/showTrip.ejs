@@ -1,5 +1,5 @@
 <%- include('../partials/header.ejs')%>
-    <script defer src="/javascript/confirmation.js"></script>
+    <script defer src="/javascript/deleteConfirmation.js"></script>
     <main>
         <div id="main_content_centered">
             <div id="trip_container">
@@ -13,13 +13,16 @@
                         </form>
                     </div>
                     <form>
-                        <button class="button" id="pdf" type="submit" formmethod="GET" formaction="/trips/<%=trip._id%>/pdf">Generate PDF</button>
+                        <button class="button" id="pdf" type="submit" formmethod="GET" formaction="/trips/<%=trip._id%>/pdf">Download PDF</button>
+                        <a href="/trips/<%=trip._id%>/share">
+                            <button class="button" type="button">Share</button>
+                         </a>
                     </form>
                     <h1><%=trip.name%></h1>
 
                     <h4>Last modified on: <%=trip.updatedAt%></h4>
                     <div id="image">
-                        <%if (trip.image==="" || trip.image===null) {
+                        <%if (trip.image === "" || trip.image === null ) {
                             trip.image="https://img.freepik.com/premium-vector/airplane-icon-flat-style-isolated-white-background-with-shadow_142957-956.jpg?w=2000"; 
                         }%>
                         <img id="trip_image" src="<%=trip.image%>" alt="trip image">

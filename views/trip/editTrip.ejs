@@ -1,6 +1,7 @@
 <%- include('../partials/header.ejs')%>
     <main>
         <script defer src="/javascript/formValidation.js"></script>
+        <script defer src="/javascript/removeDaysConfirmation.js"></script>
         <div id="main_content_centered">
             <div id="form_container">
                 <form action="/trips/<%=trip._id%>?_method=PUT" method="POST">
@@ -19,32 +20,10 @@
                     <label class="required" for="details">Details:</label>
                     <textarea id="details" name="details" placeholder="Description of Trip" rows="7" required><%=trip.details%></textarea>
 
-                    <label class="required" for="access">Who should have access?</label><br>
-                    <select name="access" id="access">
-                        <%let accessType = trip.access;
-                        switch (accessType) {
-                            case 'private':%>
-                                <option value="private" selected>Just Me</option>
-                                <option value="friends">Friends</option>
-                                <option value="public">Anyone</option>
-                                <%break;
-                            case 'friends':%>
-                                <option value="private">Just Me</option>
-                                <option value="friends" selected>Friends</option>
-                                <option value="public">Anyone</option>
-                                <%break;
-                            case 'public':%>
-                                <option value="private">Just Me</option>
-                                <option value="friends">Friends</option>
-                                <option value="public" selected>Anyone</option>
-                        <%}%>
-                    </select><br>
-
                     <label for="image">Image URL:</label>
                     <input type="url" id="image" name="image" placeholder="Image URL" value="<%=trip.image%>">
 
-
-                    <input value="Cancel" id="cancel">
+                    <input value="Cancel" id="cancel" readonly="readonly">
                     <input type="submit" value="Save Trip" id="trip_submit">
                 </form>
             </div>

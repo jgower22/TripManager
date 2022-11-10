@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <script defer src="/javascript/userMenu.js"></script>
 </head>
 
 <body>
@@ -18,9 +19,13 @@
                 </a>
                 <nav>
                     <ul id="user_nav">
+                        <%if (user) {%>
                         <li><a class="links" href="/trips/new">Start a New Trip</a></li>
-                        <li><a class="links" href="/">Login</a></li>
-                        <li><a class="links" href="/">Sign Up</a></li>
+                        <%}%>
+                        <%if (!user) {%>
+                            <li><a class="links" href="/users/login">Login</a></li>
+                            <li><a class="links" href="/users/signup">Sign Up</a></li>
+                        <%}%>
                     </ul>
                 </nav>
             </div>
@@ -30,6 +35,53 @@
                         <li><a class="links" href="/trips">Trips</a></li>
                     </ul>
                 </nav>
+                <%if (user) {%>
+                <a href="#">
+                    <img id="user_profile" src="/images/profile_icon.png" alt="user profile">
+                </a>
+                <%}%>
             </div>
         </div>
     </header>
+
+    <%if (user) {%>
+    <div class="sub_menu_wrapper" id="subMenuWrapper">
+        <div class="sub_menu">
+            <div class="user_info">
+                <img id="user_profile" src="/images/profile_icon.png" alt="user profile">
+                <h3><%=user.firstName + " " + user.lastName%></h3>
+            </div>
+            <hr>
+
+            <a class="sub_menu_links" href="/users/profile">
+                <img src="/images/logo.png">
+                <p>View Profile</p>
+                <span>></span>
+            </a>
+            <a class="sub_menu_links" href="/users/settings">
+                <img src="/images/settings_icon.png">
+                <p>Settings</p>
+                <span>></span>
+            </a>
+            <a class="sub_menu_links" href="/users/logout">
+                <img src="/images/logout_icon.png">
+                <p>Logout</p>
+                <span>></span>
+            </a>
+        </div>
+    </div>
+    <%}%>
+
+    <div id="flash_messages">
+        <%if (errorMessages.length > 0) {
+            errorMessages.forEach(message => {%>
+                <div class="error"><%=message%></div>
+            <%});
+        }%>
+    
+        <%if (successMessages.length > 0) {
+            successMessages.forEach(message => {%>
+                <div class="success"><%=message%></div>
+            <%});
+        }%>
+    </div>
