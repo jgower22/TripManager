@@ -15,8 +15,8 @@ const User = require('./models/user');
 const app = express();
 
 //configure app
-let port = 8084;
-let host = 'localhost';
+let port = process.env.PORT || 8084;
+let host = 'tripsmanager.herokuapp.com';
 let url = 'mongodb+srv://ezYCoVwNqUYpADr3eOqgx:awD9i0uSHIIcbsJwtKd79RRpjNTBMqlGMCIJdNFL9ZnxL@trips.jiospgv.mongodb.net/trips';
 //let url = 'mongodb://localhost:27017/trips';
 app.set('view engine', 'ejs');
