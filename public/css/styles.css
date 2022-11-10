@@ -233,6 +233,12 @@ main {
     padding-bottom: 10px;
 }
 
+@media (max-width: 1200px) {
+    #trip_container {
+      width: 100%
+    }
+  }
+
 #trip_container{
     width: 50%;
 }
