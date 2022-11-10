@@ -233,15 +233,15 @@ main {
     padding-bottom: 10px;
 }
 
+#trip_container{
+    width: 50%;
+}
+
 @media (max-width: 1200px) {
     #trip_container {
       width: 100%;
     }
   }
-
-#trip_container{
-    width: 50%;
-}
 
 #login_container {
     width: 30%;
