@@ -420,11 +420,14 @@ textarea {
 }
 
 #cancel {
-    width: 15%;
+    width: 20%;
     background-color: #04AA6D;
     color: white;
     border: none;
     cursor: pointer;
+    height: 20px;
+    border-radius: 25px;
+    font-weight: 700;
     float: left;
     text-align: center;
 }
