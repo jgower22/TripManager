@@ -296,6 +296,7 @@ main {
     background-color: black;
     color: white;
     font-size: 22px;
+    font-weight: 700;
     margin-bottom: 10px;
 }
 
@@ -449,7 +450,6 @@ textarea {
     background-color: #04AA6D;
     color: white;
     border: none;
-    font-size: 1vw;
     cursor: pointer;
     float: left;
     text-align: center;
