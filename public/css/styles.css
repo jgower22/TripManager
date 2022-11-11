@@ -281,7 +281,7 @@ main {
     padding-top: 35px;
 }
 
-#buttons_container {
+#buttons_container, #button_containers_day {
     float: right;
 }
 
