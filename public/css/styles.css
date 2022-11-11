@@ -247,9 +247,21 @@ main {
     width: 30%;
 }
 
+@media (max-width: 1200px) {
+    #login_container {
+      width: 90%;
+    }
+  }
+
 #form_container {
     width: 40%;
 }
+
+@media (max-width: 1200px) {
+    #form_container {
+      width: 90%;
+    }
+  }
 
 #trip_image, #day_image {
     height: 150px;
