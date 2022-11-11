@@ -130,3 +130,5 @@ app.use((err, req, res, next) => {
 //If user needs to login to access page, redirect to last page user was on after they login
 //Adding viewers / editors for everything related to trips
 //Add a copy trip button -- Will say "Copy of (trip name)"
+//Fix CANCEL button on mobile when turning device -- changes look
+//If user drop-down is shown, allow user to click anywhere else on site to close it
