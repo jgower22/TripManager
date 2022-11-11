@@ -406,15 +406,13 @@ textarea {
     background-color: #04AA6D;
     color: white;
     border: none;
-    font-size: 1vw;
+    /*font-size: 1vw;*/
     cursor: pointer;
     float: right;
 }
 
 .access {
     width: fit-content;
-}
-.access p{
 }
 
 .access button {
