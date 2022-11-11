@@ -281,6 +281,12 @@ main {
     padding-top: 35px;
 }
 
+@media only screen and (max-width: 590px) {
+    #locationHeader {
+        padding-top: 25px;
+    }
+}
+
 #buttons_container, #buttons_container_day {
     float: right;
 }
