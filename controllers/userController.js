@@ -46,28 +46,30 @@ exports.login = (req, res, next) => {
 
 exports.processLogin = (req, res, next) => {
     let email = req.body.email;
+    if (email)
+        email = email.toLowerCase();
     let password = req.body.password;
-
-    User.findOne({email: email})
+    User.findOne({ email: email })
     .then(user => {
-        if (user) {
+        if (!user) {
+            req.flash('error', 'wrong email address');
+            res.redirect('/users/login');
+        } else {
             user.comparePassword(password)
             .then(result => {
                 if (result) {
-                    console.log(req.session);
                     req.session.user = user._id;
-                    //req.flash('success', 'You have successfully logged in');
-                    res.redirect('/users/profile');
+                    console.log("SESSION: " + req.session.user + " " + Date.now());
+                    req.session.userFullName = user.firstName + ' ' + user.lastName;
+                    req.session.email = user.email;
+                    req.flash('success', 'You have successfully logged in');
+                    console.log('REDIRECT TO PROFILE, SUCCESSFULLY LOGGED IN');
+                    return res.redirect('/users/profile');
                 } else {
-                    console.log('Wrong password');
                     req.flash('error', 'Wrong password');
                     res.redirect('/users/login');
                 }
             })
-        } else {
-            console.log('Wrong email address');
-            req.flash('error', 'Wrong email address');
-            res.redirect('/users/login');
         }
     })
     .catch(err=>next(err));
@@ -77,11 +79,7 @@ exports.profile = (req, res, next) => {
     let id = req.session.user;
     User.findById(id)
     .then(user => {
-        if (user) {
-            res.render('./user/profile', {user});
-        } else {
-            res.render('./error/loginError', {user});
-        }
+        res.render('./user/profile', {user});
     })
     .catch(err=>next(err));
 }

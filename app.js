@@ -17,7 +17,9 @@ const app = express();
 //configure app
 let port = process.env.PORT || 8084;
 let host = '0.0.0.0';
-let url = 'mongodb+srv://' + process.env.username + ':' + process.env.password + '@trips.jiospgv.mongodb.net/trips';
+let username = 'ezYCoVwNqUYpADr3eOqgx';
+let password = 'awD9i0uSHIIcbsJwtKd79RRpjNTBMqlGMCIJdNFL9ZnxL';
+let url = 'mongodb+srv://' + process.env.USERNAME + ':' + process.env.PASSWORD + '@trips.jiospgv.mongodb.net/trips';
 //let url = 'mongodb://localhost:27017/trips';
 app.set('view engine', 'ejs');
 
@@ -87,6 +89,9 @@ app.use(session({
 app.use(flash());
 
 app.use((req, res, next) => {
+    res.locals.user = req.session.user||null;
+    res.locals.email = req.session.email||null;
+    res.locals.userFullName = req.session.userFullName||null;
     res.locals.successMessages = req.flash('success');
     res.locals.errorMessages = req.flash('error');
     next();

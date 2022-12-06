@@ -1,16 +1,42 @@
 <%- include('../partials/header.ejs')%>
     <main>
         <div id="main_content">
-            <h2>Who Has Access</h2>
-            <%for (let i = 0; i < trip.access.length; i++) {
-                if (i === 0) {%>
-                    <p><%=trip.access[i]%> (you)</p>
-                <%} else {%>
-                    <div class="access">
-                        <p><%=trip.access[i]%></p>
-                    </div>
-                <%}
-            }%>
+            <div class="inline_container left">
+                <h2>Who Has Access</h2>
+                <%for (let i = 0; i < trip.access.length; i++) {
+                    let curUser = trip.access[i].user;
+                    let curAccessType = trip.access[i].type;
+                    if (curUser.email === email) {%>
+                        <div class="access">
+                            <p><%=curUser.firstName%> <%=curUser.lastName%> <b>(you, <%=curAccessType%>)</b></p>
+                            <h4><%=curUser.email%></h4>
+                        </div>
+                    <%} else {%>
+                        <div class="access">
+                            <form>
+                                <p><%=curUser.firstName%> <%=curUser.lastName%> <b>(<%=curAccessType%>)</b></p>
+                                <%if (accessType === 'owner') {%>
+                                    <button class="button" type="submit" formmethod="POST" formaction="/trips/<%=trip._id%>/<%=curUser._id%>?_method=DELETE">Remove</button>
+                                <%}%>
+                            </form>
+                            <h4><%=curUser.email%></h4>
+                        </div>
+                    <%}
+                }%>
+            </div>
+            <div class="inline_container right" id="new_access_container">
+                <h2>Add New User</h2>
+                <form action="/trips/<%=trip._id%>/access?_method=PUT" method="POST">
+                    <label class="required" for="name">Email:</label>
+                    <input type="text" id="email" name="email" placeholder="Email Address" required>
+                    <label class="required" for="accessTypes">Access Level:</label>
+                    <select name="accessTypes" id="accessTypes">
+                        <option value="editor">editor</option>
+                        <option value="viewer">viewer</option>
+                    </select>
+                    <input type="submit" value="Add User" id="trip_submit">
+                </form>
+            </div>
         </div>
     </main>
 <%- include('../partials/footer.ejs')%>

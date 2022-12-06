@@ -4,14 +4,18 @@
         <div id="main_content_centered">
             <div id="trip_container">
                 <div id="top_trip">
-                    <div id="buttons_container">
-                        <form>
-                            <button class="button" id="update" type="submit" formmethod="GET"
-                                formaction="/trips/<%=trip._id%>/edit">Edit Trip</button>
-                            <button class="button" id="delete" type="submit" formmethod="POST"
-                            formaction="/trips/<%=trip._id%>?_method=DELETE">Delete Trip</button>
-                        </form>
-                    </div>
+                    <%if (accessType === 'owner' || accessType === 'editor') {%>
+                        <div id="buttons_container">
+                            <form>
+                                <button class="button" id="update" type="submit" formmethod="GET"
+                                    formaction="/trips/<%=trip._id%>/edit">Edit Trip</button>
+                                <%if (accessType === 'owner') {%>
+                                    <button class="button" id="delete" type="submit" formmethod="POST"
+                                        formaction="/trips/<%=trip._id%>?_method=DELETE">Delete Trip</button>
+                                <%}%>
+                            </form>
+                        </div>
+                    <%}%>
                     <form>
                         <button class="button" id="pdf" type="submit" formmethod="GET" formaction="/trips/<%=trip._id%>/pdf">Download PDF</button>
                         <a href="/trips/<%=trip._id%>/share">
@@ -20,6 +24,7 @@
                     </form>
                     <h1><%=trip.name%></h1>
 
+                    <h4>Created by <%=trip.createdBy.firstName%> <%=trip.createdBy.lastName%></h4>
                     <h4>Last modified on: <%=trip.updatedAt%></h4>
                     <div id="image">
                         <%if (trip.image === "" || trip.image === null ) {

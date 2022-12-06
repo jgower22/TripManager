@@ -3,11 +3,13 @@
         <div id="main_content_centered">
             <div id="trip_container">
                 <div>
+                    <%if (accessType === 'owner' || accessType === 'editor') {%>
                     <div id="buttons_container_day">
                         <form>
                             <button class="button" type="submit" formmethod="GET" formaction="/trips/<%=trip._id%>/<%=day.number%>/edit">Edit Day</button>
                         </form>
                     </div>
+                    <%}%>
                     <a href="/trips/<%=trip._id%>">
                         <button class="button" type="button">Back to Trip</button>
                      </a>

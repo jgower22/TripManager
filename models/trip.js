@@ -7,8 +7,11 @@ const tripSchema = new Schema({
     startDate: {type: String, required: [true, 'startDate is required']},
     endDate: {type: String, required: [true, 'endDate is required']},
     details: {type: String, required: [true, 'details is required']},
-    access: {type: Array, required: [true, 'access is required']},
-    createdBy: {type: String, required: [true, 'createdBy is required']},
+    access: [{
+        user: {type: Schema.Types.ObjectId, ref: 'User'},
+        type: {type: String},
+    }],
+    createdBy: {type: Schema.Types.ObjectId, ref: 'User'},
     image: {type: String},
     days: {type: Array, required: [true, 'days are required']},
 },

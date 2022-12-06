@@ -168,16 +168,16 @@ header {
 .success {
     background: green;
     color: #fff;
-    width: 30%;
+    width: 100%;
     text-align: center;
     padding: 10px 10px;
     margin-top: 20px;
-  }
+}
   
 .error {
     background: red;
     color: #fff;
-    width: 30%;
+    width: 100%;
     text-align: center;
     padding: 10px 10px;
     margin-top: 20px;
@@ -201,6 +201,15 @@ main {
     padding: 50px 0px;
     display: flex;
     justify-content: center;
+}
+
+#main_content_centered h4 {
+    margin-top: 0;
+    margin-bottom: 1px;
+}
+
+#main_content_centered h1 {
+    margin-bottom: 10px;
 }
 
 #main_content {
@@ -257,6 +266,22 @@ main {
     width: 40%;
 }
 
+#new_access_container {
+    width: 35%;
+}
+
+.inline_container {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.left {
+    max-width: 50%;
+    word-break: break-all;
+    white-space: normal;
+    margin-right: 10%;
+}
+
 @media (max-width: 1200px) {
     #form_container {
       width: 90%;
@@ -269,6 +294,7 @@ main {
 }
 
 #image {
+    margin-top: 10px;
     float: left;
     padding-right: 30px;
 }
@@ -397,7 +423,7 @@ label {
     font-size: 18px;
 }
 
-input, textarea {
+input, textarea, #accessTypes {
     margin: 7px 0px;
     padding: 7px 10px;
     width: 100%;
@@ -429,8 +455,23 @@ textarea {
     width: fit-content;
 }
 
+.access h2 {
+    margin-bottom: 0;
+}
+
 .access button {
-    float: right;
+    margin-bottom: 0;
+}
+
+.access h4{
+    margin-top: 0;
+    font-weight: normal;
+}
+
+.access p {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: inline-block;
 }
 
 #cancel {

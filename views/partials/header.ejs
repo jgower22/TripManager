@@ -30,11 +30,13 @@
                 </nav>
             </div>
             <div id="bottom_header">
+                <%if (user) {%>
                 <nav>
                     <ul id="general_nav">
                         <li><a class="links" href="/trips">Trips</a></li>
                     </ul>
                 </nav>
+                <%}%>
                 <%if (user) {%>
                 <a href="#">
                     <img id="user_profile" src="/images/profile_icon.png" alt="user profile">
@@ -49,7 +51,7 @@
         <div class="sub_menu">
             <div class="user_info">
                 <img id="user_profile" src="/images/profile_icon.png" alt="user profile">
-                <h3><%=user.firstName + " " + user.lastName%></h3>
+                <h3><%=userFullName%></h3>
             </div>
             <hr>
 
