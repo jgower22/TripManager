@@ -16,7 +16,10 @@ exports.new = (req, res, next) => {
 exports.addUser = (req, res, next) => {
     let user = new User(req.body);
     user.save()
-    .then(() => res.redirect('/users/login'))
+    .then(() => {
+        req.flash('success', 'Account created successfully');
+        res.redirect('/users/login');
+    })
     .catch(err => {
         if (err.name === 'ValidationError') {
             req.flash('error', err.message);
@@ -49,24 +52,23 @@ exports.processLogin = (req, res, next) => {
     if (email)
         email = email.toLowerCase();
     let password = req.body.password;
+    let errorMessage = 'Invalid username and/or password';
     User.findOne({ email: email })
     .then(user => {
         if (!user) {
-            req.flash('error', 'wrong email address');
+            req.flash('error', errorMessage);
             res.redirect('/users/login');
         } else {
             user.comparePassword(password)
             .then(result => {
                 if (result) {
                     req.session.user = user._id;
-                    console.log("SESSION: " + req.session.user + " " + Date.now());
                     req.session.userFullName = user.firstName + ' ' + user.lastName;
                     req.session.email = user.email;
                     req.flash('success', 'You have successfully logged in');
-                    console.log('REDIRECT TO PROFILE, SUCCESSFULLY LOGGED IN');
                     return res.redirect('/users/profile');
                 } else {
-                    req.flash('error', 'Wrong password');
+                    req.flash('error', errorMessage);
                     res.redirect('/users/login');
                 }
             })

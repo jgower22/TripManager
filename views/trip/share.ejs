@@ -3,9 +3,18 @@
         <div id="main_content">
             <div class="inline_container left">
                 <h2>Who Has Access</h2>
-                <%for (let i = 0; i < trip.access.length; i++) {
-                    let curUser = trip.access[i].user;
-                    let curAccessType = trip.access[i].type;
+                <div class="access">
+                    <%if (trip.createdBy.email === email) {%>
+                        <p><%=trip.createdBy.firstName%> <%=trip.createdBy.lastName%> <b>(you, owner)</b></p>
+                        <h4><%=trip.createdBy.email%></h4>
+                    <%} else {%>
+                        <p><%=trip.createdBy.firstName%> <%=trip.createdBy.lastName%> <b>(owner)</b></p>
+                        <h4><%=trip.createdBy.email%></h4>
+                    <%}%>
+                </div>
+                <%for (let i = 0; i < access.length; i++) {
+                    let curUser = access[i].user;
+                    let curAccessType = access[i].type;
                     if (curUser.email === email) {%>
                         <div class="access">
                             <p><%=curUser.firstName%> <%=curUser.lastName%> <b>(you, <%=curAccessType%>)</b></p>
@@ -24,19 +33,21 @@
                     <%}
                 }%>
             </div>
-            <div class="inline_container right" id="new_access_container">
-                <h2>Add New User</h2>
-                <form action="/trips/<%=trip._id%>/access?_method=PUT" method="POST">
-                    <label class="required" for="name">Email:</label>
-                    <input type="text" id="email" name="email" placeholder="Email Address" required>
-                    <label class="required" for="accessTypes">Access Level:</label>
-                    <select name="accessTypes" id="accessTypes">
-                        <option value="editor">editor</option>
-                        <option value="viewer">viewer</option>
-                    </select>
-                    <input type="submit" value="Add User" id="trip_submit">
-                </form>
-            </div>
+            <%if (accessType === 'owner') {%>
+                <div class="inline_container right" id="new_access_container">
+                    <h2>Add New User</h2>
+                    <form action="/trips/<%=trip._id%>/access?_method=PUT" method="POST">
+                        <label class="required" for="name">Email:</label>
+                        <input type="text" id="email" name="email" placeholder="Email Address" required>
+                        <label class="required" for="accessType">Access Level:</label>
+                        <select name="accessType" id="accessType">
+                            <option value="viewer">viewer</option>
+                            <option value="editor">editor</option>
+                        </select>
+                        <input type="submit" value="Add User" id="trip_submit">
+                    </form>
+                </div>
+            <%}%>
         </div>
     </main>
 <%- include('../partials/footer.ejs')%>

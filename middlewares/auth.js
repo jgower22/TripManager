@@ -1,4 +1,5 @@
 const Trip = require('../models/trip');
+const Access = require('../models/access');
 
 //check if user is a guest
 exports.isGuest = (req, res, next) => {
@@ -26,22 +27,51 @@ exports.isLoggedIn = (req, res, next) => {
     }
 };
 
-//check if user is an editor of a trip
+//check if user is an owner, editor or viewer of a trip
 exports.isAccessType = (accessType) => {
     return (req, res, next) => {
-        let id = req.params.id;
-        Trip.findById(id).populate('access.user', 'firstName lastName email type')
+        let tripId = req.params.id;
+        Promise.all([Trip.findById(tripId), Access.find({ trip: tripId, user: res.locals.user }).populate('user', 'email')])
+            .then(results => {
+                const [trip, access] = results;
+                if (trip) {
+                    if (trip.createdBy == res.locals.user && accessType.includes('owner')) {
+                        res.locals.accessType = 'owner';
+                        return next();
+                    }
+                } else {
+                    let err = new Error('Cannot find a trip with id ' + req.params.id);
+                    err.status = 404;
+                    return next(err);
+                }
+                if (access) {
+                    for (let i = 0; i < access.length; i++) {
+                        let curUser = access[i];
+                        if (curUser.user.email === res.locals.email && accessType.includes(curUser.type)) {
+                            res.locals.accessType = curUser.type;
+                            return next();
+                        }
+                    }
+                    let err = new Error('Forbidden');
+                    err.status = 403;
+                    return next(err);
+                } else {
+                    let err = new Error('Forbidden');
+                    err.status = 403;
+                    return next(err);
+                }
+            })
+            .catch(err => next(err));
+        /*Trip.findById(id).populate('access.user', 'firstName lastName email type')
             .then(trip => {
                 if (trip) {
                     for (let i = 0; i < trip.access.length; i++) {
                         let curUser = trip.access[i];
                         res.locals.accessType = curUser.type;
                         if (curUser.user.email === res.locals.email && accessType.includes(curUser.type)) {
-                            console.log('NEXT');
                             return next();
                         }
                     }
-                    console.log('ERROR');
                     let err = new Error('Forbidden');
                     err.status = 403;
                     return next(err);
@@ -51,32 +81,6 @@ exports.isAccessType = (accessType) => {
                     return next(err);
                 }
             })
-            .catch(err => next(err));
+            .catch(err => next(err));*/
     }
-  }
-/*exports.isAccessType = (req, res, next) => {
-    let id = req.params.id;
-    //let accessType = 'editor';
-    Trip.findById(id).populate('access.user', 'firstName lastName email type')
-        .then(trip => {
-            if (trip) {
-                console.log('TRIP: ' + trip);
-                for (let i = 0; i < trip.access.length; i++) {
-                    let curUser = trip.access[i];
-                    if (curUser.user.email === res.locals.email && curUser.type === accessType) {
-                        console.log('NEXT');
-                        return next();
-                    }
-                }
-                console.log('ERROR');
-                let err = new Error('Unauthorized to access the resource');
-                err.status = 401;
-                return next(err);
-            } else {
-                let err = new Error('Cannot find a trip with id ' + req.params.id);
-                err.status = 404;
-                return next(err);
-            }
-        })
-        .catch(err => next(err));
-};*/
+};

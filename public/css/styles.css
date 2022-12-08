@@ -423,7 +423,7 @@ label {
     font-size: 18px;
 }
 
-input, textarea, #accessTypes {
+input, textarea, #accessType {
     margin: 7px 0px;
     padding: 7px 10px;
     width: 100%;

@@ -17,9 +17,9 @@ const app = express();
 //configure app
 let port = process.env.PORT || 8084;
 let host = '0.0.0.0';
-let username = 'ezYCoVwNqUYpADr3eOqgx';
-let password = 'awD9i0uSHIIcbsJwtKd79RRpjNTBMqlGMCIJdNFL9ZnxL';
-let url = 'mongodb+srv://' + process.env.USERNAME + ':' + process.env.PASSWORD + '@trips.jiospgv.mongodb.net/trips';
+let USERNAME = 'ezYCoVwNqUYpADr3eOqgx';
+let PASSWORD = 'awD9i0uSHIIcbsJwtKd79RRpjNTBMqlGMCIJdNFL9ZnxL';
+let url = 'mongodb+srv://' + USERNAME + ':' + PASSWORD + '@trips.jiospgv.mongodb.net/trips';
 //let url = 'mongodb://localhost:27017/trips';
 app.set('view engine', 'ejs');
 

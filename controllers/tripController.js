@@ -1,14 +1,23 @@
-const model = require('../models/trip');
+const { model } = require('mongoose');
+const Trip = require('../models/trip');
 const User = require('../models/user');
-const { ObjectId } = require('mongodb');
+const Access = require('../models/access');
 
 exports.index = (req, res, next) => {
     //res.send('Send all trips');
 
-    //Find all trips where createdBy === user email OR has access to
-    model.find({$or: [{createdBy: res.locals.user}, {access: {$elemMatch: {user: res.locals.user}}}]})
-        .then(trips => {
-            res.render('./trip/index', { trips });
+    //Find all trips where createdBy === user id OR has access to (owner, editor, viewer)
+    Promise.all([Trip.find({ createdBy: res.locals.user }, {_id: 1, name: 1, startDate: 1, endDate: 1}), Access.find({ user: res.locals.user }).populate('trip', '_id name startDate endDate')])
+        .then(results => {
+            const [trips, access] = results;
+            console.log('TRIPS: ' + trips);
+            console.log('ACCESS: ' + access);
+            let combinedTrips = trips;
+            for (let i = 0; i < access.length; i++) {
+                combinedTrips.push(access[i].trip);
+            }
+            console.log('COMBINED TRIPS: ' + combinedTrips);
+            res.render('./trip/index', { trips: combinedTrips });
         })
         .catch(err => next(err));
 };
@@ -54,11 +63,7 @@ exports.createTrip = (req, res, next) => {
 
     req.body.days = prefilledDays;
     req.body.createdBy = req.session.user;
-    req.body.access = {
-        user: req.session.user,
-        type: 'owner',
-    };
-    let trip = new model(req.body);
+    let trip = new Trip(req.body);
 
     trip.save() //insert the document to the database
         .then(trip => {
@@ -76,7 +81,7 @@ exports.createTrip = (req, res, next) => {
 exports.showTrip = (req, res, next) => {
     let tripId = req.params.id;
 
-    model.findById(tripId).populate('createdBy', 'firstName lastName')
+    Trip.findById(tripId).populate('createdBy', 'firstName lastName')
         .then(trip => {
             if (trip) {
                 const { DateTime } = require('luxon');
@@ -95,7 +100,7 @@ exports.editTrip = (req, res, next) => {
     //res.send('Send edit form');
     let tripId = req.params.id;
 
-    model.findById(tripId)
+    Trip.findById(tripId)
         .then(trip => {
             res.render('./trip/editTrip', { trip });
         })
@@ -106,7 +111,7 @@ exports.updateTrip = (req, res, next) => {
     //res.send('Update trip with id ' + req.params.id);
     let tripId = req.params.id;
 
-    model.findById(tripId)
+    Trip.findById(tripId)
         .then(trip => {
             let newStartDate = new Date(req.body.startDate.replace('-', '/'));
             let newEndDate = new Date(req.body.endDate.replace('-', '/'));
@@ -173,7 +178,7 @@ exports.updateTrip = (req, res, next) => {
                 let combinedDays = previousDays.concat(newDays);
 
                 //{$set: tripFields, $push: {days: { $each: newDays }}}
-                model.findByIdAndUpdate(tripId, { $set: tripFields, days: combinedDays }, { useFindAndModify: false, runValidators: true })
+                Trip.findByIdAndUpdate(tripId, { $set: tripFields, days: combinedDays }, { useFindAndModify: false, runValidators: true })
                     .then(trip => {
                         if (trip) {
                             res.redirect('/trips/' + tripId);
@@ -214,7 +219,7 @@ exports.updateTrip = (req, res, next) => {
                     currentDay.date = formattedDate;
                 }
 
-                model.findByIdAndUpdate(tripId, { $set: tripFields, days: daysToKeep }, { useFindAndModify: false, runValidators: true })
+                Trip.findByIdAndUpdate(tripId, { $set: tripFields, days: daysToKeep }, { useFindAndModify: false, runValidators: true })
                     .then(trip => {
                         if (trip) {
                             res.redirect('/trips/' + tripId);
@@ -257,7 +262,7 @@ exports.updateTrip = (req, res, next) => {
             }
             //Update trip when number of days stays the same 
             if (newNumDays === currentNumDays) {
-                model.findByIdAndUpdate(tripId, { $set: tripFields, days: updatedDays }, { useFindAndModify: false, runValidators: true })
+                Trip.findByIdAndUpdate(tripId, { $set: tripFields, days: updatedDays }, { useFindAndModify: false, runValidators: true })
                     .then(trip => {
                         res.redirect('/trips/' + tripId);
                         return;
@@ -278,7 +283,7 @@ exports.deleteTrip = (req, res, next) => {
     //res.send('Delete trip with id ' + req.params.id);
     let tripId = req.params.id;
 
-    model.findByIdAndDelete(tripId, { useFindAndModify: false })
+    Trip.findByIdAndDelete(tripId, { useFindAndModify: false })
         .then(trip => {
             if (trip) {
                 res.redirect('/trips');
@@ -296,7 +301,7 @@ exports.showDay = (req, res, next) => {
     let tripId = req.params.id;
     let dayId = req.params.dayId;
 
-    model.findById(tripId)
+    Trip.findById(tripId)
         .then(trip => {
             let days = trip.days;
             //Find prev id and next id
@@ -329,7 +334,7 @@ exports.editDay = (req, res, next) => {
     let tripId = req.params.id;
     let dayId = req.params.dayId;
 
-    model.findById(tripId)
+    Trip.findById(tripId)
         .then(trip => {
             let days = trip.days;
             let day = days.find(day => day.number == dayId);
@@ -353,9 +358,9 @@ exports.updateDay = (req, res, next) => {
     let details = dayData.details;
     let image = dayData.image;
 
-    model.findById(tripId)
+    Trip.findById(tripId)
         .then(trip => {
-            model.updateOne({ _id: tripId, 'days.number': parseInt(dayId)},
+            Trip.updateOne({ _id: tripId, 'days.number': parseInt(dayId) },
                 {
                     $set: {
                         'days.$.location': location,
@@ -381,7 +386,7 @@ exports.updateDay = (req, res, next) => {
 exports.generatePDF = (req, res, next) => {
     let tripId = req.params.id;
 
-    model.findById(tripId)
+    Trip.findById(tripId)
         .then(trip => {
             const pdf = require('../public/javascript/generatePDF.js');
             const stream = res.writeHead(200, {
@@ -399,23 +404,63 @@ exports.generatePDF = (req, res, next) => {
 exports.share = (req, res, next) => {
     let tripId = req.params.id;
 
-    model.findOne({_id: tripId}, {access: 1}).populate('access.user', 'firstName lastName email')
-        .then(trip => {
-            res.render('./trip/share', { trip });
+    Promise.all([Trip.findOne({ _id: tripId }, {createdBy: 1}).populate('createdBy', 'firstName lastName email'), Access.find({ trip: tripId }).populate('user', 'firstName lastName email')])
+        .then(results => {
+            const [trip, access] = results;
+            console.log('TRIP: ' + trip);
+            console.log('ACCESS: ' + access);
+            res.render('./trip/share', { trip, access });
         })
         .catch(err => next(err));
 }
 
 exports.addAccess = (req, res, next) => {
-    console.log("REQ BODY: " + JSON.stringify(req.body));
-    res.redirect('back');
+    let tripId = req.params.id;
+    let userEmail = req.body.email;
+    let accessType = req.body.accessType;
+    //Get user id from user email
+    User.findOne({ email: userEmail })
+        .then(user => {
+            console.log('User: ' + user);
+
+            //Cannot add users that do not exist
+            if (!user) {
+                req.flash('error', 'User not found.')
+                return res.redirect('back');
+            }
+
+            //Cannot add yourself (owner)
+            if (userEmail === res.locals.email) {
+                req.flash('error', 'You are already have access!')
+                return res.redirect('back');
+            }
+
+            //Insert into access collection
+            Access.findOneAndUpdate(
+            {
+                user: user._id, trip: tripId
+            },
+            {
+                type: accessType,
+                user: user._id,
+                trip: tripId
+            }, {upsert: true})
+                .then(access => {
+                    res.redirect('/trips/' + tripId + '/share');
+                })
+                .catch(err => next(err));
+        })
+        .catch(err => next(err));
 }
 
 exports.removeAccess = (req, res, next) => {
     let tripId = req.params.id;
     let userId = req.params.userId;
-    res.send('Test');
-    //model.updateOne({ _id: tripId, 'days.number': parseInt(dayId) },
+    Access.deleteOne({trip: tripId, user: userId})
+        .then(access => {
+            res.redirect('/trips/' + tripId + '/share');
+        })
+        .catch(err => next(err));
 }
 
 
