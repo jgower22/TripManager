@@ -38,7 +38,7 @@
                     <h2>Add New User</h2>
                     <form action="/trips/<%=trip._id%>/access?_method=PUT" method="POST">
                         <label class="required" for="name">Email:</label>
-                        <input type="text" id="email" name="email" placeholder="Email Address" required>
+                        <input type="email" id="email" name="email" placeholder="Email Address" required>
                         <label class="required" for="accessType">Access Level:</label>
                         <select name="accessType" id="accessType">
                             <option value="viewer">viewer</option>

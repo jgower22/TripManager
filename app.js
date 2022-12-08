@@ -17,9 +17,7 @@ const app = express();
 //configure app
 let port = process.env.PORT || 8084;
 let host = '0.0.0.0';
-let USERNAME = 'ezYCoVwNqUYpADr3eOqgx';
-let PASSWORD = 'awD9i0uSHIIcbsJwtKd79RRpjNTBMqlGMCIJdNFL9ZnxL';
-let url = 'mongodb+srv://' + USERNAME + ':' + PASSWORD + '@trips.jiospgv.mongodb.net/trips';
+let url = 'mongodb+srv://' + process.env.USERNAME + ':' + process.env.PASSWORD + '@trips.jiospgv.mongodb.net/trips';
 //let url = 'mongodb://localhost:27017/trips';
 app.set('view engine', 'ejs');
 
@@ -128,13 +126,14 @@ app.use((err, req, res, next) => {
 //Sort trips by Ongoing, Upcoming, Previous -- DONE
 //Generate a PDF for trip showing all day details -- DONE
 //Alert user when days will be removed when num of days shrinks when editing trip -- PARTIALLY DONE, need to display the days that will be removed
+//Adding viewers / editors for everything related to trips -- DONE
+
 //Fix placeholders on forms (12:00 PM)
 //Add go to last day button on showDays.ejs
 //Storing an image without URL
 //Add limit on number of days at can be added
 //Search bar on trips page
 //If user needs to login to access page, redirect to last page user was on after they login
-//Adding viewers / editors for everything related to trips
 //Add a copy trip button -- Will say "Copy of (trip name)"
 //Fix CANCEL button on mobile when turning device -- changes look
 //If user drop-down is shown, allow user to click anywhere else on site to close it
