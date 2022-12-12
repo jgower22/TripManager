@@ -21,7 +21,7 @@ locationToSet = locationToSet.substring(locationToSet.indexOf(':') + 1, location
 console.log('LOCATION: ' + locationToSet);
 
 // build the URL to the geonames API including the name that was entered
-var geonamesURL = 'http://api.geonames.org/searchJSON?q=' +
+var geonamesURL = 'http://secure.geonames.org/searchJSON?q=' +
 
     locationToSet +
 
@@ -57,6 +57,12 @@ fetch(geonamesURL)
 
             }
         }
+    }).catch(err => {
+        map.setView([0, 0], 12);
+            L.popup()
+                .setLatLng([0, 0])
+                .setContent('Error. Please try again later.')
+                .openOn(map);
     });
 
 
