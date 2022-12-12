@@ -427,13 +427,29 @@ label {
     font-size: 18px;
 }
 
-input, textarea, #accessType {
+input,  textarea, #accessType {
     margin: 7px 0px;
     padding: 7px 10px;
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 7px;
     box-sizing: border-box;
+}
+
+#checkboxLabel {
+    display: block;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    text-indent: -15px;
+}
+
+input[type=checkbox] {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  vertical-align: bottom;
+  position: relative;
+  top: -2.5px;
 }
 
 textarea {

@@ -18,7 +18,7 @@ try {
     console.log('ERROR');
 }
 locationToSet = locationToSet.substring(locationToSet.indexOf(':') + 1, locationToSet.length).trim();
-console.log('LOCATION: ' + locationToSet);
+//console.log('LOCATION: ' + locationToSet);
 
 // build the URL to the geonames API including the name that was entered
 var geonamesURL = 'http://secure.geonames.org/searchJSON?q=' +
@@ -34,7 +34,7 @@ fetch(geonamesURL)
 
     .then((data) => {
 
-        console.log('DATA: ' + JSON.stringify(data));
+        //console.log('DATA: ' + JSON.stringify(data));
 
         if (data.totalResultsCount === 0) {
             map.setView([0, 0], 12);
@@ -45,7 +45,7 @@ fetch(geonamesURL)
         } else {
             // loop through the "N" items returned in the data array
             for (var i = 0; i < data.geonames.length; i++) {
-                console.log(data.geonames[i].name);
+                //console.log(data.geonames[i].name);
 
                 if (i == 0)  {
                     // Centers the view on the first location

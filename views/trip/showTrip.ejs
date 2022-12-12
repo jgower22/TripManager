@@ -110,11 +110,13 @@
                             if (leftButtonClicked === true) {
                                 let tempStartDay = currentStartDay;
                                 currentStartDay = ((currentStartDay - maxDaysShown) <= 0) ? 0 : currentStartDay - maxDaysShown;
-                                currentEndDay = (((currentEndDay - maxDaysShown) <= 0) ? tripDays.length - 1: tempStartDay - 1);
+                                currentEndDay = (((currentEndDay - maxDaysShown) < 0) ? tripDays.length - 1: tempStartDay - 1);
                                 //currentEndDay = ((currentEndDay - maxDaysShown) <= 0) ? maxDaysShown - 1: (currentEndDay - (currentEndDay - (tempStartDay - 1)));
                                 if ((currentEndDay - currentStartDay + 1) < maxDaysShown && maxDaysShown < tripDays.length) {
                                     currentEndDay = currentStartDay + parseInt(maxDaysShown) - 1;
                                 }
+                                console.log('CURRENT START DAY: ' + currentStartDay);
+                                console.log('CURRENT END DAY: ' + currentEndDay);
                             }
 
                             //Update start and end day when right button is clicked
