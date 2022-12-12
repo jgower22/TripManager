@@ -12,7 +12,6 @@ const tripSchema = new Schema({
         type: {type: String},
     }],
     createdBy: {type: Schema.Types.ObjectId, ref: 'User'},
-    image: {type: String},
     days: {type: Array, required: [true, 'days are required']},
 },
 {timestamps: true}

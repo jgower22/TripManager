@@ -56,7 +56,6 @@ exports.createTrip = (req, res, next) => {
             location: req.body.location,
             date: formattedDate,
             details: '',
-            image: req.body.image
         }
         prefilledDays.push(day);
     }
@@ -169,7 +168,6 @@ exports.updateTrip = (req, res, next) => {
                         location: req.body.location,
                         date: formattedDate,
                         details: '',
-                        image: req.body.image
                     }
                     newDays.push(day);
                 }
@@ -356,7 +354,6 @@ exports.updateDay = (req, res, next) => {
     let dayData = req.body;
     let location = dayData.location;
     let details = dayData.details;
-    let image = dayData.image;
 
     Trip.findById(tripId)
         .then(trip => {
@@ -365,7 +362,6 @@ exports.updateDay = (req, res, next) => {
                     $set: {
                         'days.$.location': location,
                         'days.$.details': details,
-                        'days.$.image': image
                     }
                 })
                 .then(day => {

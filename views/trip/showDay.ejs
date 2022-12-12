@@ -1,4 +1,5 @@
 <%- include('../partials/header.ejs')%>
+    <script defer src="/javascript/leaflet.js"></script>
     <main>
         <div id="main_content_centered">
             <div id="trip_container">
@@ -30,19 +31,14 @@
                         <%}%>
                     </div>
 
-                    <div id="image">
-                        <%if (day.image==="" || day.image===null) {
-                            day.image="https://img.freepik.com/premium-vector/airplane-icon-flat-style-isolated-white-background-with-shadow_142957-956.jpg?w=2000"; 
-                        }%>
-                        <img id="day_image" src="<%=day.image%>" alt="day image">
-                    </div>
+                    <div id="map"></div>
                     
                     <%const dateFormat={ ...DateTime.DATE_FULL, weekday: 'long' }; 
                     const date = DateTime.fromISO(day.date); 
                     const formattedDate = date.toLocaleString(dateFormat);%>
 
                     <h2>Day <%=day.number%> - <%=formattedDate%></h2>
-                    <h3>Location: <%=day.location%></h3>
+                    <h3 id="locationHeader">Location: <%=day.location%></h3>
                 </div>
                 <div id="day_description">
                     <h1>Description</h1>

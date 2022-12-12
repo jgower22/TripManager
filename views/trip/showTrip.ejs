@@ -1,5 +1,6 @@
 <%- include('../partials/header.ejs')%>
     <script defer src="/javascript/deleteConfirmation.js"></script>
+    <script defer src="/javascript/leaflet.js"></script>
     <main>
         <div id="main_content_centered">
             <div id="trip_container">
@@ -22,17 +23,13 @@
                             <button class="button" type="button">Share</button>
                          </a>
                     </form>
-                    <h1><%=trip.name%></h1>
+                    <h1 id="tripName"><%=trip.name%></h1>
 
                     <h4>Created by <%=trip.createdBy.firstName%> <%=trip.createdBy.lastName%></h4>
                     <h4>Last modified on: <%=trip.updatedAt%></h4>
-                    <div id="image">
-                        <%if (trip.image === "" || trip.image === null ) {
-                            trip.image="https://img.freepik.com/premium-vector/airplane-icon-flat-style-isolated-white-background-with-shadow_142957-956.jpg?w=2000"; 
-                        }%>
-                        <img id="trip_image" src="<%=trip.image%>" alt="trip image">
-                    </div>
-                    <h3 id="locationHeader">Location: <%=trip.location%></h3>
+                    <div id="map"></div>
+                    
+                    <h3 id="locationHeader" class="locationHeader">Location: <%=trip.location%></h3>
 
                     <% const dateFormat = { 
                         ...DateTime.DATE_FULL, 
