@@ -206,6 +206,7 @@ exports.updateTrip = (req, res, next) => {
                         next(err);
                         return;
                     });
+                }
             }
             //If some days need to be removed
             if (newNumDays < currentNumDays) {
