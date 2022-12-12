@@ -124,6 +124,12 @@ exports.updateTrip = (req, res, next) => {
                 return;
             }
 
+            //Need to change all trip days locations if this is true
+            let applyToAllDays = false;
+            if (req.body.applyToAllDays) {
+                applyToAllDays = true;
+            }
+
             var newDays = [];
             let currentStartDate, currentEndDate, currentTimeDifference, currentNumDays;
 
@@ -153,6 +159,11 @@ exports.updateTrip = (req, res, next) => {
                     let formattedDate = date.toISOString().split('T')[0];
 
                     currentDay.date = formattedDate;
+
+                    //Change location if requested by user
+                    if (applyToAllDays) {
+                        console.log('CHANGED LOCATION - ADDED DAYS');
+                        currentDay.location = req.body.location;
                 }
 
                 let previousDateRead = new Date(previousDays[previousDays.length - 1].date);
@@ -215,6 +226,12 @@ exports.updateTrip = (req, res, next) => {
                     let formattedDate = date.toISOString().split('T')[0];
 
                     currentDay.date = formattedDate;
+
+                    //Change location if requested by user
+                    if (applyToAllDays) {
+                        console.log('CHANGED LOCATION - REMOVED DAYS');
+                        currentDay.location = req.body.location;
+                    }
                 }
 
                 Trip.findByIdAndUpdate(tripId, { $set: tripFields, days: daysToKeep }, { useFindAndModify: false, runValidators: true })
@@ -256,10 +273,19 @@ exports.updateTrip = (req, res, next) => {
                     let formattedDate = date.toISOString().split('T')[0];
 
                     currentDay.date = formattedDate;
+
                 }
             }
             //Update trip when number of days stays the same 
             if (newNumDays === currentNumDays) {
+                //Change location if requested by user
+                if (applyToAllDays) {
+                    for (let i = 0; i < updatedDays.length; i++) {
+                        let currentDay = updatedDays[i];
+                        console.log('CHANGED LOCATION - NUM DAYS STAYED THE SAME');
+                        currentDay.location = req.body.location;
+                    }
+                }
                 Trip.findByIdAndUpdate(tripId, { $set: tripFields, days: updatedDays }, { useFindAndModify: false, runValidators: true })
                     .then(trip => {
                         res.redirect('/trips/' + tripId);
