@@ -130,7 +130,6 @@ app.use((err, req, res, next) => {
 
 //Fix placeholders on forms (12:00 PM)
 //Add go to last day button on showDays.ejs
-//Storing an image without URL
 //Add limit on number of days at can be added
 //Search bar on trips page
 //If user needs to login to access page, redirect to last page user was on after they login
