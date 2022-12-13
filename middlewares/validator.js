@@ -38,7 +38,6 @@ body('location').isLength({min: 3}).withMessage('Trip location must be at least 
 body('startDate').isDate().withMessage('Start date must be a valid date').trim().escape(),
 body('endDate').isDate().withMessage('End date must be a valid date').custom((value, { req }) => {
     let startDate = req.body.startDate;
-    console.log('VALUE: ' + value);
     let endDate = value;
 
     if (endDate < startDate) {

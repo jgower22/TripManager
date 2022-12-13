@@ -45,7 +45,6 @@ exports.isAccessType = (accessType) => {
                     return next(err);
                 }
                 if (access) {
-                    console.log('ACCESS LENGTH: ' + access.length);
                     let curUser = access[0];
                     if (accessType.includes(curUser.type)) {
                         res.locals.accessType = curUser.type;

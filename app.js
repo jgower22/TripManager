@@ -22,7 +22,6 @@ dotenv.config();
 let username = `${process.env.DB_USERNAME}`;
 let password = `${process.env.DB_PASSWORD}`;
 let url = 'mongodb+srv://' + username + ':' + password + '@trips.jiospgv.mongodb.net/trips';
-//let url = 'mongodb://localhost:27017/trips';
 app.set('view engine', 'ejs');
 
 //connect to MongoDB
@@ -117,12 +116,7 @@ app.use((err, req, res, next) => {
     } 
     res.status(err.status);
     console.log(err.stack);
-    let id = req.session.user;
-    User.findById(id)
-    .then(user => {
-        res.render('./error/serverError', {user, error: err});
-    })
-    .catch(err=>next(err));
+    res.render('./error/serverError', {error: err});
 });
 
 //TO DO

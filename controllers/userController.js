@@ -97,11 +97,7 @@ exports.settings = (req, res, next) => {
     let id = req.session.user;
     User.findById(id)
     .then(user => {
-        if (user) {
-            res.render('./user/settings', {user});
-        } else {
-            res.render('./error/loginError', {user});
-        }
+        res.render('./user/settings', {user});
     })
     .catch(err=>next(err));
 }

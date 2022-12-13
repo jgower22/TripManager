@@ -75,7 +75,10 @@ header {
     width: 50px;
     border-radius: 50%;
     margin-top: 5px;
-    margin-right: 20px;
+}
+
+#user {
+    margin-right: 25px;
 }
 
 #user_profile {

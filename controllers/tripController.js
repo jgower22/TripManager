@@ -10,13 +10,10 @@ exports.index = (req, res, next) => {
     Promise.all([Trip.find({ createdBy: res.locals.user }, {_id: 1, name: 1, startDate: 1, endDate: 1}), Access.find({ user: res.locals.user }).populate('trip', '_id name startDate endDate')])
         .then(results => {
             const [trips, access] = results;
-            console.log('TRIPS: ' + trips);
-            console.log('ACCESS: ' + access);
             let combinedTrips = trips;
             for (let i = 0; i < access.length; i++) {
                 combinedTrips.push(access[i].trip);
             }
-            console.log('COMBINED TRIPS: ' + combinedTrips);
             res.render('./trip/index', { trips: combinedTrips });
         })
         .catch(err => next(err));
@@ -162,7 +159,6 @@ exports.updateTrip = (req, res, next) => {
 
                     //Change location if requested by user
                     if (applyToAllDays) {
-                        console.log('CHANGED LOCATION - ADDED DAYS');
                         currentDay.location = req.body.location;
                 }
 
@@ -230,7 +226,6 @@ exports.updateTrip = (req, res, next) => {
 
                     //Change location if requested by user
                     if (applyToAllDays) {
-                        console.log('CHANGED LOCATION - REMOVED DAYS');
                         currentDay.location = req.body.location;
                     }
                 }
@@ -260,7 +255,6 @@ exports.updateTrip = (req, res, next) => {
             //Only need to shift days if start date changes
             let updatedDays = trip.days;
             if (currentStartDate.getTime() !== newStartDate.getTime() && newNumDays === currentNumDays) {
-                console.log('SHIFTING DAYS');
                 for (let i = 0; i < updatedDays.length; i++) {
                     let currentDay = updatedDays[i];
                     let currentDate;
@@ -283,7 +277,6 @@ exports.updateTrip = (req, res, next) => {
                 if (applyToAllDays) {
                     for (let i = 0; i < updatedDays.length; i++) {
                         let currentDay = updatedDays[i];
-                        console.log('CHANGED LOCATION - NUM DAYS STAYED THE SAME');
                         currentDay.location = req.body.location;
                     }
                 }
@@ -430,8 +423,6 @@ exports.share = (req, res, next) => {
     Promise.all([Trip.findOne({ _id: tripId }, {createdBy: 1}).populate('createdBy', 'firstName lastName email'), Access.find({ trip: tripId }).populate('user', 'firstName lastName email')])
         .then(results => {
             const [trip, access] = results;
-            console.log('TRIP: ' + trip);
-            console.log('ACCESS: ' + access);
             res.render('./trip/share', { trip, access });
         })
         .catch(err => next(err));
