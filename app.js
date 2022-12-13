@@ -10,14 +10,19 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const User = require('./models/user');
+const dotenv = require('dotenv');
 
 //create app
 const app = express();
 
+
 //configure app
 let port = process.env.PORT || 8084;
 let host = '0.0.0.0';
-let url = 'mongodb+srv://' + process.env.USERNAME + ':' + process.env.PASSWORD + '@trips.jiospgv.mongodb.net/trips';
+dotenv.config();
+let username = `${process.env.DB_USERNAME}`;
+let password = `${process.env.DB_PASSWORD}`;
+let url = 'mongodb+srv://' + username + ':' + password + '@trips.jiospgv.mongodb.net/trips';
 //let url = 'mongodb://localhost:27017/trips';
 app.set('view engine', 'ejs');
 
