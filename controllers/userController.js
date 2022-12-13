@@ -15,6 +15,13 @@ exports.new = (req, res, next) => {
 
 exports.addUser = (req, res, next) => {
     let user = new User(req.body);
+
+    //Format first and last name
+    let firstName = user.firstName.toLowerCase();
+    user.firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+    let lastName = user.lastName.toLowerCase();
+    user.lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
+    
     user.save()
     .then(() => {
         req.flash('success', 'Account created successfully');

@@ -45,12 +45,11 @@ exports.isAccessType = (accessType) => {
                     return next(err);
                 }
                 if (access) {
-                    for (let i = 0; i < access.length; i++) {
-                        let curUser = access[i];
-                        if (curUser.user.email === res.locals.email && accessType.includes(curUser.type)) {
-                            res.locals.accessType = curUser.type;
-                            return next();
-                        }
+                    console.log('ACCESS LENGTH: ' + access.length);
+                    let curUser = access[0];
+                    if (accessType.includes(curUser.type)) {
+                        res.locals.accessType = curUser.type;
+                        return next();
                     }
                     let err = new Error('Forbidden');
                     err.status = 403;

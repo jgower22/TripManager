@@ -1,7 +1,7 @@
 const express = require('express');
 const controller = require('../controllers/tripController');
 const { isGuest, isLoggedIn, isAccessType } = require('../middlewares/auth');
-const { validateId } = require('../middlewares/validator');
+const { validateId, validateTrip, validateResult } = require('../middlewares/validator');
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.get('/', isLoggedIn, controller.index);
 router.get('/new', isLoggedIn, controller.newTrip);
 
 //POST /trips: create a new trip
-router.post('/', isLoggedIn, controller.createTrip);
+router.post('/', isLoggedIn, validateTrip, validateResult, controller.createTrip);
 
 //GET /trips/:id: send details of trip of specified id
 router.get('/:id', validateId, isLoggedIn, isAccessType(['owner', 'editor', 'viewer']), controller.showTrip);
@@ -21,7 +21,7 @@ router.get('/:id', validateId, isLoggedIn, isAccessType(['owner', 'editor', 'vie
 router.get('/:id/edit', validateId, isLoggedIn, isAccessType(['owner', 'editor']), controller.editTrip);
 
 //PUT /trips/:id: update the trip of the specified id
-router.put('/:id', validateId, isLoggedIn, isAccessType(['owner', 'editor']), controller.updateTrip);
+router.put('/:id', validateId, isLoggedIn, isAccessType(['owner', 'editor']), validateTrip, validateResult, controller.updateTrip);
 
 //PUT /trips/:id/access: update the trip's access of the specified id
 router.put('/:id/access', validateId, isLoggedIn, isAccessType(['owner']), controller.addAccess);
