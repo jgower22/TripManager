@@ -15,7 +15,6 @@ const dotenv = require('dotenv');
 //create app
 const app = express();
 
-
 //configure app
 let port = process.env.PORT || 8084;
 let host = '0.0.0.0';
