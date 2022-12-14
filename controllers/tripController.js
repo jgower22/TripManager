@@ -2,6 +2,7 @@ const { model } = require('mongoose');
 const Trip = require('../models/trip');
 const User = require('../models/user');
 const Access = require('../models/access');
+const { unescapeTrip, unescapeTripNames } = require('../public/javascript/unescape');
 
 exports.index = (req, res, next) => {
     //res.send('Send all trips');
@@ -14,6 +15,8 @@ exports.index = (req, res, next) => {
             for (let i = 0; i < access.length; i++) {
                 combinedTrips.push(access[i].trip);
             }
+            console.log('TRIPS: ' + trips);
+            unescapeTripNames(trips);
             res.render('./trip/index', { trips: combinedTrips });
         })
         .catch(err => next(err));
@@ -81,6 +84,7 @@ exports.showTrip = (req, res, next) => {
         .then(trip => {
             if (trip) {
                 const { DateTime } = require('luxon');
+                unescapeTrip(trip);
                 res.render('./trip/showTrip', { trip, DateTime });
             } else {
                 let err = new Error('Cannot find trip with id: ' + tripId);
@@ -98,6 +102,7 @@ exports.editTrip = (req, res, next) => {
 
     Trip.findById(tripId)
         .then(trip => {
+            unescapeTrip(trip);
             res.render('./trip/editTrip', { trip });
         })
         .catch(err => next(err));

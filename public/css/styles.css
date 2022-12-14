@@ -7,6 +7,7 @@ body {
     background-color: white;
     min-height: 100vh;
     word-wrap: break-word;
+    overflow-x: hidden;
 }
 
 header {
@@ -25,7 +26,7 @@ header {
 #bottom_header {
     display: flex;
     justify-content: space-between;
-    padding: 0 3%;
+    padding: 0 5%;
 }
 
 #user_nav li {
@@ -55,6 +56,11 @@ header {
     text-decoration: underline;
 }
 
+#general_nav li {
+    margin-top: 10px;
+    margin-left: 0px;
+}
+
 #general_nav ul li:first-child{
     margin-right: auto;
 }
@@ -77,8 +83,13 @@ header {
     margin-top: 5px;
 }
 
+ul {
+    padding-left: 35px !important;
+}
+
 #user {
     margin-right: 25px;
+    margin-bottom: 5px;
 }
 
 #user_profile {
@@ -174,7 +185,6 @@ header {
     width: 100%;
     text-align: center;
     padding: 10px 10px;
-    margin-top: 0;
 }
   
 .error {
@@ -183,7 +193,7 @@ header {
     width: 100%;
     text-align: center;
     padding: 10px 10px;
-    margin-top: 0;
+    display: block;
 }
 
 main {
@@ -537,12 +547,6 @@ footer {
     margin-bottom: 0;
 }
 
-@media only screen and (max-width: 590px) {
-    #right_footer, .footer_links {
-        display: none;
-    }
-}
-
 #left_footer {
     display: flex;
     justify-content: space-between;
@@ -550,20 +554,10 @@ footer {
     float: left;
     font-size: 22px;
     padding-left: 10px;
+    margin-top: 10px;
 }
 
-#right_footer {
-    float: right;
-}
-
-.icons {
-    height: 30px;
-    width: 30px;
-    padding-top: 20px;
-    padding-right: 10px;
-}
-
-#footer_nav li {
+#footer_nav  li, p{
     display: inline-block;
     padding-right: 20px;
 }
