@@ -513,9 +513,16 @@ textarea {
     color: white;
     border: none;
     cursor: pointer;
-    font-weight: 700;
     float: left;
     text-align: center;
+}
+
+#trip_submit, #cancel {
+    height: 35px;
+    line-height: 20px;
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight: 700;
 }
 
 @media only screen and (max-width: 590px) {
