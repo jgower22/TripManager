@@ -564,7 +564,7 @@ footer {
     margin-top: 10px;
 }
 
-#footer_nav  li, p{
+#footer_nav li, ul p{
     display: inline-block;
     padding-right: 20px;
 }

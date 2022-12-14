@@ -165,6 +165,7 @@ exports.updateTrip = (req, res, next) => {
                     //Change location if requested by user
                     if (applyToAllDays) {
                         currentDay.location = req.body.location;
+                    }
                 }
 
                 let previousDateRead = new Date(previousDays[previousDays.length - 1].date);
@@ -207,7 +208,6 @@ exports.updateTrip = (req, res, next) => {
                         next(err);
                         return;
                     });
-                }
             }
             //If some days need to be removed
             if (newNumDays < currentNumDays) {
@@ -255,7 +255,6 @@ exports.updateTrip = (req, res, next) => {
                         return;
                     });
             }
-
             //If num days remains the same
             //Only need to shift days if start date changes
             let updatedDays = trip.days;
