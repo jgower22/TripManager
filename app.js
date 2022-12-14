@@ -44,7 +44,7 @@ app.use(trimmer);
 function trimmer(req, res, next) {
     if (req.method === 'POST' || req.method === 'PUT') {
         //Escape <script> and </script> on inputted data
-        var message = '';
+        var message = 'script';
         var searchStr = 'script';
         var regEx = new RegExp(searchStr, "ig");
         //For trips only

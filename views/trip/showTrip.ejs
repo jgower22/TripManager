@@ -69,7 +69,7 @@
                     <div id="days"></div>
                 </div>
                 <script>
-                        var days = document.getElementById('days');
+                    var days = document.getElementById('days');
                         var trip = <%- JSON.stringify(trip) %>;
                         var tripDays = trip.days;
                         var numDays = tripDays.length;
@@ -235,8 +235,7 @@
                             showDays(false, false);
                         }
 
-                        document.getElementById('maxDaysSelect').addEventListener('change', handleSelectChange);
-
+                        document.getElementById('maxDaysSelect').addEventListener('change', handleSelectChange);%>
                 </script>
             </div>
         </div>
