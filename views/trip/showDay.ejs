@@ -42,12 +42,25 @@
                 </div>
                 <div id="day_description">
                     <h1>Description</h1>
-                    <%function linkify(inputText) {
-                        var replacedText, replacePattern1, replacePattern2, replacePattern3;
+                    <%function replacer(match, p1, p2, p3, offset, string) {
+                        // p1 is non-digits, p2 digits, and p3 non-alphanumerics
+                        return validator.escape(match);
+                    }
+
+                    function linkify(inputText) {
+                        var replacedText, replacePattern1, replacePattern2, replacePattern3, replacePattern4, replacePattern5;
                     
+                        //Unescape text
+                        console.log('INPUT TEXT: ' + inputText);
+                        inputText = validator.unescape(inputText);
+
+                        //Check for html tags
+                        replacePattern5 = /<\/?[^>]*>/gims;
+                        replacedText = inputText.replace(replacePattern5, replacer);
+
                         //URLs starting with http://, https://, or ftp://
                         replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-                        replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank" class="hyperlinks">$1</a>');
+                        replacedText = replacedText.replace(replacePattern1, '<a href="$1" target="_blank" class="hyperlinks">$1</a>');
                     
                         //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
                         replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
@@ -56,7 +69,13 @@
                         //Change email addresses to mailto:: links.
                         replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
                         replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1" class="hyperlinks">$1</a>');
+
+                        //Check for script tags
+                        //replacePattern4 = /([<&][a-z]*[;]*)(script( .+[=]["'].+["'])*)([>&]*[a-z]*[;]*)([^>]*([<&][a-z]*[;]*)*(\/script)([>&]*[a-z]*[;]*))*/gim;
+                        //replacedText = replacedText.replace(replacePattern4, '<>');
                         
+                        console.log('REPLACED TEXT: \n' + replacedText);
+
                         return replacedText;
                     }%>
                     <%if (day.details === '' || day.details === null) {%>

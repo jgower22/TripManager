@@ -50,3 +50,6 @@ body('endDate').isDate().withMessage('End date must be a valid date').custom((va
 body('details').isLength({min: 3}).withMessage('Trip details must be at least 3 characters').trim().escape(),
 body('applyToAllDays', 'Invalid value for change location for all days').toLowerCase().isIn('on').trim().escape()];
 
+exports.validateDay = [body('location').isLength({min: 3}).withMessage('Day location must be at least 3 characters').trim().escape(),
+body('details').isLength({min: 3}).withMessage('Day details must be at least 3 characters').trim().escape()];
+

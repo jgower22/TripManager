@@ -2,7 +2,7 @@ const { model } = require('mongoose');
 const Trip = require('../models/trip');
 const User = require('../models/user');
 const Access = require('../models/access');
-const { unescapeTrip, unescapeTripNames } = require('../public/javascript/unescape');
+const { unescapeTrip, unescapeTripNames, unescapeTripDay, unescapeTripDays } = require('../public/javascript/unescape');
 
 exports.index = (req, res, next) => {
     //res.send('Send all trips');
@@ -15,7 +15,6 @@ exports.index = (req, res, next) => {
             for (let i = 0; i < access.length; i++) {
                 combinedTrips.push(access[i].trip);
             }
-            console.log('TRIPS: ' + trips);
             unescapeTripNames(trips);
             res.render('./trip/index', { trips: combinedTrips });
         })
@@ -84,8 +83,17 @@ exports.showTrip = (req, res, next) => {
         .then(trip => {
             if (trip) {
                 const { DateTime } = require('luxon');
+                const  validator  = require('validator');
+                console.log('TRIP ID: ' + trip._id);
+                let escapedTrip = {
+                    _id: trip._id,
+                    name: trip.name,
+                    location: trip.location,
+                    details: trip.details,
+                    days: trip.days
+                };
                 unescapeTrip(trip);
-                res.render('./trip/showTrip', { trip, DateTime });
+                res.render('./trip/showTrip', { trip, escapedTrip, DateTime, validator });
             } else {
                 let err = new Error('Cannot find trip with id: ' + tripId);
                 err.status = 404;
@@ -341,8 +349,12 @@ exports.showDay = (req, res, next) => {
             }
             if (index !== -1) {
                 let day = days[index];
+                //Unescape day
+                unescapeTripDay(day);
+                console.log('DAY: ' + JSON.stringify(day));
                 const { DateTime } = require('luxon');
-                res.render('./trip/showDay', { day, trip, prevId, nextId, firstId, DateTime });
+                const validator = require('validator');
+                res.render('./trip/showDay', { day, trip, prevId, nextId, firstId, DateTime, validator });
             } else {
                 let err = new Error('Cannot find day with id: ' + dayId);
                 err.status = 404;
@@ -360,6 +372,9 @@ exports.editDay = (req, res, next) => {
         .then(trip => {
             let days = trip.days;
             let day = days.find(day => day.number == dayId);
+            //Unescape trip day
+            unescapeTripDay(day);
+
             if (day) {
                 res.render('./trip/editDay', { trip, day });
             } else {
@@ -408,6 +423,10 @@ exports.generatePDF = (req, res, next) => {
 
     Trip.findById(tripId)
         .then(trip => {
+            //Unescape text
+            unescapeTrip(trip);
+            unescapeTripDays(trip);
+
             const pdf = require('../public/javascript/generatePDF.js');
             const stream = res.writeHead(200, {
                 'Content-Type': 'application/pdf',

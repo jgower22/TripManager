@@ -1,7 +1,7 @@
 const express = require('express');
 const controller = require('../controllers/tripController');
 const { isGuest, isLoggedIn, isAccessType } = require('../middlewares/auth');
-const { validateId, validateTrip, validateResult } = require('../middlewares/validator');
+const { validateId, validateTrip, validateDay, validateResult } = require('../middlewares/validator');
 
 const router = express.Router();
 
@@ -45,6 +45,6 @@ router.get('/:id/:dayId', validateId, isLoggedIn, isAccessType(['owner', 'editor
 router.get('/:id/:dayId/edit', validateId, isLoggedIn, isAccessType(['owner', 'editor']), controller.editDay);
 
 //PUT /trips/:id/:dayId: update the day of the specified trip id/day number
-router.put('/:id/:dayId', validateId, isLoggedIn, isAccessType(['owner', 'editor']), controller.updateDay);
+router.put('/:id/:dayId', validateId, isLoggedIn, isAccessType(['owner', 'editor']), validateDay, validateResult, controller.updateDay);
 
 module.exports = router;

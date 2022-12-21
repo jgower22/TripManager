@@ -39,7 +39,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
 app.use(morgan('tiny'));
 app.use(methodOverride("_method"));
-app.use(trimmer);
+//app.use(trimmer);
 
 function trimmer(req, res, next) {
     if (req.method === 'POST' || req.method === 'PUT') {
@@ -65,9 +65,6 @@ function trimmer(req, res, next) {
             req.body.details = req.body.details.replaceAll(regEx, message);
             req.body.details = req.body.details.replaceAll('<', '');
             req.body.details = req.body.details.replaceAll('>', '');
-            req.body.image = req.body.image.replaceAll(regEx, '');
-            req.body.image = req.body.image.replaceAll('<', '');
-            req.body.image = req.body.image.replaceAll('>', '');
         } catch (e) {
             console.log(e.message);
         }
