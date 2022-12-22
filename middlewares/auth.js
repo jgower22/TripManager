@@ -44,8 +44,10 @@ exports.isAccessType = (accessType) => {
                     err.status = 404;
                     return next(err);
                 }
-                if (access) {
+                if (access.length >= 1) {
                     let curUser = access[0];
+                    console.log('CUR USER: ' + curUser);
+                    console.log('ACCESS: ' + access);
                     if (accessType.includes(curUser.type)) {
                         res.locals.accessType = curUser.type;
                         return next();
