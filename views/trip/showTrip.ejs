@@ -46,8 +46,6 @@
                     <h1>Description</h1>
                     <%function replacer(match, p1, p2, p3, offset, string) {
                         // p1 is non-digits, p2 digits, and p3 non-alphanumerics
-                        console.log('MATCH :D :' + match);
-                        console.log('RETURN: ' + validator.escape(match));
                         return validator.escape(match);
                     }
 
@@ -77,7 +75,6 @@
                         //replacePattern4 = /([<&][a-z]*[;]*)(script( .+[=]["'].+["'])*)([>&]*[a-z]*[;]*)([^>]*([<&][a-z]*[;]*)*(\/script)([>&]*[a-z]*[;]*))*/gim;
                         //replacedText = replacedText.replace(replacePattern4, '<>');
                         
-                        console.log('REPLACED TEXT: \n' + replacedText);
 
                         return replacedText;
                     }%>
@@ -193,7 +190,6 @@
                             localStorage.setItem('maxDaysShown', maxDaysShown);
                         }
     
-                        console.log('TRIP: ' + JSON.stringify(trip));
                         for (let i = currentStartDay; i <= currentEndDay; i++) {
                             let day = tripDays[i];
                             let newDay = "<li class='list'><a href='" + trip._id + "/" + day.number + "' class='link_underline day_links'>Day " + day.number + " - " + day.location + "</a></li>";
@@ -250,7 +246,22 @@
                         let storedMaxDaysShown = localStorage.getItem('maxDaysShown');
                         maxDaysShown = (storedMaxDaysShown > trip.days.length - 1 && currentStartDay === 0) ? trip.days.length : storedMaxDaysShown;
     
-                        currentEndDay = ((currentStartDay + parseInt(maxDaysShown)) - 1 > trip.days.length - 1) ? trip.days.length - 1 : currentStartDay + parseInt(maxDaysShown) - 1;
+                        //Set current start/end day
+                        console.log('TEST');
+                        if (parseInt(maxDaysShown) >= trip.days.length) {
+                            console.log('TRUE');
+                            currentStartDay = 0;
+                            currentEndDay = trip.days.length - 1;
+                            console.log('CURRENT END DAY: ' + currentEndDay);
+                        } else {
+                            console.log('FALSE');
+                            currentEndDay = currentStartDay + parseInt(maxDaysShown) - 1;
+                            if (currentEndDay >= trip.days.length) 
+                                currentEndDay = trip.days.length - 1;
+                            console.log('MAX DAYS SHOWN: ' + maxDaysShown);
+                            console.log('CURRENT END DAY: ' + currentEndDay);
+                        }
+                        //currentEndDay = ((currentStartDay + parseInt(maxDaysShown)) - 1 > trip.days.length - 1) ? trip.days.length - 1 : currentStartDay + parseInt(maxDaysShown) - 1;
     
                         showDays(false, false);
                     }
