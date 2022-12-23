@@ -14,6 +14,9 @@ router.get('/new', isLoggedIn, controller.newTrip);
 //POST /trips: create a new trip
 router.post('/', isLoggedIn, validateTrip, validateResult, controller.createTrip);
 
+//POST /trips/:id: copy an existing trip
+router.post('/:id/copy', isLoggedIn, isAccessType(['owner', 'editor', 'viewer']), controller.copyTrip);
+
 //GET /trips/:id: send details of trip of specified id
 router.get('/:id', validateId, isLoggedIn, isAccessType(['owner', 'editor', 'viewer']), controller.showTrip);
 

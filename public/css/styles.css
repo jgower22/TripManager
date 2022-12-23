@@ -463,6 +463,10 @@ input,  textarea, #accessType {
     text-indent: -15px;
 }
 
+#checkboxLabel:hover {
+    opacity: 0.7;
+}
+
 input[type=checkbox] {
   width: 15px;
   height: 15px;

@@ -21,13 +21,6 @@ function generatePDF(trip, dataCallback, endCallback) {
         .fontSize(subHeaderFontSize)
         .text('Location: ' + trip.location);
 
-    //Trip image
-    /*doc.image(trip.image, {
-        fit: [250, 300],
-        align: 'center',
-        valign: 'center'
-      });*/
-
     //Format start/end dates
     const dateFormat = { 
         ...DateTime.DATE_FULL, 

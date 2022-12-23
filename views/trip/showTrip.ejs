@@ -5,18 +5,20 @@
         <div id="main_content_centered">
             <div id="trip_container">
                 <div id="top_trip">
-                    <%if (accessType === 'owner' || accessType === 'editor') {%>
                         <div id="buttons_container">
                             <form>
-                                <button class="button" id="update" type="submit" formmethod="GET"
-                                    formaction="/trips/<%=trip._id%>/edit">Edit Trip</button>
+                                <%if (accessType === 'owner' || accessType === 'editor') {%>
+                                    <button class="button" id="update" type="submit" formmethod="GET"
+                                        formaction="/trips/<%=trip._id%>/edit">Edit Trip</button>
+                                <%}%>
+                                <button class="button" id="update" type="submit" formmethod="POST"
+                                    formaction="/trips/<%=trip._id%>/copy">Copy Trip</button>
                                 <%if (accessType === 'owner') {%>
                                     <button class="button" id="delete" type="submit" formmethod="POST"
                                         formaction="/trips/<%=trip._id%>?_method=DELETE">Delete Trip</button>
                                 <%}%>
                             </form>
                         </div>
-                    <%}%>
                     <form>
                         <button class="button" id="pdf" type="submit" formmethod="GET" formaction="/trips/<%=trip._id%>/pdf">Download PDF</button>
                         <a href="/trips/<%=trip._id%>/share">

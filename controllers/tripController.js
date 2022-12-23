@@ -1,8 +1,9 @@
-const { model } = require('mongoose');
 const Trip = require('../models/trip');
 const User = require('../models/user');
 const Access = require('../models/access');
+const mongoose = require('mongoose');
 const { unescapeTrip, unescapeTripNames, unescapeTripDay, unescapeTripDays } = require('../public/javascript/unescape');
+const maxNumDays = 731;
 
 exports.index = (req, res, next) => {
     //res.send('Send all trips');
@@ -41,6 +42,11 @@ exports.createTrip = (req, res, next) => {
         return;
     }
 
+    if (numDays >= maxNumDays) {
+        req.flash('error', 'Sorry, the maximum number of days you can have on a trip is ' + maxNumDays + ' days. Please try again.');
+        return res.redirect('/trips/new');
+    }
+
     for (let i = 0; i <= numDays; i++) {
         let currentDate;
         if (i === 0) {
@@ -76,6 +82,31 @@ exports.createTrip = (req, res, next) => {
         });
 };
 
+exports.copyTrip = (req, res, next) => {
+    let tripId = req.params.id;
+    console.log('TRIP ID: ' + tripId);
+    Trip.findById(tripId)
+        .then(trip => {
+            let tripCopy = trip.toObject();
+            let previousName = tripCopy.name;
+            tripCopy.name = 'Copy of ' + trip.name;
+            delete tripCopy._id;
+            delete tripCopy.createdBy
+            console.log('CREATED BY: ' + res.locals.user);
+            tripCopy.createdBy = res.locals.user;
+            console.log('TRIP: ' + trip);
+
+            let tripCopyDoc = new Trip(tripCopy);
+            tripCopyDoc.save()
+                .then(trip => {
+                    req.flash('success', previousName + ' was copied successfully');
+                    res.redirect('/trips');
+                })
+                .catch(err => next(err));
+        })
+        .catch(err => next(err));
+};
+
 exports.showTrip = (req, res, next) => {
     let tripId = req.params.id;
 
@@ -101,7 +132,7 @@ exports.showTrip = (req, res, next) => {
         })
         .catch(err => next(err));
 
-}
+};
 
 exports.editTrip = (req, res, next) => {
     //res.send('Send edit form');
@@ -131,6 +162,11 @@ exports.updateTrip = (req, res, next) => {
                 err.status = 400;
                 next(err);
                 return;
+            }
+
+            if (newNumDays > maxNumDays) {
+                req.flash('error', 'Sorry, the maximum number of days you can have on a trip is ' + maxNumDays + ' days. Please try again.');
+                return res.redirect('back');
             }
 
             //Need to change all trip days locations if this is true
@@ -364,7 +400,7 @@ exports.showDay = (req, res, next) => {
             }
         })
         .catch(err => next(err));
-}
+};
 
 exports.editDay = (req, res, next) => {
     let tripId = req.params.id;
@@ -419,7 +455,7 @@ exports.updateDay = (req, res, next) => {
         })
         .catch(err => next(err));
 
-}
+};
 
 exports.generatePDF = (req, res, next) => {
     let tripId = req.params.id;
@@ -441,7 +477,7 @@ exports.generatePDF = (req, res, next) => {
             );
         })
         .catch(err => next(err));
-}
+};
 
 exports.share = (req, res, next) => {
     let tripId = req.params.id;
@@ -452,7 +488,7 @@ exports.share = (req, res, next) => {
             res.render('./trip/share', { trip, access });
         })
         .catch(err => next(err));
-}
+};
 
 exports.addAccess = (req, res, next) => {
     let tripId = req.params.id;
@@ -490,7 +526,7 @@ exports.addAccess = (req, res, next) => {
                 .catch(err => next(err));
         })
         .catch(err => next(err));
-}
+};
 
 exports.removeAccess = (req, res, next) => {
     let tripId = req.params.id;
@@ -500,7 +536,7 @@ exports.removeAccess = (req, res, next) => {
             res.redirect('/trips/' + tripId + '/share');
         })
         .catch(err => next(err));
-}
+};
 
 
 
