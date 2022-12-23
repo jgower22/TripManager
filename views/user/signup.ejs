@@ -1,7 +1,7 @@
 <%- include('../partials/header.ejs')%>
     <main>
         <div id="main_content_centered">
-            <div id="login_container">
+            <div id="signup_container">
                 <h2>Create an account</h2>
                 <form action="/users" method="POST">
                     <label class="required" for="firstName">First Name:</label>
@@ -16,11 +16,14 @@
                     <label class="required" for="password">Password:</label>
                     <input type="password" id="password" name="password" placeholder="Password" minlength="8" maxlength="64" required>
 
-                    <a href="/">
-                        <input value="Cancel" id="cancel">
-                    </a>
-                    <input type="submit" value="Sign Up" id="submit">
+                    <input type="submit" value="Sign Up" id="submit" class="greenButton">
                 </form>
+                <div id="login">
+                    <h3>Already have an account?</h3>
+                    <a href="/users/login">
+                        <button class="greenButton" id="accountButton" type="button">Log In Here</button>
+                     </a>
+                </div>
             </div>
         </div>
     </main>
