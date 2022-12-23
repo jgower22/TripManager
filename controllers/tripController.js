@@ -13,9 +13,13 @@ exports.index = (req, res, next) => {
         .then(results => {
             const [trips, access] = results;
             let combinedTrips = trips;
+            console.log('TRIPS 1: ' + trips);
+            console.log('ACCESS: ' + access);
             for (let i = 0; i < access.length; i++) {
                 combinedTrips.push(access[i].trip);
             }
+            console.log('TRIPS 2: ' + combinedTrips);
+            console.log('--------------');
             unescapeTripNames(trips);
             res.render('./trip/index', { trips: combinedTrips });
         })
@@ -351,16 +355,10 @@ exports.deleteTrip = (req, res, next) => {
     //res.send('Delete trip with id ' + req.params.id);
     let tripId = req.params.id;
 
-    Trip.findByIdAndDelete(tripId, { useFindAndModify: false })
-        .then(trip => {
-            if (trip) {
-                req.flash('success', 'Trip deleted successfully');
-                res.redirect('/trips');
-            } else {
-                let err = new Error('Cannot find trip with id: ' + tripId);
-                err.status = 404;
-                next(err);
-            }
+    Promise.all([Trip.findByIdAndDelete(tripId, { useFindAndModify: false }), Access.deleteMany({ trip: tripId })])
+        .then(results => {
+            req.flash('success', 'Trip deleted successfully');
+            res.redirect('/trips');
         })
         .catch(err => next(err));
 };

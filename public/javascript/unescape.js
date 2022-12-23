@@ -9,6 +9,7 @@ exports.unescapeTrip = (trip) => {
 
 exports.unescapeTripNames = (trips) => {
     //Trip names on list of trips page
+    console.log(trips);
     for (let i = 0; i < trips.length; i++) {
         let trip = trips[i];
         trip.name = validator.unescape(trip.name);

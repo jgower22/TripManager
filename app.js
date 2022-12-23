@@ -136,4 +136,3 @@ app.use((err, req, res, next) => {
 //Add go to last day button on showDays.ejs
 //Search bar on trips page
 //Fix CANCEL button on mobile when turning device -- changes look
-//If user drop-down is shown, allow user to click anywhere else on site to close it
