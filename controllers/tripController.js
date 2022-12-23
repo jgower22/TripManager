@@ -470,7 +470,7 @@ exports.addAccess = (req, res, next) => {
 
             //Cannot add yourself (owner)
             if (userEmail === res.locals.email) {
-                req.flash('error', 'You are already have access!')
+                req.flash('error', 'You already have access!')
                 return res.redirect('back');
             }
 
