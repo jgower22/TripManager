@@ -8,7 +8,6 @@ try {
     document.addEventListener('click', e => {
         //Keep menu open when menu is clicked
         if (e.target.matches('.sub_menu') || e.target.matches('.user_info') || e.target.matches('#user_profile') || e.target.matches('#userFullName')) {
-            console.log('RETURN');
             return;
         }
 

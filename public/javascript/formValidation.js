@@ -1,4 +1,4 @@
-document.getElementById('trip_submit').addEventListener('click', function(event) {
+document.getElementById('submit').addEventListener('click', function(event) {
     let startDateElem = document.getElementById('startDate');
     let endDateElem = document.getElementById('endDate');
 
@@ -66,8 +66,5 @@ document.getElementById('trip_submit').addEventListener('click', function(event)
 
 document.getElementById('cancel').addEventListener('click', function(event) {
     event.preventDefault();
-    let currentURL = window.location.href;
-    let index = currentURL.lastIndexOf('/');
-    let redirectURL = currentURL.substring(0, index);
-    window.location.href = redirectURL;
+    history.back();
 });

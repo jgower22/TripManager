@@ -51,7 +51,6 @@
                         var replacedText, replacePattern1, replacePattern2, replacePattern3, replacePattern4, replacePattern5;
                     
                         //Unescape text
-                        console.log('INPUT TEXT: ' + inputText);
                         inputText = validator.unescape(inputText);
 
                         //Check for html tags
@@ -73,8 +72,6 @@
                         //Check for script tags
                         //replacePattern4 = /([<&][a-z]*[;]*)(script( .+[=]["'].+["'])*)([>&]*[a-z]*[;]*)([^>]*([<&][a-z]*[;]*)*(\/script)([>&]*[a-z]*[;]*))*/gim;
                         //replacedText = replacedText.replace(replacePattern4, '<>');
-                        
-                        console.log('REPLACED TEXT: \n' + replacedText);
 
                         return replacedText;
                     }%>

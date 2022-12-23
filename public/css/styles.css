@@ -41,7 +41,7 @@ header {
 }
 
 .links:hover {
-    opacity: 0.7;
+    opacity: 1.0;
 }
 
 .link_underline:hover {
@@ -113,7 +113,7 @@ ul {
 .sub_menu {
     background: black;
     padding: 20px;
-    margin: 10px;
+    margin: 30px;
 }
 
 .sub_menu hr {
@@ -134,6 +134,7 @@ ul {
 
 .sub_menu_links p {
     width: 100%;
+    margin-bottom: 0;
 }
 
 .sub_menu_links:hover p {
@@ -151,6 +152,10 @@ ul {
 .sub_menu_links span {
     font-size: 22px;
     transition: transform 0.5s;
+}
+
+.sub_menu_links {
+    text-decoration: none;
 }
 
 .sub_menu_links:hover span {
@@ -179,23 +184,16 @@ ul {
     justify-content: center;
 }
 
-.success {
-    background: green;
-    color: #fff;
-    width: 100%;
-    text-align: center;
-    padding: 10px 10px;
-}
-  
-.error {
-    background: red;
-    color: #fff;
-    width: 100%;
+.flash {
+    width: 50%;
     text-align: center;
     padding: 10px 10px;
     display: block;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    font-size: 20px;
+    margin: auto;
 }
-
+  
 main {
     width: 100%;
     margin: 0 auto;
@@ -346,6 +344,10 @@ main {
     margin-bottom: 10px;
 }
 
+.button:hover {
+    opacity: 0.7;
+}
+
 .button:disabled {
     opacity: 0;
 }
@@ -474,7 +476,7 @@ textarea {
     color: red;
 }
 
-#trip_submit {
+#submit {
     width: 25%;
     background-color: #04AA6D;
     color: white;
@@ -483,6 +485,8 @@ textarea {
     cursor: pointer;
     float: right;
 }
+
+
 
 .access {
     width: fit-content;
@@ -517,12 +521,16 @@ textarea {
     text-align: center;
 }
 
-#trip_submit, #cancel {
+#submit, #cancel {
     height: 35px;
     line-height: 20px;
     font-size: 20px;
     margin-top: 10px;
     font-weight: 700;
+}
+
+#submit:hover, #cancel:hover {
+    opacity: 0.9;
 }
 
 @media only screen and (max-width: 590px) {

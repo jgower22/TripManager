@@ -247,19 +247,13 @@
                         maxDaysShown = (storedMaxDaysShown > trip.days.length - 1 && currentStartDay === 0) ? trip.days.length : storedMaxDaysShown;
     
                         //Set current start/end day
-                        console.log('TEST');
                         if (parseInt(maxDaysShown) >= trip.days.length) {
-                            console.log('TRUE');
                             currentStartDay = 0;
                             currentEndDay = trip.days.length - 1;
-                            console.log('CURRENT END DAY: ' + currentEndDay);
                         } else {
-                            console.log('FALSE');
                             currentEndDay = currentStartDay + parseInt(maxDaysShown) - 1;
                             if (currentEndDay >= trip.days.length) 
                                 currentEndDay = trip.days.length - 1;
-                            console.log('MAX DAYS SHOWN: ' + maxDaysShown);
-                            console.log('CURRENT END DAY: ' + currentEndDay);
                         }
                         //currentEndDay = ((currentStartDay + parseInt(maxDaysShown)) - 1 > trip.days.length - 1) ? trip.days.length - 1 : currentStartDay + parseInt(maxDaysShown) - 1;
     

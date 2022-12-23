@@ -49,7 +49,6 @@ function generatePDF(trip, dataCallback, endCallback) {
         .fontSize(headerFontSize)
         .text('Description');
 
-    console.log("DESCRIPTION: " + trip.details);
     doc.font(normal)
         .fontSize(textFontSize)
         .text(trip.details.replace(/\r\n|\r/g, '\n'));

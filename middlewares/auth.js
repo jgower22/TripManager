@@ -3,26 +3,21 @@ const Access = require('../models/access');
 
 //check if user is a guest
 exports.isGuest = (req, res, next) => {
-    console.log('CHECK GUEST REQ SESSION USER 1: ' + req.session.user);
     if (!req.session.user) {
-        console.log("HERE1");
         return next();
     } else {
-        req.flash('error', 'You are logged in already :D');
-        console.log("HERE2");
+        req.flash('error', 'You are logged in already');
         return res.redirect('/users/profile');
     }
 };
 
 //check if user is authenticated
 exports.isLoggedIn = (req, res, next) => {
-    console.log('CHECK LOGGED IN REQ SESSION USER 2: ' + req.session.user + ' ' + Date.now());
     if (req.session.user) {
-        console.log("HERE3");
         return next();
     } else {
-        req.flash('error', 'You need to log in first :D');
-        console.log("HERE4 " + Date.now());
+        req.session.returnTo = req.originalUrl;
+        req.flash('error', 'You need to log in to view this page');
         return res.redirect('/users/login');
     }
 };
@@ -46,8 +41,6 @@ exports.isAccessType = (accessType) => {
                 }
                 if (access.length >= 1) {
                     let curUser = access[0];
-                    console.log('CUR USER: ' + curUser);
-                    console.log('ACCESS: ' + access);
                     if (accessType.includes(curUser.type)) {
                         res.locals.accessType = curUser.type;
                         return next();

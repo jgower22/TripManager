@@ -84,7 +84,6 @@ exports.showTrip = (req, res, next) => {
             if (trip) {
                 const { DateTime } = require('luxon');
                 const  validator  = require('validator');
-                console.log('TRIP ID: ' + trip._id);
                 let escapedTrip = {
                     _id: trip._id,
                     name: trip.name,
@@ -200,6 +199,7 @@ exports.updateTrip = (req, res, next) => {
                 Trip.findByIdAndUpdate(tripId, { $set: tripFields, days: combinedDays }, { useFindAndModify: false, runValidators: true })
                     .then(trip => {
                         if (trip) {
+                            req.flash('success', 'Trip updated successfully');
                             res.redirect('/trips/' + tripId);
                             return;
                         } else {
@@ -246,6 +246,7 @@ exports.updateTrip = (req, res, next) => {
                 Trip.findByIdAndUpdate(tripId, { $set: tripFields, days: daysToKeep }, { useFindAndModify: false, runValidators: true })
                     .then(trip => {
                         if (trip) {
+                            req.flash('success', 'Trip updated successfully');
                             res.redirect('/trips/' + tripId);
                             return;
                         } else {
@@ -294,6 +295,7 @@ exports.updateTrip = (req, res, next) => {
                 }
                 Trip.findByIdAndUpdate(tripId, { $set: tripFields, days: updatedDays }, { useFindAndModify: false, runValidators: true })
                     .then(trip => {
+                        req.flash('success', 'Trip updated successfully');
                         res.redirect('/trips/' + tripId);
                         return;
                     })
@@ -316,6 +318,7 @@ exports.deleteTrip = (req, res, next) => {
     Trip.findByIdAndDelete(tripId, { useFindAndModify: false })
         .then(trip => {
             if (trip) {
+                req.flash('success', 'Trip deleted successfully');
                 res.redirect('/trips');
             } else {
                 let err = new Error('Cannot find trip with id: ' + tripId);
@@ -351,7 +354,6 @@ exports.showDay = (req, res, next) => {
                 let day = days[index];
                 //Unescape day
                 unescapeTripDay(day);
-                console.log('DAY: ' + JSON.stringify(day));
                 const { DateTime } = require('luxon');
                 const validator = require('validator');
                 res.render('./trip/showDay', { day, trip, prevId, nextId, firstId, DateTime, validator });
@@ -405,6 +407,7 @@ exports.updateDay = (req, res, next) => {
                 })
                 .then(day => {
                     if (day) {
+                        req.flash('success', 'Day ' + dayId + ' updated successfully');
                         res.redirect('/trips/' + tripId + '/' + dayId);
                     } else {
                         let err = new Error('Cannot find trip with id: ' + tripId);
@@ -458,7 +461,6 @@ exports.addAccess = (req, res, next) => {
     //Get user id from user email
     User.findOne({ email: userEmail })
         .then(user => {
-            console.log('User: ' + user);
 
             //Cannot add users that do not exist
             if (!user) {

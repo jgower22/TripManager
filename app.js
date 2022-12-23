@@ -87,6 +87,8 @@ app.use(session({
 app.use(flash());
 
 app.use((req, res, next) => {
+    req.session.returnTo = req.originalUrl;
+    console.log('REQ SESSION RETURN TO APP : ' + req.session.returnTo);
     res.locals.user = req.session.user||null;
     res.locals.email = req.session.email||null;
     res.locals.userFullName = req.session.userFullName||null;
@@ -122,12 +124,16 @@ app.use((err, req, res, next) => {
 //Generate a PDF for trip showing all day details -- DONE
 //Alert user when days will be removed when num of days shrinks when editing trip -- PARTIALLY DONE, need to display the days that will be removed
 //Adding viewers / editors for everything related to trips -- DONE
+//If user drop-down is shown, allow user to click anywhere else on site to close it -- DONE
+//If user needs to login to access page, redirect to last page user was on after they login -- DONE
 
+//Update end date calendar value to day after start date when it is changed
+//Option to sort trips shown by created or shared with me or show all
+//Update CSS for flash messages
 //Fix placeholders on forms (12:00 PM)
 //Add go to last day button on showDays.ejs
 //Add limit on number of days at can be added
 //Search bar on trips page
-//If user needs to login to access page, redirect to last page user was on after they login
 //Add a copy trip button -- Will say "Copy of (trip name)"
 //Fix CANCEL button on mobile when turning device -- changes look
 //If user drop-down is shown, allow user to click anywhere else on site to close it

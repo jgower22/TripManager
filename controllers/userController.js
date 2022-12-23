@@ -73,7 +73,9 @@ exports.processLogin = (req, res, next) => {
                     req.session.userFullName = user.firstName + ' ' + user.lastName;
                     req.session.email = user.email;
                     req.flash('success', 'You have successfully logged in');
-                    return res.redirect('/users/profile');
+                    res.redirect(req.session.returnTo || '/users/profile');
+                    console.log('REQ SESSION RETURN TO!!!: ' + req.session.returnTo);
+                    delete req.session.returnTo;
                 } else {
                     req.flash('error', errorMessage);
                     res.redirect('/users/login');

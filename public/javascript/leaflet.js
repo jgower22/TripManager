@@ -15,7 +15,6 @@ try {
     let tripName = document.getElementById('tripName').value;
     zoomLevel = 4;
 } catch (err) {
-    console.log('ERROR');
 }
 locationToSet = locationToSet.substring(locationToSet.indexOf(':') + 1, locationToSet.length).trim();
 
