@@ -8,22 +8,59 @@ const maxNumDays = 731;
 exports.index = (req, res, next) => {
     //res.send('Send all trips');
 
-    //Find all trips where createdBy === user id OR has access to (owner, editor, viewer)
-    Promise.all([Trip.find({ createdBy: res.locals.user }, {_id: 1, name: 1, startDate: 1, endDate: 1}), Access.find({ user: res.locals.user }).populate('trip', '_id name startDate endDate')])
-        .then(results => {
-            const [trips, access] = results;
-            let combinedTrips = trips;
-            console.log('TRIPS 1: ' + trips);
-            console.log('ACCESS: ' + access);
-            for (let i = 0; i < access.length; i++) {
-                combinedTrips.push(access[i].trip);
+    let query = req._parsedOriginalUrl.query;
+    let show = 'all';
+    if (query) {
+        let splitQuery = query.split('&');
+        for (let i = 0; i < splitQuery.length; i++) {
+            let index = splitQuery[i].indexOf('=');
+            let queryString = splitQuery[i].substring(0, index).toLowerCase();
+            //Find first show in query
+            if (queryString === 'show') {
+                show = splitQuery[i].substring(index + 1, splitQuery[i].length);
+                break;
             }
-            console.log('TRIPS 2: ' + combinedTrips);
-            console.log('--------------');
-            unescapeTripNames(trips);
-            res.render('./trip/index', { trips: combinedTrips });
-        })
-        .catch(err => next(err));
+        }
+    }
+
+    switch (show) {
+        case 'mytrips':
+            //Show only userCreated trips
+            Trip.find({ createdBy: res.locals.user }, { _id: 1, name: 1, startDate: 1, endDate: 1})
+                .then(trips => {
+                    unescapeTripNames(trips);
+                    res.render('./trip/index', { trips, show });
+                })
+                .catch(err => next(err));
+            break;
+        case 'shared':
+            //Show only shared trips
+            Access.find({ user: res.locals.user}).populate('trip', '_id name startDate endDate')
+                .then(trips => {
+                    //Format trips
+                    let formattedTrips = [];
+                    for (let i = 0; i < trips.length; i++) {
+                        formattedTrips.push(trips[i].trip);
+                    }
+                    unescapeTripNames(formattedTrips);
+                    res.render('./trip/index', { trips: formattedTrips, show });
+                })
+                .catch(err => next(err));
+            break;
+        default:
+            //Show all trips (userCreated + shared)
+            Promise.all([Trip.find({ createdBy: res.locals.user }, { _id: 1, name: 1, startDate: 1, endDate: 1 }), Access.find({ user: res.locals.user }).populate('trip', '_id name startDate endDate')])
+                .then(results => {
+                    const [trips, access] = results;
+                    let combinedTrips = trips;
+                    for (let i = 0; i < access.length; i++) {
+                        combinedTrips.push(access[i].trip);
+                    }
+                    unescapeTripNames(trips);
+                    res.render('./trip/index', { trips: combinedTrips, show });
+                })
+                .catch(err => next(err));
+    }
 };
 
 exports.newTrip = (req, res) => {
@@ -88,7 +125,6 @@ exports.createTrip = (req, res, next) => {
 
 exports.copyTrip = (req, res, next) => {
     let tripId = req.params.id;
-    console.log('TRIP ID: ' + tripId);
     Trip.findById(tripId)
         .then(trip => {
             let tripCopy = trip.toObject();
@@ -96,9 +132,7 @@ exports.copyTrip = (req, res, next) => {
             tripCopy.name = 'Copy of ' + trip.name;
             delete tripCopy._id;
             delete tripCopy.createdBy
-            console.log('CREATED BY: ' + res.locals.user);
             tripCopy.createdBy = res.locals.user;
-            console.log('TRIP: ' + trip);
 
             let tripCopyDoc = new Trip(tripCopy);
             tripCopyDoc.save()
@@ -118,7 +152,7 @@ exports.showTrip = (req, res, next) => {
         .then(trip => {
             if (trip) {
                 const { DateTime } = require('luxon');
-                const  validator  = require('validator');
+                const validator = require('validator');
                 let escapedTrip = {
                     _id: trip._id,
                     name: trip.name,
@@ -480,7 +514,7 @@ exports.generatePDF = (req, res, next) => {
 exports.share = (req, res, next) => {
     let tripId = req.params.id;
 
-    Promise.all([Trip.findOne({ _id: tripId }, {createdBy: 1}).populate('createdBy', 'firstName lastName email'), Access.find({ trip: tripId }).populate('user', 'firstName lastName email')])
+    Promise.all([Trip.findOne({ _id: tripId }, { createdBy: 1 }).populate('createdBy', 'firstName lastName email'), Access.find({ trip: tripId }).populate('user', 'firstName lastName email')])
         .then(results => {
             const [trip, access] = results;
             res.render('./trip/share', { trip, access });
@@ -510,14 +544,14 @@ exports.addAccess = (req, res, next) => {
 
             //Insert into access collection
             Access.findOneAndUpdate(
-            {
-                user: user._id, trip: tripId
-            },
-            {
-                type: accessType,
-                user: user._id,
-                trip: tripId
-            }, {upsert: true})
+                {
+                    user: user._id, trip: tripId
+                },
+                {
+                    type: accessType,
+                    user: user._id,
+                    trip: tripId
+                }, { upsert: true })
                 .then(access => {
                     res.redirect('/trips/' + tripId + '/share');
                 })
@@ -529,7 +563,7 @@ exports.addAccess = (req, res, next) => {
 exports.removeAccess = (req, res, next) => {
     let tripId = req.params.id;
     let userId = req.params.userId;
-    Access.deleteOne({trip: tripId, user: userId})
+    Access.deleteOne({ trip: tripId, user: userId })
         .then(access => {
             res.redirect('/trips/' + tripId + '/share');
         })

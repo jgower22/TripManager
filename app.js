@@ -88,7 +88,6 @@ app.use(flash());
 
 app.use((req, res, next) => {
     req.session.returnTo = req.originalUrl;
-    console.log('REQ SESSION RETURN TO APP : ' + req.session.returnTo);
     res.locals.user = req.session.user||null;
     res.locals.email = req.session.email||null;
     res.locals.userFullName = req.session.userFullName||null;
@@ -132,7 +131,7 @@ app.use((err, req, res, next) => {
 //Add a copy trip button -- Will say "Copy of (trip name)" -- DONE
 
 //Update end date calendar value to day after start date when it is changed
-//Option to sort trips shown by created or shared with me or show all
+//Option to sort trips shown by created or shared with me or show all (send new request to server)
 //Add go to last day button on showDays.ejs
 //Search bar on trips page
 //Fix CANCEL button on mobile when turning device -- changes look

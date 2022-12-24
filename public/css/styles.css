@@ -378,26 +378,18 @@ button:hover {
     margin-bottom: 7px;
 }
 
-#maxDaysSelect{
-    margin-top: 0;
+#maxDaysSelect {
     float: right;
+}
+
+#maxDaysSelect, #showTrips {
+    margin-top: 0;
     border-radius: 25px;
     background-color: black;
     color: white;
     height: 25px;
-    width: 120px;
+    width: fit-content;
 }
-
-/*#access {
-    margin: 8px 0;
-    border-radius: 7px;
-    border: 1px solid #ccc;
-    background-color: white;
-    text-align: center;
-    color: black;
-    height: 25px;
-    width: 100px;
-}*/
 
 #addDayButton {
     float: right;

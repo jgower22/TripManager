@@ -29,7 +29,6 @@ exports.isAccessType = (accessType) => {
         Promise.all([Trip.findById(tripId), Access.find({ trip: tripId, user: res.locals.user }).populate('user', 'email')])
             .then(results => {
                 const [trip, access] = results;
-                console.log('TRIP: ' + trip);
                 if (trip) {
                     if (trip.createdBy == res.locals.user && accessType.includes('owner')) {
                         res.locals.accessType = 'owner';
@@ -40,7 +39,6 @@ exports.isAccessType = (accessType) => {
                     err.status = 404;
                     return next(err);
                 }
-                console.log('ACCESS: ' + access);
                 if (access.length >= 1) {
                     let curUser = access[0];
                     if (accessType.includes(curUser.type)) {

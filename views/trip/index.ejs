@@ -1,4 +1,5 @@
 <%- include('../partials/header.ejs')%>
+    <script defer src="/javascript/showTrips.js"></script>
     <main>
         <div id="main_content">
             <%
@@ -35,9 +36,32 @@
                 } else if (startDate > dateNow) {
                     trip.group = 'Upcoming Trips';
                 }
-            } 
+            }%> 
             
-            if(trips.length) {
+            <%switch (show) {
+                case 'mytrips':%>
+                    <select name="showTrips" id="showTrips">
+                        <option value="mytrips" selected>Show My Trips</option>
+                        <option value="shared">Show Shared Trips</option>
+                        <option value="all">Show All Trips</option>
+                    </select>
+                    <%break;
+                case 'shared':%>
+                    <select name="showTrips" id="showTrips">
+                        <option value="mytrips">Show My Trips</option>
+                        <option value="shared" selected>Show Shared Trips</option>
+                        <option value="all">Show All Trips</option>
+                    </select>
+                    <%break;
+                default:%>
+                    <select name="showTrips" id="showTrips">
+                        <option value="mytrips">Show My Trips</option>
+                        <option value="shared">Show Shared Trips</option>
+                        <option value="all" selected>Show All Trips</option>
+                    </select>
+            <%}%>
+
+            <%if (trips.length) {
                 trips.sort(sortByName);
                 let prevGroup = null;
                 for (let i = 0; i < trips.length; i++) {
