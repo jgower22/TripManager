@@ -132,6 +132,7 @@ app.use((err, req, res, next) => {
 //Add go to last day button on showDays.ejs -- DONE
 
 //Fix share.ejs css on mobile
+//Edit timestamp for last modified on for trips
 //Update end date calendar value to day after start date when it is changed
 //Search bar on trips page
 //Fix CANCEL button on mobile when turning device -- changes look
