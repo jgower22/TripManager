@@ -128,9 +128,10 @@ app.use((err, req, res, next) => {
 //Fix placeholders on forms (12:00 PM) -- DONE
 //Add limit on number of days at can be added (731 days) -- DONE
 //Add a copy trip button -- Will say "Copy of (trip name)" -- DONE
+//Option to sort trips shown by created or shared with me or show all (send new request to server) -- DONE
+//Add go to last day button on showDays.ejs -- DONE
 
+//Fix share.ejs css on mobile
 //Update end date calendar value to day after start date when it is changed
-//Option to sort trips shown by created or shared with me or show all (send new request to server)
-//Add go to last day button on showDays.ejs
 //Search bar on trips page
 //Fix CANCEL button on mobile when turning device -- changes look
