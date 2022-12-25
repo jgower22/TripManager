@@ -61,12 +61,8 @@ exports.processLogin = (req, res, next) => {
             .then(result => {
                 if (result) {
                     req.session.user = user._id;
-                    console.log('REQ SESSION USER 2: ' + req.session.user + ' ' + Date.now());
                     req.session.userFullName = user.firstName + ' ' + user.lastName;
                     req.session.email = user.email;
-                    console.log('---------------------------');
-                    console.log('REQ SESSION RETURN TO: ' + req.session.returnTo);
-                    console.log('---------------------------');
                     req.flash('success', 'You have successfully logged in');
                     res.redirect(req.session.returnTo || '/users/profile');
                     delete req.session.returnTo;

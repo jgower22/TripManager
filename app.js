@@ -87,8 +87,6 @@ app.use(session({
 app.use(flash());
 
 app.use((req, res, next) => {
-    //if (req.originalUrl != '/users/login')
-        //req.session.returnTo = req.originalUrl||null;
     res.locals.user = req.session.user||null;
     res.locals.email = req.session.email||null;
     res.locals.userFullName = req.session.userFullName||null;
