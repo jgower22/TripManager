@@ -42,16 +42,7 @@ exports.addUser = (req, res, next) => {
 }
 
 exports.login = (req, res, next) => {
-    let id = req.session.user;
-    User.findById(id)
-    .then(user => {
-        if (user) {
-            res.render('./error/sessionError', {user});
-        } else {
-            res.render('./user/login', {user});
-        }
-    })
-    .catch(err=>next(err));
+    res.render('./user/login');
 }
 
 exports.processLogin = (req, res, next) => {
@@ -70,6 +61,7 @@ exports.processLogin = (req, res, next) => {
             .then(result => {
                 if (result) {
                     req.session.user = user._id;
+                    console.log('REQ SESSION USER 2: ' + req.session.user + ' ' + Date.now());
                     req.session.userFullName = user.firstName + ' ' + user.lastName;
                     req.session.email = user.email;
                     req.flash('success', 'You have successfully logged in');
