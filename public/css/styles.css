@@ -227,6 +227,12 @@ main {
     padding: 50px 50px;
 }
 
+@media only screen and (max-width: 590px) {
+    #main_content {
+        padding: 0 0;
+    }
+}
+
 #main_content p {
     font-size: 22px;
 }
@@ -261,7 +267,7 @@ main {
     #trip_container {
       width: 95%;
     }
-  }
+}
 
 #login_container, #signup_container {
     width: 30%;
