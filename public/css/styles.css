@@ -309,12 +309,12 @@ main {
     }
     .inline_container {
         display: block;
-        margin-top: 10px;
+        padding-top: 10px;
+        width: 100%;
     }
 }
 
 .left {
-    max-width: 50%;
     word-break: break-all;
     white-space: normal;
     margin-right: 10%;
