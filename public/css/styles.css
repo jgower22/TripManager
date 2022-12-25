@@ -297,6 +297,13 @@ main {
     vertical-align: top;
 }
 
+@media only screen and (max-width: 590px) {
+    .inline_container {
+        display: block;
+        margin-top: 10px;
+    }
+}
+
 .left {
     max-width: 50%;
     word-break: break-all;

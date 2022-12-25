@@ -39,7 +39,7 @@
                 }%>
             </div>
             <%if (accessType === 'owner') {%>
-                <div class="inline_container right" id="new_access_container">
+                <div class="inline_container" id="new_access_container">
                     <h2>Add New User</h2>
                     <form action="/trips/<%=trip._id%>/access?_method=PUT" method="POST">
                         <label class="required" for="name">Email:</label>

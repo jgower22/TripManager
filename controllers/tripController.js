@@ -408,9 +408,11 @@ exports.showDay = (req, res, next) => {
             //Find prev id and next id
             let prevId, nextId;
             let index = days.findIndex(day => day.number == dayId);
-            let firstId;
+            let firstId, lastId;
             if (days.length > 0 && index !== -1) {
                 firstId = days[0].number;
+                lastId = days[days.length-1].number;
+                console.log('LAST ID: ' + lastId);
                 if (index !== 0) {
                     prevId = trip.days[index - 1].number;
                 }
@@ -424,7 +426,7 @@ exports.showDay = (req, res, next) => {
                 unescapeTripDay(day);
                 const { DateTime } = require('luxon');
                 const validator = require('validator');
-                res.render('./trip/showDay', { day, trip, prevId, nextId, firstId, DateTime, validator });
+                res.render('./trip/showDay', { day, trip, prevId, nextId, firstId, lastId, DateTime, validator });
             } else {
                 let err = new Error('Cannot find day with id: ' + dayId);
                 err.status = 404;
