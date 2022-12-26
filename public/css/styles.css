@@ -344,8 +344,11 @@ main {
     }
   }
 
-  /*200, 250*/
-#trip_image, #day_image, #map {
+#form_container input {
+    display: block;
+}
+
+#map {
     height: 250px;
     width: 250px;
 }
