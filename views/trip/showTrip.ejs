@@ -28,15 +28,23 @@
                     <h1 id="tripName"><%=trip.name%></h1>
 
                     <h4>Created by <%=trip.createdBy.firstName%> <%=trip.createdBy.lastName%></h4>
-                    <h4>Last modified on: <%=trip.updatedAt%></h4>
+                    <%console.log('LAST MODIFIED ON: ' + trip.updatedAt);
+                    let date = new Date(trip.updatedAt);
+                    console.log('DATE: ' + date);
+                    const dateFormat = { 
+                        ...DateTime.DATE_FULL, 
+                        weekday: 'long'
+                    };
+                    let formattedDate = date.toLocaleString(dateFormat);
+                    formattedDate = formattedDate.replace(',', ' @');
+                    console.log('FORMATTED DATE: ' + formattedDate);
+                    %>
+                    <h4>Last modified on: <%=formattedDate%> by <%=trip.lastModifiedBy.firstName%> <%=trip.lastModifiedBy.lastName%></h4>
                     <div id="map"></div>
                     
                     <h3 id="locationHeader" class="locationHeader">Location: <%=trip.location%></h3>
 
-                    <% const dateFormat = { 
-                        ...DateTime.DATE_FULL, 
-                        weekday: 'long' 
-                    }; 
+                    <% 
                     const startDate = DateTime.fromISO(trip.startDate); 
                     const formattedStartDate = startDate.toLocaleString(dateFormat); 
                     const endDate = DateTime.fromISO(trip.endDate); 

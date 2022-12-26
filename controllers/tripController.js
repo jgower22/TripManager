@@ -108,6 +108,7 @@ exports.createTrip = (req, res, next) => {
 
     req.body.days = prefilledDays;
     req.body.createdBy = req.session.user;
+    req.body.lastModifiedBy = req.session.user;
     let trip = new Trip(req.body);
 
     trip.save() //insert the document to the database
@@ -131,8 +132,12 @@ exports.copyTrip = (req, res, next) => {
             let previousName = tripCopy.name;
             tripCopy.name = 'Copy of ' + trip.name;
             delete tripCopy._id;
-            delete tripCopy.createdBy
+            delete tripCopy.createdBy;
+            delete tripCopy.lastModifiedBy;
+            delete tripCopy.updatedAt;
+            delete tripCopy.createdAt;
             tripCopy.createdBy = res.locals.user;
+            tripCopy.lastModifiedBy = res.locals.user;
 
             let tripCopyDoc = new Trip(tripCopy);
             tripCopyDoc.save()
@@ -148,7 +153,7 @@ exports.copyTrip = (req, res, next) => {
 exports.showTrip = (req, res, next) => {
     let tripId = req.params.id;
 
-    Trip.findById(tripId).populate('createdBy', 'firstName lastName')
+    Trip.findById(tripId).populate('createdBy', 'firstName lastName').populate('lastModifiedBy', 'firstName lastName')
         .then(trip => {
             if (trip) {
                 const { DateTime } = require('luxon');
@@ -270,7 +275,7 @@ exports.updateTrip = (req, res, next) => {
                 let combinedDays = previousDays.concat(newDays);
 
                 //{$set: tripFields, $push: {days: { $each: newDays }}}
-                Trip.findByIdAndUpdate(tripId, { $set: tripFields, days: combinedDays }, { useFindAndModify: false, runValidators: true })
+                Trip.findByIdAndUpdate(tripId, { $set: tripFields, days: combinedDays, lastModifiedBy: res.locals.user }, { useFindAndModify: false, runValidators: true })
                     .then(trip => {
                         if (trip) {
                             req.flash('success', 'Trip updated successfully');
@@ -317,7 +322,7 @@ exports.updateTrip = (req, res, next) => {
                     }
                 }
 
-                Trip.findByIdAndUpdate(tripId, { $set: tripFields, days: daysToKeep }, { useFindAndModify: false, runValidators: true })
+                Trip.findByIdAndUpdate(tripId, { $set: tripFields, days: daysToKeep, lastModifiedBy: res.locals.user}, { useFindAndModify: false, runValidators: true })
                     .then(trip => {
                         if (trip) {
                             req.flash('success', 'Trip updated successfully');
@@ -367,7 +372,7 @@ exports.updateTrip = (req, res, next) => {
                         currentDay.location = req.body.location;
                     }
                 }
-                Trip.findByIdAndUpdate(tripId, { $set: tripFields, days: updatedDays }, { useFindAndModify: false, runValidators: true })
+                Trip.findByIdAndUpdate(tripId, { $set: tripFields, days: updatedDays, lastModifiedBy: res.locals.user }, { useFindAndModify: false, runValidators: true })
                     .then(trip => {
                         req.flash('success', 'Trip updated successfully');
                         res.redirect('/trips/' + tripId);
@@ -468,7 +473,7 @@ exports.updateDay = (req, res, next) => {
 
     Trip.findById(tripId)
         .then(trip => {
-            Trip.updateOne({ _id: tripId, 'days.number': parseInt(dayId) },
+            Trip.updateOne({ _id: tripId, 'days.number': parseInt(dayId)},
                 {
                     $set: {
                         'days.$.location': location,

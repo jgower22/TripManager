@@ -130,9 +130,9 @@ app.use((err, req, res, next) => {
 //Add a copy trip button -- Will say "Copy of (trip name)" -- DONE
 //Option to sort trips shown by created or shared with me or show all (send new request to server) -- DONE
 //Add go to last day button on showDays.ejs -- DONE
+//Edit timestamp for last modified on for trips and add last modified by -- DONE
 
 //Fix share.ejs css on mobile
-//Edit timestamp for last modified on for trips
 //Update end date calendar value to day after start date when it is changed
 //Search bar on trips page
 //Fix CANCEL button on mobile when turning device -- changes look
