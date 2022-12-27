@@ -30,16 +30,15 @@
                     <h4>Created by <%=trip.createdBy.firstName%> <%=trip.createdBy.lastName%></h4>
                     <%console.log('LAST MODIFIED ON: ' + trip.updatedAt);
                     let date = new Date(trip.updatedAt);
-                    console.log('DATE: ' + date);
+                    let formattedDate = date.toLocaleString('en-US', { Intl.DateTimeFormat().resolvedOptions().timeZone });
                     const dateFormat = { 
                         ...DateTime.DATE_FULL, 
                         weekday: 'long'
                     };
-                    let formattedDate = date.toLocaleString(dateFormat);
                     formattedDate = formattedDate.replace(',', ' @');
                     console.log('FORMATTED DATE: ' + formattedDate);
                     %>
-                    <h4><%=date%></h4>
+                    <h4><%=formattedDate%></h4>
                     <h4>Last modified on: <%=formattedDate%> by <%=trip.lastModifiedBy.firstName%> <%=trip.lastModifiedBy.lastName%></h4>
                     <div id="map"></div>
                     
