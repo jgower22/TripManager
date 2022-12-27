@@ -39,6 +39,7 @@
                     formattedDate = formattedDate.replace(',', ' @');
                     console.log('FORMATTED DATE: ' + formattedDate);
                     %>
+                    <h4><%=date%></h4>
                     <h4>Last modified on: <%=formattedDate%> by <%=trip.lastModifiedBy.firstName%> <%=trip.lastModifiedBy.lastName%></h4>
                     <div id="map"></div>
                     
