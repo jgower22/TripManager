@@ -98,7 +98,9 @@ ul {
     }
     #user_nav li {
         display: inline-block;
-        padding-left: 0;
+    }
+    #user_nav li:first-child {
+        padding-left: 0px;
     }
 }
 
@@ -216,7 +218,7 @@ ul {
 
 @media only screen and (max-width: 590px) {
     .flash {
-        width: 100%;
+        width: 90%;
     }
 }
   
