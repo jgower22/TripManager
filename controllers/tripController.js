@@ -470,30 +470,25 @@ exports.updateDay = (req, res, next) => {
     let dayData = req.body;
     let location = dayData.location;
     let details = dayData.details;
-
-    Trip.findById(tripId)
-        .then(trip => {
-            Trip.updateOne({ _id: tripId, 'days.number': parseInt(dayId)},
-                {
-                    $set: {
-                        'days.$.location': location,
-                        'days.$.details': details,
-                    }
-                })
-                .then(day => {
-                    if (day) {
-                        req.flash('success', 'Day ' + dayId + ' updated successfully');
-                        res.redirect('/trips/' + tripId + '/' + dayId);
-                    } else {
-                        let err = new Error('Cannot find trip with id: ' + tripId);
-                        err.status = 404;
-                        next(err);
-                    }
-                })
-                .catch(err => next(err));
+    
+    Promise.all([Trip.updateOne({ _id: tripId, 'days.number': parseInt(dayId)},
+        {
+            $set: {
+                'days.$.location': location,
+                'days.$.details': details,
+            }
+        }), Trip.findByIdAndUpdate({ _id: tripId}, { lastModifiedBy: res.locals.user})])
+        .then(day => {
+            if (day.matchedCount === 0) {
+                let err = new Error('Cannot find day ' + dayId + ' for this trip.');
+                err.status = 404;
+                return next(err);
+            }
+            console.log('DAY: ' + JSON.stringify(day));
+            req.flash('success', 'Day ' + dayId + ' updated successfully');
+            res.redirect('/trips/' + tripId + '/' + dayId);
         })
         .catch(err => next(err));
-
 };
 
 exports.generatePDF = (req, res, next) => {
