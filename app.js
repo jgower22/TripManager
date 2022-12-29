@@ -132,9 +132,14 @@ app.use((err, req, res, next) => {
 //Add go to last day button on showDays.ejs -- DONE
 //Edit timestamp for last modified on for trips and add last modified by -- DONE
 //Fix CANCEL button on mobile when turning device -- changes look -- DONE
+//General access - anyone with link can view/edit trip -- DONE
 
-//General access - anyone with link can view/edit trip -- DONE, NEED TO TEST THIS
-//Bug fix: Flash message saying you are already logged in when spamming cancel on forms
+//Work on profile page -- display created trips in a table maybe
+//Work on settings page
+//Add pop-up modal for adding new users for share.ejs
+//Make flash messages same width as main container on page
+//Save user preference when reloading trips page (display trips based on what they last have been shown)
+//Bug fix: Flash message saying you are already logged in when spamming cancel on forms -- unable to replicate 12/28/22 @ 10:50 PM
 //Fix share.ejs css on mobile
 //Update end date calendar value to day after start date when it is changed
 //Search bar on trips page
