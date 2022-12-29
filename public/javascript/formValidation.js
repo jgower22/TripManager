@@ -66,5 +66,14 @@ document.getElementById('submit').addEventListener('click', function(event) {
 
 document.getElementById('cancel').addEventListener('click', function(event) {
     event.preventDefault();
-    history.back();
+    let previousPath = document.referrer.replace(/^[^:]+:\/\/[^/]+/, '').replace(/#.*/, '');
+    if (previousPath !== '/users/login')
+        history.back();
+    else {
+        let currentURL = window.location.href;
+        let index = currentURL.lastIndexOf('/');
+        let redirectURL = currentURL.substring(0, index);
+        window.location.href = redirectURL;
+    }
+
 });
