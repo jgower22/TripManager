@@ -137,8 +137,10 @@ exports.copyTrip = (req, res, next) => {
             delete tripCopy.lastModifiedBy;
             delete tripCopy.updatedAt;
             delete tripCopy.createdAt;
+            delete tripCopy.generalAccess;
             tripCopy.createdBy = res.locals.user;
             tripCopy.lastModifiedBy = res.locals.user;
+            tripCopy.generalAccess = 'private';
 
             let tripCopyDoc = new Trip(tripCopy);
             tripCopyDoc.save()

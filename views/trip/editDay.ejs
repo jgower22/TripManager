@@ -3,6 +3,7 @@
         <script defer src="/javascript/formValidation.js"></script>
         <div id="main_content_centered">
             <div id="form_container">
+                <h2>Edit Day <%=day.number%></h2>
                 <form action="/trips/<%=trip._id%>/<%=day.number%>?_method=PUT" method="POST">
                     <label class="required" for="number">Day Number:</label>
                     <input type="text" id="number" name="number" value="<%=day.number%>" disabled>
