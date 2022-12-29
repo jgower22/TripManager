@@ -334,6 +334,10 @@ main {
     margin-right: 10%;
 }
 
+#general_access {
+    margin-bottom: 10px;
+}
+
 @media only screen and (max-width: 590px) {
     #new_access_container {
         width: 100%;
@@ -490,13 +494,26 @@ label {
     font-size: 18px;
 }
 
-input,  textarea, #accessType {
+input, textarea, #accessType {
     margin: 7px 0px;
     padding: 7px 10px;
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 7px;
     box-sizing: border-box;
+}
+
+#generalAccess {
+    padding: 7px 10px;
+    width: fit-content;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    box-sizing: border-box;
+}
+
+#generalAccess p {
+    margin-bottom: 0;
 }
 
 #checkboxLabel {

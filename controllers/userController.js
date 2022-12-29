@@ -63,6 +63,8 @@ exports.processLogin = (req, res, next) => {
                     req.session.user = user._id;
                     req.session.userFullName = user.firstName + ' ' + user.lastName;
                     req.session.email = user.email;
+                    console.log('*******************');
+                    console.log('REQ SESSION RETURN TO: ' + req.session.returnTo);
                     req.flash('success', 'You have successfully logged in');
                     res.redirect(req.session.returnTo || '/users/profile');
                     delete req.session.returnTo;
@@ -95,6 +97,7 @@ exports.settings = (req, res, next) => {
 }
 
 exports.logout = (req, res, next) => {
+    delete req.session.returnTo;
     req.session.destroy(err=> {
         if (err)
             return next(err);

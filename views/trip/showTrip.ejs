@@ -11,9 +11,11 @@
                                     <button class="button" id="update" type="submit" formmethod="GET"
                                         formaction="/trips/<%=trip._id%>/edit">Edit Trip</button>
                                 <%}%>
+                                <%if (accessType !== 'anon') {%>
                                 <button class="button" id="update" type="submit" formmethod="POST"
                                     formaction="/trips/<%=trip._id%>/copy">Copy Trip</button>
-                                <%if (accessType === 'owner') {%>
+                                <%}
+                                if (accessType === 'owner') {%>
                                     <button class="button" id="delete" type="submit" formmethod="POST"
                                         formaction="/trips/<%=trip._id%>?_method=DELETE">Delete Trip</button>
                                 <%}%>
@@ -21,9 +23,11 @@
                         </div>
                     <form>
                         <button class="button" id="pdf" type="submit" formmethod="GET" formaction="/trips/<%=trip._id%>/pdf">Download PDF</button>
+                        <%if (accessType !== 'anon') {%>
                         <a href="/trips/<%=trip._id%>/share">
                             <button class="button" type="button">Share</button>
                          </a>
+                         <%}%>
                     </form>
                     <h1 id="tripName"><%=trip.name%></h1>
 

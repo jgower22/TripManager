@@ -24,7 +24,7 @@ exports.isLoggedIn = (req, res, next) => {
 };
 
 //check if user is an owner, editor or viewer of a trip
-exports.isAccessType = (accessType) => {
+exports.isAccessType = (accessType, isPublicAction) => {
     return (req, res, next) => {
         let tripId = req.params.id;
         Promise.all([Trip.findById(tripId), Access.find({ trip: tripId, user: res.locals.user }).populate('user', 'email')])
@@ -40,6 +40,8 @@ exports.isAccessType = (accessType) => {
                     err.status = 404;
                     return next(err);
                 }
+                //Forbidden - When user is logged in and does not have access to resource
+                //Redirect to login page when user is NOT logged in and does not have access to a private trip
                 if (access.length >= 1) {
                     let curUser = access[0];
                     if (accessType.includes(curUser.type)) {
@@ -49,11 +51,20 @@ exports.isAccessType = (accessType) => {
                     let err = new Error('Forbidden');
                     err.status = 403;
                     return next(err);
-                } else {
-                    let err = new Error('Forbidden');
-                    err.status = 403;
-                    return next(err);
+                } 
+                if (trip.generalAccess === 'public') {
+                    res.locals.accessType = 'anon';
+                    if (isPublicAction) 
+                        return next();
+                } else if (trip.generalAccess === 'private' && !req.session.user) {
+                    res.locals.accessType = 'anon';
+                    req.session.returnTo = req.originalUrl;
+                    req.flash('error', 'You need to log in to view this page');
+                    return res.redirect('/users/login');
                 }
+                let err = new Error('Forbidden');
+                err.status = 403;
+                return next(err);
             })
             .catch(err => next(err));
     }

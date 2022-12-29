@@ -7,6 +7,33 @@
                  </a>
             </div>
             <div class="inline_container left">
+                <div id="general_access">
+                    <h2>General Access</h2>
+                    <%if (trip.generalAccess === 'public') {%>
+                        <p>Anyone with the link can view this trip</p>
+                        <%if (accessType === 'owner') {%>
+                        <form action="/trips/<%=trip._id%>/general?_method=PUT" method="POST">
+                            <select name="generalAccess" id="generalAccess">
+                                <option value="private">Restricted</option>
+                                <option value="public" selected>Anyone with link</option>
+                            </select>
+                            <input type="submit" value="Save Changes" class="greenButton">
+                        </form>
+                        <%}%>
+                    <%} else {%>
+                        <p>Only people with access can view this trip with the link</p>
+                        <%if (accessType === 'owner') {%>
+                        <form action="/trips/<%=trip._id%>/general?_method=PUT" method="POST">
+                            <select name="generalAccess" id="generalAccess">
+                                <option value="private" selected>Restricted</option>
+                                <option value="public">Anyone with link</option>
+                            </select>
+                            <input type="submit" value="Save Changes" class="greenButton">
+                        </form>
+                        <%}%>
+                    <%}%>
+                    
+                </div>
                 <h2>Who Has Access</h2>
                 <div class="access">
                     <%if (trip.createdBy.email === email) {%>

@@ -133,6 +133,8 @@ app.use((err, req, res, next) => {
 //Edit timestamp for last modified on for trips and add last modified by -- DONE
 //Fix CANCEL button on mobile when turning device -- changes look -- DONE
 
+//General access - anyone with link can view/edit trip -- DONE, NEED TO TEST THIS
+//Bug fix: Flash message saying you are already logged in when spamming cancel on forms
 //Fix share.ejs css on mobile
 //Update end date calendar value to day after start date when it is changed
 //Search bar on trips page

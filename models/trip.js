@@ -9,6 +9,7 @@ const tripSchema = new Schema({
     details: {type: String, required: [true, 'details is required']},
     createdBy: {type: Schema.Types.ObjectId, ref: 'User'},
     lastModifiedBy: {type: Schema.Types.ObjectId, ref: 'User'},
+    generalAccess: {type: String},
     days: {type: Array, required: [true, 'days are required']},
 },
 {timestamps: true}

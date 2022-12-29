@@ -109,6 +109,7 @@ exports.createTrip = (req, res, next) => {
     req.body.days = prefilledDays;
     req.body.createdBy = req.session.user;
     req.body.lastModifiedBy = req.session.user;
+    req.body.generalAccess = 'private';
     let trip = new Trip(req.body);
 
     trip.save() //insert the document to the database
@@ -516,7 +517,7 @@ exports.generatePDF = (req, res, next) => {
 exports.share = (req, res, next) => {
     let tripId = req.params.id;
 
-    Promise.all([Trip.findOne({ _id: tripId }, { createdBy: 1 }).populate('createdBy', 'firstName lastName email'), Access.find({ trip: tripId }).populate('user', 'firstName lastName email')])
+    Promise.all([Trip.findOne({ _id: tripId }, {  generalAccess: 1 }).populate('createdBy', 'firstName lastName email'), Access.find({ trip: tripId }).populate('user', 'firstName lastName email')])
         .then(results => {
             const [trip, access] = results;
             res.render('./trip/share', { trip, access });
@@ -571,6 +572,16 @@ exports.removeAccess = (req, res, next) => {
         })
         .catch(err => next(err));
 };
+
+exports.updateGeneralAccess = (req, res, next) => {
+    let tripId = req.params.id;
+    Trip.updateOne({ _id: tripId }, { generalAccess: req.body.generalAccess })
+        .then(trip => {
+            req.flash('success', 'General Access updated successfully');
+            res.redirect('/trips/' + tripId + '/share');
+        })
+        .catch(err => next(err));
+}
 
 
 
