@@ -10,7 +10,7 @@
                 <div id="general_access">
                     <h2>General Access</h2>
                     <%if (trip.generalAccess === 'public') {%>
-                        <p>Anyone with the link can view this trip</p>
+                        <p class="no_bottom_margin">Anyone with the link can view this trip</p>
                         <%if (accessType === 'owner') {%>
                         <form action="/trips/<%=trip._id%>/general?_method=PUT" method="POST">
                             <select name="generalAccess" id="generalAccess">

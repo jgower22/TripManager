@@ -492,6 +492,11 @@ button:hover {
 
 label {
     font-size: 18px;
+    user-select: none;
+}
+
+.no_bottom_margin {
+    margin-bottom: 0px;
 }
 
 input, textarea, #accessType {
