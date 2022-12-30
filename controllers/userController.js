@@ -1,4 +1,7 @@
 const User = require('../models/user');
+const Trip = require('../models/trip');
+const { unescapeTripNames } = require('../public/javascript/unescape');
+const { DateTime } = require('luxon');
 
 exports.new = (req, res, next) => {
     let id = req.session.user;
@@ -80,9 +83,11 @@ exports.processLogin = (req, res, next) => {
 
 exports.profile = (req, res, next) => {
     let id = req.session.user;
-    User.findById(id)
-    .then(user => {
-        res.render('./user/profile', {user});
+    Promise.all([User.findById(id), Trip.find({ createdBy: res.locals.user }, { _id: 1, name: 1, startDate: 1, endDate: 1})])
+    .then(results => {
+        const [user, trips] = results;
+        unescapeTripNames(trips);
+        res.render('./user/profile', {user, trips, DateTime});
     })
     .catch(err=>next(err));
 }

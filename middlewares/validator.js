@@ -33,8 +33,8 @@ body('password', 'Password must be at least 8 characters and at most 64 characte
 exports.validateLogIn = [body('email', 'Email must be a valid email address').isEmail().normalizeEmail({ gmail_remove_dots: false }).trim().escape(),
 body('password', 'Password must be at least 8 characters and at most 64 characters').isLength({min: 8, max: 64})];
 
-exports.validateTrip = [body('name').isLength({min: 3}).withMessage('Trip name must be at least 3 characters').trim().escape(),
-body('location').isLength({min: 3}).withMessage('Trip location must be at least 3 characters').trim().escape(),
+exports.validateTrip = [body('name').isLength({min: 2, max: 50}).withMessage('Trip name must be at least 2 characters and at most 50 characters').trim().escape(),
+body('location').isLength({min: 2, max: 50}).withMessage('Trip location must be at least 2 characters and at most 50 characters').trim().escape(),
 body('startDate').isDate().withMessage('Start date must be a valid date').trim().escape(),
 body('endDate').isDate().withMessage('End date must be a valid date').custom((value, { req }) => {
     let startDate = req.body.startDate;
@@ -47,7 +47,7 @@ body('endDate').isDate().withMessage('End date must be a valid date').custom((va
     return true;
 })
 .trim().escape(),
-body('details').isLength({min: 3}).withMessage('Trip details must be at least 3 characters').trim().escape(),
+body('details').isLength({min: 3, max: 2000}).withMessage('Trip details must be at least 3 characters and at most 2000 characters').trim().escape(),
 body('applyToAllDays', 'Invalid value for change location for all days').toLowerCase().isIn('on').trim().escape()];
 
 exports.validateDay = [body('location').isLength({min: 3}).withMessage('Day location must be at least 3 characters').trim().escape(),

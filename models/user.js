@@ -7,7 +7,8 @@ const userSchema = new Schema({
     lastName: {type: String, required: [true, 'last name cannot be empty']},
     email: {type: String, required: [true, 'email cannot be empty'], unique: true},
     password: {type: String, required: [true, 'password cannot be empty']}
-});
+},
+{timestamps: true});
 
 userSchema.pre('save', function(next) {
     let user = this;

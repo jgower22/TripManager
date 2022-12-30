@@ -523,6 +523,37 @@ label {
     opacity: 0.7;
 }
 
+#myTrips {
+    margin-top: 10px;
+}
+
+table {
+    width: fit-content;
+    text-align: left;
+}
+
+th {
+    font-size: 19px;
+}
+
+td {
+    font-size: 22px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    word-break: break-all;
+}
+
+th, td {
+    padding: 10px !important;
+}
+
 input, textarea, #accessType {
     margin: 7px 0px;
     padding: 7px 10px;

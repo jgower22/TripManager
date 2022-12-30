@@ -7,10 +7,10 @@
                 <h2>Edit this trip</h2>
                 <form action="/trips/<%=trip._id%>?_method=PUT" method="POST">
                     <label class="required" for="name">Trip Name:</label>
-                    <input type="text" id="name" name="name" placeholder="Trip Name" value="<%=trip.name%>" required>
+                    <input type="text" id="name" name="name" placeholder="Trip Name" value="<%=trip.name%>" minlength="2" maxlength="50" required>
 
                     <label class="required" for="location">Location:</label>
-                    <input type="text" id="location" name="location" placeholder="Location" value="<%=trip.location%>" required>
+                    <input type="text" id="location" name="location" placeholder="Location" value="<%=trip.location%>" minlength="2" maxlength="50" required>
 
                     <label id="checkboxLabel"><input type="checkbox" id="applyToAllDays" name="applyToAllDays"><b>Change location for all days?</b></label>
 
@@ -21,7 +21,7 @@
                     <input type="date" id="endDate" name="endDate" value="<%=trip.endDate%>" required>
                     
                     <label class="required" for="details">Details:</label>
-                    <textarea id="details" name="details" placeholder="Description of Trip" rows="7" required><%=trip.details%></textarea>
+                    <textarea id="details" name="details" placeholder="Description of Trip" rows="7" minlength="3" maxlength="2000" required><%=trip.details%></textarea>
 
                     <input value="Cancel" id="cancel" readonly="readonly" class="greenButton">
                     <input type="submit" value="Save Trip" id="submit" class="greenButton">

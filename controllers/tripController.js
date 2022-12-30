@@ -177,7 +177,6 @@ exports.showTrip = (req, res, next) => {
             }
         })
         .catch(err => next(err));
-
 };
 
 exports.editTrip = (req, res, next) => {

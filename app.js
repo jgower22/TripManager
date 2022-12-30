@@ -134,8 +134,9 @@ app.use((err, req, res, next) => {
 //Fix CANCEL button on mobile when turning device -- changes look -- DONE
 //General access - anyone with link can view/edit trip -- DONE
 //Add copy link button on share.ejs under general access -- DONE
+//Work on profile page -- display created trips in a table maybe -- DONE
 
-//Work on profile page -- display created trips in a table maybe
+//Add character limits on trip fields
 //Work on settings page
 //Add pop-up modal for adding new users for share.ejs
 //Add transition on copy link message on share.ejs
