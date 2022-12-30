@@ -133,6 +133,7 @@ app.use((err, req, res, next) => {
 //Edit timestamp for last modified on for trips and add last modified by -- DONE
 //Fix CANCEL button on mobile when turning device -- changes look -- DONE
 //General access - anyone with link can view/edit trip -- DONE
+//Add copy link button on share.ejs under general access -- DONE
 
 //Work on profile page -- display created trips in a table maybe
 //Work on settings page

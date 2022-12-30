@@ -334,10 +334,6 @@ main {
     margin-right: 10%;
 }
 
-#general_access {
-    margin-bottom: 10px;
-}
-
 @media only screen and (max-width: 590px) {
     #new_access_container {
         width: 100%;
@@ -498,6 +494,33 @@ label {
 
 .no_bottom_margin {
     margin-bottom: 0px;
+}
+
+.custom-margin {
+    margin-top: 10px;
+}
+
+#copyMessage {
+    background-color: #dafbe1;
+    width: fit-content;
+    padding: 20px;
+    color: black;
+    font-size: 18px;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: black;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    opacity: 0.7;
 }
 
 input, textarea, #accessType {
