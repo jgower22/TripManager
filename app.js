@@ -138,6 +138,7 @@ app.use((err, req, res, next) => {
 //Work on profile page -- display created trips in a table maybe
 //Work on settings page
 //Add pop-up modal for adding new users for share.ejs
+//Add transition on copy link message on share.ejs
 //Make flash messages same width as main container on page
 //Save user preference when reloading trips page (display trips based on what they last have been shown)
 //Bug fix: Flash message saying you are already logged in when spamming cancel on forms -- unable to replicate 12/28/22 @ 10:50 PM

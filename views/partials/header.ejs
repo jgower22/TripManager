@@ -53,6 +53,7 @@
         </div>
     </header>
 
+    
     <%if (user) {%>
     <div class="sub_menu_wrapper" id="subMenuWrapper">
         <div class="sub_menu">
@@ -80,7 +81,7 @@
         </div>
     </div>
     <%}%>
-
+    
     <%if (successMessages.length > 0) {
         successMessages.forEach(message => {%>
             <div class="flash mt-3 flash-success">
