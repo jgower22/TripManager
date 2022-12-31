@@ -20,6 +20,18 @@
                 return 0;
             }
 
+            function sortByEndDateReverse(a, b) {
+                a = a.endDate;
+                b = b.endDate;
+                if (a > b) {
+                    return -1;
+                }
+                if (a < b) {
+                    return 1;
+                }
+                return 0;
+            }
+
             //Sort by start date
             trips.sort(sortByStartDate);
 
@@ -78,6 +90,12 @@
                     }
                     if (prevGroup !== trip.group) {%>
                         </ul>
+                        <%if (trip.group === 'Previous Trips') {
+                            let previousTrips = trips.slice(i, trips.length);
+                            previousTrips.sort(sortByEndDateReverse);
+                            Array.prototype.splice.apply(trips, [i, previousTrips.length].concat(previousTrips));
+                            trip = trips[i];
+                        }%>
                         <h1><%=trip.group%></h1>
                         <ul>
                     <%}%>
