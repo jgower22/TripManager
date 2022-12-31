@@ -1,12 +1,45 @@
 <%- include('../partials/header.ejs')%>
+    <script defer src="/javascript/showTrips.js"></script>
     <main>
         <div id="main_content">
             <h2>Hello, <%=user.firstName + " " + user.lastName%>!</h2>
             <h3>Email: <%=user.email%></h3>
 
-            <%if (trips.length > 0) {%>
-                <h2 id="myTrips">My Trips (<%=trips.length%>)</h2>
-                <%let sortOrder = ['Ongoing Trips', 'Upcoming Trips', 'Previous Trips'];
+            <%switch (show) {
+                case 'mytrips':%>
+                    <select name="showTrips" id="showTrips">
+                        <option value="mytrips" selected>Show My Trips</option>
+                        <option value="shared">Show Shared Trips</option>
+                        <option value="all">Show All Trips</option>
+                    </select>
+                    <%break;
+                case 'shared':%>
+                    <select name="showTrips" id="showTrips">
+                        <option value="mytrips">Show My Trips</option>
+                        <option value="shared" selected>Show Shared Trips</option>
+                        <option value="all">Show All Trips</option>
+                    </select>
+                    <%break;
+                default:%>
+                    <select name="showTrips" id="showTrips">
+                        <option value="mytrips">Show My Trips</option>
+                        <option value="shared">Show Shared Trips</option>
+                        <option value="all" selected>Show All Trips</option>
+                    </select>
+            <%}%>
+
+            <%if (trips.length > 0) {
+                switch (show) {
+                    case 'shared':%>
+                        <h2 id="myTrips">Trips Shared with Me (<%=trips.length%>)</h2>
+                        <%break;
+                    case 'all':%>
+                        <h2 id="myTrips">All Trips (<%=trips.length%>)</h2>
+                        <%break;
+                    default:%>
+                        <h2 id="myTrips">My Trips (<%=trips.length%>)</h2>
+                <%}
+                let sortOrder = ['Ongoing Trips', 'Upcoming Trips', 'Previous Trips'];
                 function sortByName(a, b) {
                     return sortOrder.indexOf(a.group) - sortOrder.indexOf(b.group);
                 }
@@ -96,9 +129,19 @@
                     <%}%>
                 </table>
             <%} else {%>
-                <h2 id="myTrips">My Trips</h2>
-                <p>You have not created any trips</p>
-            <%}%>
+                <%switch (show) {
+                    case 'shared':%>
+                        <h2 id="myTrips">Trips Shared with Me</h2>
+                        <p>No one has shared any trips with you.</p>
+                        <%break;
+                    case 'all':%>
+                        <h2 id="myTrips">All Trips</h2>
+                        <p>There are no trips to display</p>
+                    <%default:%>
+                        <h2 id="myTrips">My Trips</h2>
+                        <p>You have not created any trips</p>
+                <%}
+            }%>
         </div>
     </main>
 <%- include('../partials/footer.ejs')%>

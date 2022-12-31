@@ -137,6 +137,7 @@ app.use((err, req, res, next) => {
 //Work on profile page -- display created trips in a table maybe -- DONE
 //Display previous trips in reverse order by end date (show most recent trips at top) -- DONE
 
+//Profile page - options to sort trips by created or shared with me or show all
 //Statistics - show one big map of all with pinpoints of everywhere the user went in a given year or overall
 //Add character limits on trip fields
 //Work on settings page

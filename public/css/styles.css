@@ -443,6 +443,10 @@ button:hover {
     width: fit-content;
 }
 
+#showTrips {
+    margin-top: 10px;
+}
+
 #addDayButton {
     float: right;
 }
@@ -521,10 +525,6 @@ label {
 
 .closebtn:hover {
     opacity: 0.7;
-}
-
-#myTrips {
-    margin-top: 10px;
 }
 
 table {
