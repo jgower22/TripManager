@@ -22,7 +22,7 @@
                         </form>
                         <%}%>
                     <%} else {%>
-                        <p>Only people with access can view this trip with the link</p>
+                        <p class="no_bottom_margin">Only people with access can view this trip with the link</p>
                         <%if (accessType === 'owner') {%>
                         <form action="/trips/<%=trip._id%>/general?_method=PUT" method="POST">
                             <select name="generalAccess" id="generalAccess">
