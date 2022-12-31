@@ -547,7 +547,7 @@ td {
 table, th, td {
     border: 1px solid black;
     border-collapse: collapse;
-    word-break: break-all;
+    word-break: break-word;
 }
 
 th, td {
@@ -666,12 +666,11 @@ textarea {
     opacity: 0.9;
 }
 
-/*@media only screen and (max-width: 590px) {
-    #cancel {
-        height: 20px;
-        border-radius: 25px;
+@media only screen and (max-width: 407px) {
+    .footer_links {
+        display: none;
     }
-}*/
+}
 
 .error_buttons {
     height: 30px;
