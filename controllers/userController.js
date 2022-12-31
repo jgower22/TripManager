@@ -130,7 +130,7 @@ exports.profile = (req, res, next) => {
                         formattedTrips.push(trips[i].trip);
                     }
                     unescapeTripNames(formattedTrips);
-                    res.render('./user/profile', { user, trips: formattedTrips, show });
+                    res.render('./user/profile', { user, trips: formattedTrips, show, DateTime });
                 })
                 .catch(err => next(err));
             break;

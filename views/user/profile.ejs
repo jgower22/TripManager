@@ -4,6 +4,16 @@
         <div id="main_content">
             <h2>Hello, <%=user.firstName + " " + user.lastName%>!</h2>
             <h3>Email: <%=user.email%></h3>
+            <%
+            const dateFormat = { 
+                ...DateTime.DATE_FULL, 
+                weekday: 'short',
+                month: 'short'
+            };
+            const createdAtDate = new Date(user.createdAt); 
+            const formattedDate = createdAtDate.toLocaleString(dateFormat);
+            %>
+            <h3>User since: <%=formattedDate.split(',')[0]%></h3>
 
             <%switch (show) {
                 case 'mytrips':%>
@@ -128,8 +138,8 @@
                         </tr>
                     <%}%>
                 </table>
-            <%} else {%>
-                <%switch (show) {
+            <%} else {
+                switch (show) {
                     case 'shared':%>
                         <h2 id="myTrips">Trips Shared with Me</h2>
                         <p>No one has shared any trips with you.</p>
@@ -137,7 +147,8 @@
                     case 'all':%>
                         <h2 id="myTrips">All Trips</h2>
                         <p>There are no trips to display</p>
-                    <%default:%>
+                        <%break;
+                    default:%>
                         <h2 id="myTrips">My Trips</h2>
                         <p>You have not created any trips</p>
                 <%}

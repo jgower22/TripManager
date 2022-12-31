@@ -135,11 +135,13 @@ app.use((err, req, res, next) => {
 //General access - anyone with link can view/edit trip -- DONE
 //Add copy link button on share.ejs under general access -- DONE
 //Work on profile page -- display created trips in a table maybe -- DONE
+//Add character limits on trip fields -- DONE
 //Display previous trips in reverse order by end date (show most recent trips at top) -- DONE
+//Profile page - options to sort trips by created or shared with me or show all -- DONE
 
-//Profile page - options to sort trips by created or shared with me or show all
+//Add create new trip when user is shown none exist
+//When a form contains errors, keep the fields when page refreshes
 //Statistics - show one big map of all with pinpoints of everywhere the user went in a given year or overall
-//Add character limits on trip fields
 //Work on settings page
 //Add pop-up modal for adding new users for share.ejs
 //Add transition on copy link message on share.ejs
