@@ -34,7 +34,7 @@
                     <h4>Created by <%=trip.createdBy.firstName%> <%=trip.createdBy.lastName%></h4>
                     <%console.log('LAST MODIFIED ON: ' + trip.updatedAt);
                     let date = new Date(trip.updatedAt);
-                    let formattedDate = date.toLocaleString('en-US', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone });
+                    let formattedDate = date.toLocaleString(undefined, { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone });
                     const dateFormat = { 
                         ...DateTime.DATE_FULL, 
                         weekday: 'long'

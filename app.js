@@ -136,8 +136,10 @@ app.use((err, req, res, next) => {
 //Add copy link button on share.ejs under general access -- DONE
 //Work on profile page -- display created trips in a table maybe -- DONE
 //Add character limits on trip fields -- DONE
+//Fix share.ejs css on mobile -- DONE
 //Display previous trips in reverse order by end date (show most recent trips at top) -- DONE
 //Profile page - options to sort trips by created or shared with me or show all -- DONE
+//Save user preference when reloading trips page (display trips based on what they last have been shown), saved in session -- DONE
 
 //Add create new trip when user is shown none exist
 //When a form contains errors, keep the fields when page refreshes
@@ -146,9 +148,7 @@ app.use((err, req, res, next) => {
 //Add pop-up modal for adding new users for share.ejs
 //Add transition on copy link message on share.ejs
 //Make flash messages same width as main container on page
-//Save user preference when reloading trips page (display trips based on what they last have been shown)
 //Bug fix: Flash message saying you are already logged in when spamming cancel on forms -- unable to replicate 12/28/22 @ 10:50 PM
-//Fix share.ejs css on mobile
 //Update end date calendar value to day after start date when it is changed
 //Search bar on trips page
 
