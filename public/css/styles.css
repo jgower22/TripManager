@@ -512,6 +512,14 @@ label {
     font-size: 18px;
 }
 
+#copyMessageError {
+    background-color: #ffebe9;
+    width: fit-content;
+    padding: 20px;
+    color: black;
+    font-size: 18px;
+}
+
 .closebtn {
     margin-left: 15px;
     color: black;

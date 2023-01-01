@@ -557,7 +557,7 @@ exports.addAccess = (req, res, next) => {
                     trip: tripId
                 }, { upsert: true })
                 .then(access => {
-                    req.flash('success', 'User successfully added');
+                    req.flash('success', 'User added successfully');
                     res.redirect('/trips/' + tripId + '/share');
                 })
                 .catch(err => next(err));
@@ -570,7 +570,7 @@ exports.removeAccess = (req, res, next) => {
     let userId = req.params.userId;
     Access.deleteOne({ trip: tripId, user: userId })
         .then(access => {
-            req.flash('success', 'User successfully removed');
+            req.flash('success', 'User removed successfully');
             res.redirect('/trips/' + tripId + '/share');
         })
         .catch(err => next(err));

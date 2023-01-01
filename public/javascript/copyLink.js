@@ -13,17 +13,18 @@ document.getElementById('copyLink').addEventListener('click', () => {
             let div = document.createElement('div');
             div.setAttribute('id', 'copyMessage');
             div.innerHTML = "<span class='closebtn' onclick='this.parentElement.style.display=\"none\"';>&times;</span>";
-            div.innerHTML += "Link successfully copied!";
+            div.innerHTML += "Link copied!";
             document.getElementById('general_access').append(div);
         },
         () => {
             //Error
-            if (document.getElementById('copyMessage') !== null) {
-                document.getElementById('copyMessage').remove();
+            if (document.getElementById('copyMessageError') !== null) {
+                document.getElementById('copyMessageError').remove();
             }
             let div = document.createElement('div');
-            div.setAttribute('id', 'copyMessage');
-            div.innerHTML = 'Unknown error. Please try again.';
+            div.setAttribute('id', 'copyMessageError');
+            div.innerHTML = "<span class='closebtn' onclick='this.parentElement.style.display=\"none\"';>&times;</span>";
+            div.innerHTML += "Unknown error. Please try again.";
             document.getElementById('general_access').append(div);
         }
     );

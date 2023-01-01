@@ -111,7 +111,7 @@ exports.profile = (req, res, next) => {
     switch (show) {
         case 'mytrips':
             //Show only userCreated trips
-            Promise.all([User.findById(id), Trip.find({ createdBy: res.locals.user }, { _id: 1, name: 1, startDate: 1, endDate: 1 })])
+            Promise.all([User.findById(id), Trip.find({ createdBy: res.locals.user }, { _id: 1, name: 1, startDate: 1, endDate: 1})])
                 .then(results => {
                     const [user, trips] = results;
                     unescapeTripNames(trips);
