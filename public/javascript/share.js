@@ -6,7 +6,7 @@ shareButton.addEventListener('click', event => {
         let tripName = document.getElementById('tripName').value;
         navigator.share({
             title: 'Trip link for ' + tripName,
-            text: 'Here is the link for ' + tripName,
+            text: 'Here is the link for ' + tripName + '\n',
             url: shareURL
         }).then(() => {
         })
