@@ -10,7 +10,7 @@ exports.index = (req, res, next) => {
     //res.send('Send all trips');
 
     let query = req._parsedOriginalUrl.query;
-    let show = 'all';
+    let show = req.session.showTrip || 'all';
     if (query) {
         let splitQuery = query.split('&');
         for (let i = 0; i < splitQuery.length; i++) {
@@ -19,6 +19,7 @@ exports.index = (req, res, next) => {
             //Find first show in query
             if (queryString === 'show') {
                 show = splitQuery[i].substring(index + 1, splitQuery[i].length);
+                req.session.showTrip = show;
                 break;
             }
         }
@@ -420,7 +421,6 @@ exports.showDay = (req, res, next) => {
             if (days.length > 0 && index !== -1) {
                 firstId = days[0].number;
                 lastId = days[days.length-1].number;
-                console.log('LAST ID: ' + lastId);
                 if (index !== 0) {
                     prevId = trip.days[index - 1].number;
                 }
@@ -487,7 +487,6 @@ exports.updateDay = (req, res, next) => {
                 err.status = 404;
                 return next(err);
             }
-            console.log('DAY: ' + JSON.stringify(day));
             req.flash('success', 'Day ' + dayId + ' updated successfully');
             res.redirect('/trips/' + tripId + '/' + dayId);
         })
