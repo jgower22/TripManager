@@ -120,9 +120,7 @@
                             const startDate = DateTime.fromISO(trip.startDate); 
                             const formattedStartDate = startDate.toLocaleString(dateFormat); 
                             const endDate = DateTime.fromISO(trip.endDate); 
-                            const formattedEndDate = endDate.toLocaleString(dateFormat);
-                            console.log('FORMATTED START DATE: ' + formattedStartDate);
-                            console.log('TRIPS[8]: ' + trips);%>
+                            const formattedEndDate = endDate.toLocaleString(dateFormat);%>
                             <td><%=formattedStartDate%></td>
                             <td><%=formattedEndDate%></td>
                         </tr>
