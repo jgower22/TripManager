@@ -1,5 +1,6 @@
 <%- include('../partials/header.ejs')%>
     <script defer src="/javascript/copyLink.js"></script>
+    <script defer src="/javascript/share.js"></script>
     <main>
         <div id="main_content">
             <div>
@@ -33,7 +34,8 @@
                         </form>
                         <%}%>
                     <%}%>
-                    <button id="copyLink" class="button custom-margin" type="button">Copy Link</button>
+                    <button id="copyLink" class="button margin-top" type="button">Copy Link</button>
+                    <button id="shareButton" class="button margin-top" type="button">Share Link</button>
                 </div>
                 <h2>Who Has Access</h2>
                 <div class="access">
@@ -81,6 +83,7 @@
                     </form>
                 </div>
             <%}%>
+            <input type="hidden" id="tripName" name="tripName" value="<%=trip.name%>">
         </div>
     </main>
 <%- include('../partials/footer.ejs')%>

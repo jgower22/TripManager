@@ -500,24 +500,23 @@ label {
     margin-bottom: 0px;
 }
 
-.custom-margin {
+.margin-top {
     margin-top: 10px;
 }
 
-#copyMessage {
-    background-color: #dafbe1;
+#shareMessage {
     width: fit-content;
     padding: 20px;
     color: black;
     font-size: 18px;
 }
 
-#copyMessageError {
+.success {
+    background-color: #dafbe1;
+}
+
+.error {
     background-color: #ffebe9;
-    width: fit-content;
-    padding: 20px;
-    color: black;
-    font-size: 18px;
 }
 
 .closebtn {

@@ -7,22 +7,24 @@ document.getElementById('copyLink').addEventListener('click', () => {
     navigator.clipboard.writeText(copyURL).then(
         () => {
             //Success
-            if (document.getElementById('copyMessage') !== null) {
-                document.getElementById('copyMessage').remove();
+            if (document.getElementById('shareMessage') !== null) {
+                document.getElementById('shareMessage').remove();
             }
             let div = document.createElement('div');
-            div.setAttribute('id', 'copyMessage');
+            div.setAttribute('id', 'shareMessage');
+            div.setAttribute('class', 'success');
             div.innerHTML = "<span class='closebtn' onclick='this.parentElement.style.display=\"none\"';>&times;</span>";
             div.innerHTML += "Link copied!";
             document.getElementById('general_access').append(div);
         },
         () => {
             //Error
-            if (document.getElementById('copyMessageError') !== null) {
-                document.getElementById('copyMessageError').remove();
+            if (document.getElementById('shareMessage') !== null) {
+                document.getElementById('shareMessage').remove();
             }
             let div = document.createElement('div');
-            div.setAttribute('id', 'copyMessageError');
+            div.setAttribute('id', 'shareMessage');
+            div.setAttribute('class', 'error');
             div.innerHTML = "<span class='closebtn' onclick='this.parentElement.style.display=\"none\"';>&times;</span>";
             div.innerHTML += "Unknown error. Please try again.";
             document.getElementById('general_access').append(div);
