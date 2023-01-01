@@ -26,12 +26,12 @@ exports.addUser = (req, res, next) => {
     .catch(err => {
         if (err.name === 'ValidationError') {
             req.flash('error', err.message);
-            return res.redirect('/users/new');
+            return res.redirect('/users/signup');
         }
 
         if (err.code === 11000) {
             req.flash('error', 'Email address has been used');
-            return res.redirect('/users/new');
+            return res.redirect('/users/signup');
         }
         next(err);
     });
