@@ -193,7 +193,7 @@ exports.editTrip = (req, res, next) => {
     Trip.findById(tripId)
         .then(trip => {
             unescapeTrip(trip);
-            res.locals.title = 'Edit trip - ' + trip.name;
+            res.locals.title = 'Edit Trip - ' + trip.name;
             res.render('./trip/editTrip', { trip });
         })
         .catch(err => next(err));
@@ -463,7 +463,7 @@ exports.editDay = (req, res, next) => {
             //Unescape trip day
             unescapeTripDay(day);
             unescapeTrip(trip);
-            res.locals.title = 'Edit day ' + day.number + ' - ' + trip.name;
+            res.locals.title = 'Edit Day ' + day.number + ' - ' + trip.name;
 
             if (day) {
                 res.render('./trip/editDay', { trip, day });
