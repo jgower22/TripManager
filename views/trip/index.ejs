@@ -2,7 +2,8 @@
     <script defer src="/javascript/showTrips.js"></script>
     <main>
         <div id="main_content">
-            <%switch (show) {
+            <%
+            switch (show) {
                 case 'mytrips':%>
                     <select name="showTrips" id="showTrips">
                         <option value="mytrips" selected>Show My Trips</option>
@@ -81,6 +82,7 @@
                         trip.group = 'Upcoming Trips';
                     }
                 }
+
                 trips.sort(sortByName);%>
                 <table>
                     <%let prevGroup = null;
@@ -95,6 +97,7 @@
                                 Array.prototype.splice.apply(trips, [i, previousTrips.length].concat(previousTrips));
                                 trip = trips[i];
                             }
+
                             const tripsInGroup = trips.filter(trip => trip.group === currentGroup);
                             %>
                             <tr>
