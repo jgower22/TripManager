@@ -2,54 +2,6 @@
     <script defer src="/javascript/showTrips.js"></script>
     <main>
         <div id="main_content">
-            <%
-            let sortOrder = ['Ongoing Trips', 'Upcoming Trips', 'Previous Trips'];
-            function sortByName(a, b) {
-                return sortOrder.indexOf(a.group) - sortOrder.indexOf(b.group);
-            }
-
-            function sortByStartDate(a, b) {
-                a = a.startDate;
-                b = b.startDate;
-                if (a > b) {
-                    return 1;
-                }
-                if (a < b) {
-                    return -1;
-                }
-                return 0;
-            }
-
-            function sortByEndDateReverse(a, b) {
-                a = a.endDate;
-                b = b.endDate;
-                if (a > b) {
-                    return -1;
-                }
-                if (a < b) {
-                    return 1;
-                }
-                return 0;
-            }
-
-            //Sort by start date
-            trips.sort(sortByStartDate);
-
-            //Determine if trip is in previous, ongoing or upcoming
-            for (let i = 0; i < trips.length; i++) {
-                let trip = trips[i];
-                let startDate = new Date(trip.startDate.replace('-', '/'));
-                let endDate = new Date(trip.endDate.replace('-', '/'));
-                let dateNow = new Date().setHours(0, 0, 0, 0);
-                if (endDate < dateNow) {
-                    trip.group = 'Previous Trips';
-                } else if (startDate <= dateNow && endDate >= dateNow) {
-                    trip.group = 'Ongoing Trips';
-                } else if (startDate > dateNow) {
-                    trip.group = 'Upcoming Trips';
-                }
-            }%> 
-            
             <%switch (show) {
                 case 'mytrips':%>
                     <select name="showTrips" id="showTrips">
@@ -73,41 +25,121 @@
                     </select>
             <%}%>
 
-            <%if (trips.length) {
-                trips.sort(sortByName);
-                let prevGroup = null;
+            <%if (trips.length > 0) {
+                switch (show) {
+                    case 'shared':%>
+                        <h2 id="myTrips">Trips Shared with Me (<%=trips.length%>)</h2>
+                        <%break;
+                    case 'all':%>
+                        <h2 id="myTrips">All Trips (<%=trips.length%>)</h2>
+                        <%break;
+                    default:%>
+                        <h2 id="myTrips">My Trips (<%=trips.length%>)</h2>
+                <%}
+                let sortOrder = ['Ongoing Trips', 'Upcoming Trips', 'Previous Trips'];
+                function sortByName(a, b) {
+                    return sortOrder.indexOf(a.group) - sortOrder.indexOf(b.group);
+                }
+
+                function sortByStartDate(a, b) {
+                    a = a.startDate;
+                    b = b.startDate;
+                    if (a > b) {
+                        return 1;
+                    }
+                    if (a < b) {
+                        return -1;
+                    }
+                    return 0;
+                }
+
+                function sortByEndDateReverse(a, b) {
+                    a = a.endDate;
+                    b = b.endDate;
+                    if (a > b) {
+                        return -1;
+                    }
+                    if (a < b) {
+                        return 1;
+                    }
+                    return 0;
+                }
+
+                //Sort by start date
+                trips.sort(sortByStartDate);
+                
                 for (let i = 0; i < trips.length; i++) {
                     let trip = trips[i];
-                    if (prevGroup === null) {%>
-                        <h1><%=trip.group%></h1>
-                        <ul>
-                        <li><a href="trips/<%=trip._id%>" class="link_underline"><%=trip.name%></a></li>
-                        <%prevGroup = trip.group;
-                        if (i === trips.length - 1) {%>
-                            </ul>
-                        <%}
-                        continue;
+                    let startDate = new Date(trip.startDate.replace('-', '/'));
+                    let endDate = new Date(trip.endDate.replace('-', '/'));
+                    let dateNow = new Date().setHours(0, 0, 0, 0);
+                    if (endDate < dateNow) {
+                        trip.group = 'Previous Trips';
+                    } else if (startDate <= dateNow && endDate >= dateNow) {
+                        trip.group = 'Ongoing Trips';
+                    } else if (startDate > dateNow) {
+                        trip.group = 'Upcoming Trips';
                     }
-                    if (prevGroup !== trip.group) {%>
-                        </ul>
-                        <%if (trip.group === 'Previous Trips') {
-                            let previousTrips = trips.slice(i, trips.length);
-                            previousTrips.sort(sortByEndDateReverse);
-                            Array.prototype.splice.apply(trips, [i, previousTrips.length].concat(previousTrips));
-                            trip = trips[i];
-                        }%>
-                        <h1><%=trip.group%></h1>
-                        <ul>
-                    <%}%>
-                    <li><a href="trips/<%=trip._id%>" class="link_underline"><%=trip.name%></a></li>
-                    <%if (i === trips.length - 1) {%>
-                        </ul>
-                    <%}
-                    prevGroup = trip.group;
                 }
-            } else {%>
-                <p>There are no trips to display.</p>
-            <%}%>
+                trips.sort(sortByName);%>
+                <table>
+                    <%let prevGroup = null;
+                    for (let i = 0; i < trips.length; i++) {
+                        let trip = trips[i];
+                        if (prevGroup === null || prevGroup !== trip.group) {%>
+                            <%
+                            let currentGroup = trip.group;
+                            if (trip.group === 'Previous Trips') {
+                                let previousTrips = trips.slice(i, trips.length);
+                                previousTrips.sort(sortByEndDateReverse);
+                                Array.prototype.splice.apply(trips, [i, previousTrips.length].concat(previousTrips));
+                                trip = trips[i];
+                            }
+                            const tripsInGroup = trips.filter(trip => trip.group === currentGroup);
+                            %>
+                            <tr>
+                                <td class="bold" colspan="100%"><%=trip.group%> (<%=tripsInGroup.length%>)</td>
+                            </tr>
+                            <tr>
+                                <th>Trip Name</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                            </tr>
+                            <%prevGroup = trip.group;
+                        }%>
+                        <tr>
+                            <td><li><a href="/trips/<%=trips[i]._id%>" class="link_table"><%=trips[i].name%></a></li></td>
+                            <%const dateFormat = { 
+                                ...DateTime.DATE_FULL, 
+                                weekday: 'short',
+                                month: 'short'
+                            };
+                            const startDate = DateTime.fromISO(trip.startDate); 
+                            const formattedStartDate = startDate.toLocaleString(dateFormat); 
+                            const endDate = DateTime.fromISO(trip.endDate); 
+                            const formattedEndDate = endDate.toLocaleString(dateFormat);
+                            console.log('FORMATTED START DATE: ' + formattedStartDate);
+                            console.log('TRIPS[8]: ' + trips);%>
+                            <td><%=formattedStartDate%></td>
+                            <td><%=formattedEndDate%></td>
+                        </tr>
+                    <%}%>
+                </table>
+            <%} else {
+                switch (show) {
+                    case 'shared':%>
+                        <h2 id="myTrips">Trips Shared with Me</h2>
+                        <p>No one has shared any trips with you.</p>
+                        <%break;
+                    case 'all':%>
+                        <h2 id="myTrips">All Trips</h2>
+                        <p>There are no trips to display</p>
+                        <%break;
+                    default:%>
+                        <h2 id="myTrips">My Trips</h2>
+                        <p>You have not created any trips</p>
+                <%}
+            }%>
         </div>
     </main>
 <%- include('../partials/footer.ejs')%>
