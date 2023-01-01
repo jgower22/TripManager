@@ -27,7 +27,7 @@ exports.validateResult = (req, res, next) => {
 
 exports.validateSignUp = [body('firstName', 'First name cannot be empty').notEmpty().isAlpha().withMessage('First name can only contain letters').trim().escape(),
 body('lastName', 'Last name cannot be empty').notEmpty().isAlpha().withMessage('Last name can only contain letters').trim().escape(),
-body('email', 'Email must be a valid email address').isEmail().normalizeEmail().trim().escape(),
+body('email', 'Email must be a valid email address').isEmail().normalizeEmail({ gmail_remove_dots: false}).trim().escape(),
 body('password', 'Password must be at least 8 characters and at most 64 characters').isLength({min: 8, max: 64})];
 
 exports.validateLogIn = [body('email', 'Email must be a valid email address').isEmail().normalizeEmail({ gmail_remove_dots: false }).trim().escape(),

@@ -176,6 +176,7 @@ exports.showTrip = (req, res, next) => {
                 };
                 unescapeTrip(trip);
                 res.locals.title = trip.name;
+                req.session.returnTo = req.originalUrl;
                 res.render('./trip/showTrip', { trip, escapedTrip, DateTime, validator });
             } else {
                 let err = new Error('Cannot find trip with id: ' + tripId);
@@ -442,6 +443,7 @@ exports.showDay = (req, res, next) => {
                 res.locals.title = 'Day ' + index + ' - ' + trip.name;
                 const { DateTime } = require('luxon');
                 const validator = require('validator');
+                req.session.returnTo = req.originalUrl;
                 res.render('./trip/showDay', { day, trip, prevId, nextId, firstId, lastId, DateTime, validator });
             } else {
                 let err = new Error('Cannot find day with id: ' + dayId);
