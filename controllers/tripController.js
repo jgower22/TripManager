@@ -2,7 +2,7 @@ const Trip = require('../models/trip');
 const User = require('../models/user');
 const Access = require('../models/access');
 const mongoose = require('mongoose');
-const { unescapeTrip, unescapeTripNames, unescapeTripDay, unescapeTripDays } = require('../public/javascript/unescape');
+const { unescapeTrip, unescapeTripName, unescapeTripNames, unescapeTripDay, unescapeTripDays } = require('../public/javascript/unescape');
 const maxNumDays = 731;
 const { DateTime }  = require('luxon');
 
@@ -31,6 +31,7 @@ exports.index = (req, res, next) => {
             Trip.find({ createdBy: res.locals.user }, { _id: 1, name: 1, startDate: 1, endDate: 1})
                 .then(trips => {
                     unescapeTripNames(trips);
+                    res.locals.title = 'Trip Manager - My Trips';
                     res.render('./trip/index', { trips, show, DateTime });
                 })
                 .catch(err => next(err));
@@ -45,6 +46,7 @@ exports.index = (req, res, next) => {
                         formattedTrips.push(trips[i].trip);
                     }
                     unescapeTripNames(formattedTrips);
+                    res.locals.title = 'Trip Manager - Shared Trips';
                     res.render('./trip/index', { trips: formattedTrips, show, DateTime });
                 })
                 .catch(err => next(err));
@@ -59,6 +61,7 @@ exports.index = (req, res, next) => {
                         combinedTrips.push(access[i].trip);
                     }
                     unescapeTripNames(trips);
+                    res.locals.title = 'Trip Manager - All Trips';
                     res.render('./trip/index', { trips: combinedTrips, show, DateTime });
                 })
                 .catch(err => next(err));
@@ -67,6 +70,7 @@ exports.index = (req, res, next) => {
 
 exports.newTrip = (req, res) => {
     //res.send('Send the new form');
+    res.locals.title = 'Trip Manager - New Trip';
     res.render('./trip/newTrip');
 };
 
@@ -171,6 +175,7 @@ exports.showTrip = (req, res, next) => {
                     days: trip.days
                 };
                 unescapeTrip(trip);
+                res.locals.title = trip.name;
                 res.render('./trip/showTrip', { trip, escapedTrip, DateTime, validator });
             } else {
                 let err = new Error('Cannot find trip with id: ' + tripId);
@@ -188,6 +193,7 @@ exports.editTrip = (req, res, next) => {
     Trip.findById(tripId)
         .then(trip => {
             unescapeTrip(trip);
+            res.locals.title = 'Edit trip - ' + trip.name;
             res.render('./trip/editTrip', { trip });
         })
         .catch(err => next(err));
@@ -432,6 +438,8 @@ exports.showDay = (req, res, next) => {
                 let day = days[index];
                 //Unescape day
                 unescapeTripDay(day);
+                unescapeTrip(trip);
+                res.locals.title = 'Day ' + index + ' - ' + trip.name;
                 const { DateTime } = require('luxon');
                 const validator = require('validator');
                 res.render('./trip/showDay', { day, trip, prevId, nextId, firstId, lastId, DateTime, validator });
@@ -454,6 +462,8 @@ exports.editDay = (req, res, next) => {
             let day = days.find(day => day.number == dayId);
             //Unescape trip day
             unescapeTripDay(day);
+            unescapeTrip(trip);
+            res.locals.title = 'Edit day ' + day.number + ' - ' + trip.name;
 
             if (day) {
                 res.render('./trip/editDay', { trip, day });
@@ -518,9 +528,11 @@ exports.generatePDF = (req, res, next) => {
 exports.share = (req, res, next) => {
     let tripId = req.params.id;
 
-    Promise.all([Trip.findOne({ _id: tripId }, {  generalAccess: 1 }).populate('createdBy', 'firstName lastName email'), Access.find({ trip: tripId }).populate('user', 'firstName lastName email')])
+    Promise.all([Trip.findOne({ _id: tripId }, {  generalAccess: 1, name: 1 }).populate('createdBy', 'firstName lastName email'), Access.find({ trip: tripId }).populate('user', 'firstName lastName email')])
         .then(results => {
             const [trip, access] = results;
+            unescapeTripName(trip);
+            res.locals.title = 'Share - ' + trip.name;
             res.render('./trip/share', { trip, access });
         })
         .catch(err => next(err));

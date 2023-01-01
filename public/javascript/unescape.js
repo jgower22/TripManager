@@ -7,6 +7,10 @@ exports.unescapeTrip = (trip) => {
     trip.details = validator.unescape(trip.details);
 };
 
+exports.unescapeTripName = (trip) => {
+    trip.name = validator.unescape(trip.name);
+}
+
 exports.unescapeTripNames = (trips) => {
     //Trip names on list of trips page
     for (let i = 0; i < trips.length; i++) {

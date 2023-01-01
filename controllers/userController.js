@@ -5,16 +5,8 @@ const { unescapeTripNames } = require('../public/javascript/unescape');
 const { DateTime } = require('luxon');
 
 exports.new = (req, res, next) => {
-    let id = req.session.user;
-    User.findById(id)
-    .then(user => {
-        if (user) {
-            res.render('./error/sessionError', {user});
-        } else {
-            res.render('./user/signup', {user});
-        }
-    })
-    .catch(err=>next(err));
+    res.locals.title = 'Trip Manager - Sign Up';
+    res.render('./user/signup');
 }
 
 exports.addUser = (req, res, next) => {
@@ -46,6 +38,7 @@ exports.addUser = (req, res, next) => {
 }
 
 exports.login = (req, res, next) => {
+    res.locals.title = 'Trip Manager - Log In';
     res.render('./user/login');
 }
 
@@ -83,72 +76,15 @@ exports.processLogin = (req, res, next) => {
 }
 
 exports.profile = (req, res, next) => {
-    /*let id = req.session.user;
-    Promise.all([User.findById(id), Trip.find({ createdBy: res.locals.user }, { _id: 1, name: 1, startDate: 1, endDate: 1})])
-    .then(results => {
-        const [user, trips] = results;
-        unescapeTripNames(trips);
-        res.render('./user/profile', {user, trips, DateTime});
-    })
-    .catch(err=>next(err));*/
-
     let id = req.session.user;
-    let query = req._parsedOriginalUrl.query;
-    let show = 'mytrips';
-    if (query) {
-        let splitQuery = query.split('&');
-        for (let i = 0; i < splitQuery.length; i++) {
-            let index = splitQuery[i].indexOf('=');
-            let queryString = splitQuery[i].substring(0, index).toLowerCase();
-            //Find first show in query
-            if (queryString === 'show') {
-                show = splitQuery[i].substring(index + 1, splitQuery[i].length);
-                break;
-            }
-        }
-    }
-
-    switch (show) {
-        case 'mytrips':
-            //Show only userCreated trips
-            Promise.all([User.findById(id), Trip.find({ createdBy: res.locals.user }, { _id: 1, name: 1, startDate: 1, endDate: 1})])
-                .then(results => {
-                    const [user, trips] = results;
-                    unescapeTripNames(trips);
-                    res.render('./user/profile', { user, trips, show, DateTime });
-                })
-                .catch(err => next(err));
-            break;
-        case 'shared':
-            //Show only shared trips
-            Promise.all([User.findById(id), Access.find({ user: res.locals.user}).populate('trip', '_id name startDate endDate')])
-                .then(results => {
-                    const [user, trips] = results;
-                    //Format trips
-                    let formattedTrips = [];
-                    for (let i = 0; i < trips.length; i++) {
-                        formattedTrips.push(trips[i].trip);
-                    }
-                    unescapeTripNames(formattedTrips);
-                    res.render('./user/profile', { user, trips: formattedTrips, show, DateTime });
-                })
-                .catch(err => next(err));
-            break;
-        default:
-            //Show all trips (userCreated + shared)
-            Promise.all([User.findById(id), Trip.find({ createdBy: res.locals.user }, { _id: 1, name: 1, startDate: 1, endDate: 1 }), Access.find({ user: res.locals.user }).populate('trip', '_id name startDate endDate')])
-                .then(results => {
-                    console.log('RESULTS: ' + results);
-                    const [user, trips, access] = results;
-                    let combinedTrips = trips;
-                    for (let i = 0; i < access.length; i++) {
-                        combinedTrips.push(access[i].trip);
-                    }
-                    unescapeTripNames(trips);
-                    res.render('./user/profile', { user, trips: combinedTrips, show, DateTime });
-                })
-                .catch(err => next(err));
-    }
+    User.findById(id)
+        .then(user => {
+            res.locals.title = 'Trip Manager - Profile';
+            console.log(user);
+            res.render('./user/profile', { user, DateTime });
+        })
+        .catch(err => next(err));
+    
 }
 
 exports.settings = (req, res, next) => {
