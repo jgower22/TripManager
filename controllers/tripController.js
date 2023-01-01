@@ -4,6 +4,7 @@ const Access = require('../models/access');
 const mongoose = require('mongoose');
 const { unescapeTrip, unescapeTripNames, unescapeTripDay, unescapeTripDays } = require('../public/javascript/unescape');
 const maxNumDays = 731;
+const { DateTime }  = require('luxon');
 
 exports.index = (req, res, next) => {
     //res.send('Send all trips');
@@ -29,7 +30,7 @@ exports.index = (req, res, next) => {
             Trip.find({ createdBy: res.locals.user }, { _id: 1, name: 1, startDate: 1, endDate: 1})
                 .then(trips => {
                     unescapeTripNames(trips);
-                    res.render('./trip/index', { trips, show });
+                    res.render('./trip/index', { trips, show, DateTime });
                 })
                 .catch(err => next(err));
             break;
@@ -43,7 +44,7 @@ exports.index = (req, res, next) => {
                         formattedTrips.push(trips[i].trip);
                     }
                     unescapeTripNames(formattedTrips);
-                    res.render('./trip/index', { trips: formattedTrips, show });
+                    res.render('./trip/index', { trips: formattedTrips, show, DateTime });
                 })
                 .catch(err => next(err));
             break;
@@ -57,7 +58,7 @@ exports.index = (req, res, next) => {
                         combinedTrips.push(access[i].trip);
                     }
                     unescapeTripNames(trips);
-                    res.render('./trip/index', { trips: combinedTrips, show });
+                    res.render('./trip/index', { trips: combinedTrips, show, DateTime });
                 })
                 .catch(err => next(err));
     }
