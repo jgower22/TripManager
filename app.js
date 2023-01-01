@@ -141,8 +141,9 @@ app.use((err, req, res, next) => {
 //Profile page - options to sort trips by created or shared with me or show all -- DONE
 //Save user preference when reloading trips page (display trips based on what they last have been shown), saved in session -- DONE
 //Fix header (user drop down) - does not show on 'top' of screen -- DONE
+//Fix header (user drop down) - goes off page if main content is not long enough -- DONE
 
-//Fix header (user drop down) - goes off page if main content is not long enough
+
 //Add create new trip when user is shown none exist
 //When a form contains errors, keep the fields when page refreshes
 //Statistics - show one big map of all with pinpoints of everywhere the user went in a given year or overall
