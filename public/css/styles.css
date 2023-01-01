@@ -109,6 +109,7 @@ ul {
 }
 
 .sub_menu_wrapper {
+    z-index: 1;
     position: absolute;
     width: 320px;
     right: 0;
@@ -207,7 +208,7 @@ ul {
 }
 
 .flash {
-    width: 50%;
+    width: 100%;
     text-align: center;
     padding: 10px 10px;
     display: block;
