@@ -4,7 +4,7 @@
     <main>
         <div id="main_content_centered">
             <div id="trip_container">
-                <div id="top_trip">
+                <div id="main-trip-wrapper">
                         <div id="buttons_container">
                             <form>
                                 <%if (accessType === 'owner' || accessType === 'editor') {%>
@@ -45,15 +45,17 @@
                     <h4>Last modified on: <%=formattedDate%> by <%=trip.lastModifiedBy.firstName%> <%=trip.lastModifiedBy.lastName%></h4>
                     <div id="map"></div>
                     
-                    <h3 id="locationHeader" class="locationHeader">Location: <%=trip.location%></h3>
+                    <div id="location-wrapper">
+                        <h3 id="locationHeader" class="locationHeader">Location: <%=trip.location%></h3>
 
-                    <% 
-                    const startDate = DateTime.fromISO(trip.startDate); 
-                    const formattedStartDate = startDate.toLocaleString(dateFormat); 
-                    const endDate = DateTime.fromISO(trip.endDate); 
-                    const formattedEndDate = endDate.toLocaleString(dateFormat);%>
+                        <% 
+                        const startDate = DateTime.fromISO(trip.startDate); 
+                        const formattedStartDate = startDate.toLocaleString(dateFormat); 
+                        const endDate = DateTime.fromISO(trip.endDate); 
+                        const formattedEndDate = endDate.toLocaleString(dateFormat);%>
 
-                    <h3><%=formattedStartDate%> - <%=formattedEndDate%></h3>
+                        <h3><%=formattedStartDate%> - <%=formattedEndDate%></h3>
+                    </div>
                 </div>
                 <div id="description">
                     <h1>Description</h1>

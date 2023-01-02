@@ -213,7 +213,7 @@ ul {
       margin-left: auto !important;
       position: static !important;
      }
-   }
+}
 
 .flash {
     width: 50%;
@@ -376,8 +376,14 @@ main {
     margin-right: 30px;
 }
 
-#top_trip {
+#main-trip-wrapper {
     padding-bottom: 10px;
+}
+
+@media only screen and (max-width: 590px) {
+    #map {
+        width: 100%;
+    }
 }
 
 .locationHeader, #dayHeader {

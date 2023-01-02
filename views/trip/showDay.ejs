@@ -3,7 +3,7 @@
     <main>
         <div id="main_content_centered">
             <div id="trip_container">
-                <div id="top_trip">
+                <div id="main-trip-wrapper">
                     <%if (accessType === 'owner' || accessType === 'editor') {%>
                     <div id="buttons_container_day">
                         <form>
@@ -36,13 +36,14 @@
                     </div>
 
                     <div id="map"></div>
-                    
-                    <%const dateFormat={ ...DateTime.DATE_FULL, weekday: 'long' }; 
-                    const date = DateTime.fromISO(day.date); 
-                    const formattedDate = date.toLocaleString(dateFormat);%>
+                    <div id="location-wrapper">
+                        <%const dateFormat={ ...DateTime.DATE_FULL, weekday: 'long' }; 
+                        const date = DateTime.fromISO(day.date); 
+                        const formattedDate = date.toLocaleString(dateFormat);%>
 
-                    <h2>Day <%=day.number%> - <%=formattedDate%></h2>
-                    <h3 id="locationHeader">Location: <%=day.location%></h3>
+                        <h2>Day <%=day.number%> - <%=formattedDate%></h2>
+                        <h3 id="locationHeader">Location: <%=day.location%></h3>
+                    </div>
                 </div>
                 <div id="day_description">
                     <h1>Description</h1>
