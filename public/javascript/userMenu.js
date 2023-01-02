@@ -1,4 +1,4 @@
-try {
+try {    
     document.getElementById('user_profile').addEventListener('click', e => {
         e.preventDefault();
         let element = document.getElementById('subMenuWrapper');

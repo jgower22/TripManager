@@ -207,13 +207,13 @@ ul {
     justify-content: center;
 }
 
-@media (max-height: 573px) {
+/*@media (max-height: 573px) {
     .sub_menu_wrapper{
       overflow-y: scroll !important;
       margin-left: auto !important;
       position: static !important;
      }
-}
+}*/
 
 .flash {
     width: 50%;
@@ -233,6 +233,7 @@ ul {
   
 main {
     width: 100%;
+    min-height: 300px;
     margin: 0 auto;
 }
 
