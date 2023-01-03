@@ -46,7 +46,6 @@ function generatePDF(trip, dataCallback, endCallback) {
         .fontSize(textFontSize)
         .text(trip.details.replace(/\r\n|\r/g, '\n'));
 
-
     //Days
     doc.text('\n');
     doc.font(bold)

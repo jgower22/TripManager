@@ -6,6 +6,7 @@ body {
     margin: 0 auto;
     background-color: white;
     min-height: 100vh;
+    min-width: 314px;
     word-wrap: break-word;
     overflow-x: hidden;
 }
@@ -320,6 +321,10 @@ main {
     }
 }
 
+/*#trip_container {
+    width: 95%;
+}*/
+
 #login_container, #signup_container {
     width: 30%;
 }
@@ -380,7 +385,7 @@ main {
 #map {
     height: 250px;
     width: 350px;
-    z-index: -1;
+    z-index: 0;
 }
 
 #map {
