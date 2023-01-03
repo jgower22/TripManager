@@ -15,6 +15,16 @@ header {
     background-color: black;
 }
 
+@media only screen and (max-width: 590px) {
+    .float-right-mobile {
+        float: right;
+    }
+
+    .float-left-mobile {
+        float: left;
+    }
+}
+
 #top_header {
     display: flex;
     justify-content: space-between;
@@ -339,12 +349,13 @@ main {
 }
 
 .left {
-    word-break: break-all;
+    word-break: break-word;
     white-space: normal;
     margin-right: 10%;
 }
 
-@media only screen and (max-width: 590px) {
+/*590px*/
+@media only screen and (max-width: 775px) {
     #new_access_container {
         width: 100%;
     }
@@ -372,10 +383,9 @@ main {
     z-index: -1;
 }
 
-#image, #map {
+#map {
     margin-top: 10px;
     float: left;
-    margin-right: 30px;
 }
 
 #main-trip-wrapper {
@@ -383,8 +393,25 @@ main {
 }
 
 @media only screen and (max-width: 590px) {
-    #map {
+    #location-wrapper, #map {
         width: 100%;
+    }
+}
+
+#map-location-wrapper {
+    float: left;
+    width: 100%;
+}
+
+@media only screen and (min-width: 591px) {
+    /*#location-wrapper {
+        float: right;
+        width: 50%;
+        word-break: break-word;
+    }*/
+    #map {
+        float: left;
+        display: flex;
     }
 }
 
@@ -393,7 +420,7 @@ main {
 }
 
 @media only screen and (max-width: 590px) {
-    #locationHeader {
+    #location-wrapper {
         padding-top: 0px;
     }
 }
@@ -506,6 +533,7 @@ button:hover {
 #prevNextButtons {
     margin-top: 10px;
     margin-bottom: 10px;
+    clear: both;
 }
 
 label {

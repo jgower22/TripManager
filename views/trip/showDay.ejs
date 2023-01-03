@@ -17,16 +17,16 @@
                     <div id="prevNextButtons">
                         <%if (prevId !== undefined) {%>
                             <a href="/trips/<%=trip._id%>/<%=prevId%>">
-                                <button class="button" type="button">Previous Day</button>
+                                <button class="button float-left-mobile" type="button">Previous Day</button>
                             </a>
                         <%} else if (trip.days.length > 1) {%>
                             <a href="/trips/<%=trip._id%>/<%=lastId%>">
-                                <button class="button" type="button">Go to Last Day</button>
+                                <button class="button float-left-mobile" type="button">Go to Last Day</button>
                             </a>
                         <%}
                         if (nextId !== undefined) {%>
                             <a href="/trips/<%=trip._id%>/<%=nextId%>">
-                                <button class="button" type="button">Next Day</button>
+                                <button class="button float-right-mobile" type="button">Next Day</button>
                             </a>
                         <%} else if (trip.days.length > 1) {%>
                             <a href="/trips/<%=trip._id%>/<%=firstId%>">
@@ -35,14 +35,16 @@
                         <%}%>
                     </div>
 
-                    <div id="map"></div>
-                    <div id="location-wrapper">
-                        <%const dateFormat={ ...DateTime.DATE_FULL, weekday: 'long' }; 
-                        const date = DateTime.fromISO(day.date); 
-                        const formattedDate = date.toLocaleString(dateFormat);%>
-
-                        <h2>Day <%=day.number%> - <%=formattedDate%></h2>
-                        <h3 id="locationHeader">Location: <%=day.location%></h3>
+                    <div id="map-location-wrapper">
+                        <div id="location-wrapper">
+                            <%const dateFormat={ ...DateTime.DATE_FULL, weekday: 'long' }; 
+                            const date = DateTime.fromISO(day.date); 
+                            const formattedDate = date.toLocaleString(dateFormat);%>
+    
+                            <h2>Day <%=day.number%> - <%=formattedDate%></h2>
+                            <h3 id="locationHeader">Location: <%=day.location%></h3>
+                        </div>
+                        <div id="map"></div>
                     </div>
                 </div>
                 <div id="day_description">
