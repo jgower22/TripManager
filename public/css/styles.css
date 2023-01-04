@@ -1,5 +1,6 @@
 :root {
     --lineHeight: 1.5;
+    --mapWidth: 350px;
 }
 
 body {
@@ -276,16 +277,22 @@ main {
     padding: 50px 50px;
 }
 
+#main-content-flex {
+    display: flex;
+    padding: 50px 50px;
+}
+
 @media only screen and (max-width: 590px) {
-    #main_content {
-        padding: 10px 10px;
-    }
-    #main_content_centered {
+    #main_content, #main_content_centered, #main-content-flex {
         padding: 10px 10px;
     }
 }
 
 #main_content p {
+    font-size: 22px;
+}
+
+p {
     font-size: 22px;
 }
 
@@ -348,9 +355,13 @@ main {
     width: 35%;
 }
 
-.inline_container {
+.inline_container, .inline-profile {
     display: inline-block;
     vertical-align: top;
+}
+
+#profile-container {
+    margin-bottom: 10px;
 }
 
 .left {
@@ -360,7 +371,7 @@ main {
 }
 
 /*590px*/
-@media only screen and (max-width: 775px) {
+@media only screen and (max-width: 780px) {
     #new_access_container {
         width: 100%;
     }
@@ -371,6 +382,16 @@ main {
         margin-right: 0;
     }
 }
+
+/*@media only screen and (max-width: 970px) {
+    #map-wrapper {
+        width: 100%;
+        float: left;
+    }
+    .inline-profile {
+        width: 100%;
+    }
+}*/
 
 @media (max-width: 1200px) {
     #form_container {
@@ -384,8 +405,13 @@ main {
 
 #map {
     height: 250px;
-    width: 350px;
+    width: var(--mapWidth);
     z-index: 0;
+}
+
+.large-map {
+    width: 600px !important;
+    height: 300px !important;
 }
 
 #map {
