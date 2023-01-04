@@ -429,7 +429,7 @@ p {
     padding-bottom: 10px;
 }
 
-@media only screen and (max-width: 884px) {
+@media only screen and (max-width: 590px) {
     #location-wrapper, #map, #map-wrapper {
         width: 100%;
     }
