@@ -143,7 +143,7 @@ app.use((err, req, res, next) => {
 //Fix header (user drop down) - does not show on 'top' of screen -- DONE
 //Fix header (user drop down) - goes off page if main content is not long enough -- DONE
 //Add create new trip when user is shown none exist -- DONE
-//Statistics - show one big map of all with pinpoints of everywhere the user went in a overall - DONE, need to format this for mobile
+//Statistics - show one big map of all with pinpoints of everywhere the user went in a overall - DONE
 
 //When a form contains errors, keep the fields when page refreshes
 //Work on settings page
