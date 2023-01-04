@@ -142,10 +142,10 @@ app.use((err, req, res, next) => {
 //Save user preference when reloading trips page (display trips based on what they last have been shown), saved in session -- DONE
 //Fix header (user drop down) - does not show on 'top' of screen -- DONE
 //Fix header (user drop down) - goes off page if main content is not long enough -- DONE
+//Add create new trip when user is shown none exist -- DONE
+//Statistics - show one big map of all with pinpoints of everywhere the user went in a overall - DONE, need to format this for mobile
 
-//Add create new trip when user is shown none exist
 //When a form contains errors, keep the fields when page refreshes
-//Statistics - show one big map of all with pinpoints of everywhere the user went in a given year or overall
 //Work on settings page
 //Add pop-up modal for adding new users for share.ejs
 //Add transition on copy link message on share.ejs

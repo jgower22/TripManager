@@ -33,3 +33,11 @@ exports.unescapeTripDays = (trip) => {
         day.details = validator.unescape(day.details);
     }
 }
+
+exports.unescapeTripLocations = (trips) => {
+    //Trip locations for profile page
+    for (let i = 0; i < trips.length; i++) {
+        let trip = trips[i];
+        trip.location = validator.unescape(trip.location);
+    }
+}
