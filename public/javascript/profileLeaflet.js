@@ -10,7 +10,7 @@ map.setView([0, 0], 1);
 
 //Get location from locationHeader on page
 //var locationToSet = document.getElementById('locationHeader').innerHTML;
-var zoomLevel = 11;
+var zoomLevel = 1;
 //If on trip overview, set zoom level to 4
 
 var tripLocations = document.getElementById('tripLocations').value;
@@ -53,6 +53,8 @@ const findAllLocations = async () => {
             } else {
                 //Else save first result
                 let currentLocation = data.geonames[0];
+                //Center on current location
+                map.setView([currentLocation.lat, currentLocation.lng], zoomLevel);
                 var marker = L.marker([currentLocation.lat, currentLocation.lng]).addTo(map);
                 marker.bindPopup(locations[i]).openPopup();
             }

@@ -409,14 +409,15 @@ p {
     z-index: 0;
 }
 
-@media only screen and (min-width: 650px) {
-    /*.large-map {
+@media only screen and (min-width: 675px) {
+    .large-map {
         width: 600px !important;
         height: 300px !important;
+        margin-right: 0 !important;
     }
     #map-wrapper {
         width: fit-content;
-    }*/
+    }
 }
 
 #map {
