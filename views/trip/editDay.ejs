@@ -6,13 +6,13 @@
                 <h2>Edit Day <%=day.number%></h2>
                 <form action="/trips/<%=trip._id%>/<%=day.number%>?_method=PUT" method="POST">
                     <label class="required" for="number">Day Number:</label>
-                    <input type="text" id="number" name="number" value="<%=day.number%>" disabled>
+                    <input type="text" id="number" class="disabled" name="number" value="<%=day.number%>" disabled>
 
                     <label class="required" for="location">Location:</label>
                     <input type="text" id="location" name="location" value="<%=day.location%>" required>
 
                     <label class="required" for="date">Date:</label>
-                    <input type="date" id="date" name="date" value="<%=day.date%>" disabled>
+                    <input type="date" id="date" class="disabled" name="date" value="<%=day.date%>" disabled>
                     
                     <label class="required" for="details">Details:</label>
                     <textarea id="details" name="details" placeholder="12:00 PM - Arrive at airport&#10;2:00 PM - Go to hotel" rows="10" required><%=day.details%></textarea>

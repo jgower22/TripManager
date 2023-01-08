@@ -153,4 +153,5 @@ app.use((err, req, res, next) => {
 //Bug fix: Flash message saying you are already logged in when spamming cancel on forms -- unable to replicate 12/28/22 @ 10:50 PM
 //Update end date calendar value to day after start date when it is changed
 //Search bar on trips page
+//Confirmation emails
 

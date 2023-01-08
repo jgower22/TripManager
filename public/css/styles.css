@@ -415,9 +415,6 @@ p {
         height: 300px !important;
         margin-right: 0 !important;
     }
-    #map-wrapper {
-        width: fit-content;
-    }
 }
 
 #map {
@@ -651,6 +648,10 @@ input, textarea, #accessType {
     border: 1px solid #ccc;
     border-radius: 7px;
     box-sizing: border-box;
+}
+
+input.disabled:hover {
+    cursor: not-allowed;
 }
 
 #generalAccess {
