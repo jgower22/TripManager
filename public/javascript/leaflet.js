@@ -42,10 +42,10 @@ fetch(geonamesURL)
             // loop through the "N" items returned in the data array
             for (var i = 0; i < data.geonames.length; i++) {
 
-                if (i == 0)  {
+                if (i == 0) {
                     // Centers the view on the first location
                     map.setView([data.geonames[i].lat, data.geonames[i].lng], zoomLevel);
-    
+
                     var marker = L.marker([data.geonames[i].lat, data.geonames[i].lng]).addTo(map);
                 }
 
@@ -53,11 +53,12 @@ fetch(geonamesURL)
             }
         }
     }).catch(err => {
+        console.log('Map error: ' + err);
         map.setView([0, 0], 12);
-            L.popup()
-                .setLatLng([0, 0])
-                .setContent('Error. Please try again later.')
-                .openOn(map);
+        L.popup()
+            .setLatLng([0, 0])
+            .setContent('Error. Please try again later.')
+            .openOn(map);
     });
 
 

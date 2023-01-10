@@ -20,8 +20,7 @@ exports.validateResult = (req, res, next) => {
             req.flash('error', error.msg);
         });
         res.locals.formFields = req.body;
-        console.log('RES LOCALS FORM FIELDS: ' + JSON.stringify(res.locals.formFields));
-        return res.redirect('back', { formFields: req.body});
+        return res.redirect('back');
     } else {
         return next();
     }
