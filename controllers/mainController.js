@@ -1,5 +1,3 @@
-const User = require('../models/user');
-
 exports.index = (req, res) => {
     res.locals.title = 'Trip Manager - Home';
     res.render('./index');

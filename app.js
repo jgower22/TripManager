@@ -9,7 +9,6 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
-const User = require('./models/user');
 const dotenv = require('dotenv');
 
 //create app
@@ -145,6 +144,7 @@ app.use((err, req, res, next) => {
 //Add create new trip when user is shown none exist -- DONE
 //Statistics - show one big map of all with pinpoints of everywhere the user went in a overall - DONE
 
+//Ability to archive a trip
 //When a form contains errors, keep the fields when page refreshes
 //Work on settings page
 //Add pop-up modal for adding new users for share.ejs
