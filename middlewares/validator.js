@@ -54,3 +54,5 @@ body('applyToAllDays', 'Invalid value for change location for all days').toLower
 exports.validateDay = [body('location').isLength({ min: 3 }).withMessage('Day location must be at least 3 characters').trim().escape(),
 body('details').isLength({ min: 3 }).withMessage('Day details must be at least 3 characters').trim().escape()];
 
+exports.validateEmail = [body('email', 'Email must be a valid email address').isEmail().normalizeEmail({ gmail_remove_dots: false }).trim().escape()];
+
