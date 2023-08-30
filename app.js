@@ -21,6 +21,7 @@ dotenv.config();
 let username = `${process.env.DB_USERNAME}`;
 let password = `${process.env.DB_PASSWORD}`;
 let url = 'mongodb+srv://' + username + ':' + password + '@trips.jiospgv.mongodb.net/trips';
+console.log(url);
 app.set('view engine', 'ejs');
 
 //connect to MongoDB
