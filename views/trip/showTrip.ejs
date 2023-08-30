@@ -24,9 +24,9 @@
                     <form>
                         <button class="button" id="pdf" type="submit" formmethod="GET" formaction="/trips/<%=trip._id%>/pdf">Download PDF</button>
                         <%if (accessType !== 'anon') {%>
-                        <a href="/trips/<%=trip._id%>/share">
-                            <button class="button" type="button">Share</button>
-                         </a>
+                            <a href="/trips/<%=trip._id%>/share">
+                                <button class="button" type="button">Share</button>
+                            </a>
                          <%}%>
                     </form>
                     <h1 id="tripName"><%=trip.name%></h1>
@@ -277,7 +277,7 @@
                         showDays(false, false);
                     }
     
-                    document.getElementById('maxDaysSelect').addEventListener('change', handleSelectChange);%>
+                    document.getElementById('maxDaysSelect').addEventListener('change', handleSelectChange);
                 </script>
             </div>
         </div>
