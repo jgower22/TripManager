@@ -695,6 +695,14 @@ textarea {
     color: red;
 }
 
+#resetPasswordLink {
+    font-size: 15px;
+}
+
+#header-spacing {
+    margin-top: 4rem;
+}
+
 .greenButton {
     width: fit-content;
     background-color: #04AA6D;
