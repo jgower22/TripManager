@@ -1,13 +1,18 @@
 const User = require('../models/user');
 const Trip = require('../models/trip');
 const Access = require('../models/access');
+const Token = require('../models/token');
+const crypto = require('crypto');
+const bcrypt = require('bcrypt');
+const bcryptSalt = process.env.BCRYPT_SALT;
 const { unescapeTripNames, unescapeTrip, unescapeTripLocations } = require('../public/javascript/unescape');
+const { message } = require('../public/javascript/email.js');
 const { DateTime } = require('luxon');
 
 exports.new = (req, res, next) => {
     res.locals.title = 'Trip Manager - Sign Up';
     res.render('./user/signup');
-}
+};
 
 exports.addUser = (req, res, next) => {
     let user = new User(req.body);
@@ -35,12 +40,12 @@ exports.addUser = (req, res, next) => {
         }
         next(err);
     });
-}
+};
 
 exports.login = (req, res, next) => {
     res.locals.title = 'Trip Manager - Log In';
     res.render('./user/login');
-}
+};
 
 exports.processLogin = (req, res, next) => {
     let email = req.body.email;
@@ -73,7 +78,7 @@ exports.processLogin = (req, res, next) => {
         }
     })
     .catch(err=>next(err));
-}
+};
 
 exports.profile = (req, res, next) => {
     let id = req.session.user;
@@ -87,7 +92,7 @@ exports.profile = (req, res, next) => {
         })
         .catch(err => next(err));
     
-}
+};
 
 exports.settings = (req, res, next) => {
     let id = req.session.user;
@@ -96,7 +101,7 @@ exports.settings = (req, res, next) => {
         res.render('./user/settings', {user});
     })
     .catch(err=>next(err));
-}
+};
 
 exports.logout = (req, res, next) => {
     delete req.session.returnTo;
@@ -107,4 +112,59 @@ exports.logout = (req, res, next) => {
             res.redirect('/');
         }
     });
+};
+
+exports.resetPassword = (req, res, next) => {
+    let data = req.flash('formdata');
+    res.locals.title = 'Reset Login - Trip Manager';
+    res.render('./user/resetPassword', { formData: data[0] });
+};
+
+exports.sendPasswordReset = (req, res, next) => {
+    let userEmail = req.body.email;
+    let flashMessage = 'If we found an account associated with that email, then we\'ll send an email to reset your password.';
+
+    User.findOne({ email: userEmail }, { email: 1, username: 1, firstName: 1})
+        .then(user => {
+            if (user) {
+                let resetToken = crypto.randomBytes(32).toString('hex');
+
+                Token.findOne({ user: user._id })
+                    .then(token => {
+                        console.log('TOKEN: ' + token);
+                        if (token) {
+                            token.deleteOne();
+                        }
+                        bcrypt.hash(resetToken, Number(bcryptSalt))
+                            .then(hash => {
+                                new Token({
+                                    user: user._id,
+                                    token: hash,
+                                    createdAt: Date.now()
+                                }).save()
+                                    .then(token => {
+                                        let link = `${process.env.CLIENT_URL}/users/reset-password?token=${resetToken}&id=${user._id}`;
+                                        console.log('LINK: ' + link);
+                                        let messageOptions = ({
+                                            from: `${process.env.EMAIL}`,
+                                            to: "" + req.body.email + "", //receiver
+                                            subject: "Trip Manager Password Reset Link",
+                                            html: "Hello " + user.firstName + "," + 
+                                                "<br>Here is the password reset link you requested:" +
+                                                '<br><p>Click <a href="' + link + '">here</a> to reset your password</p>'
+                                        });
+                                        message(null, null, messageOptions, null, null, null, null);
+                                        req.flash('success', flashMessage);
+                                        res.redirect('back');
+                                    })
+                                    .catch(err => next(err));
+                            });
+                    })
+                    .catch(err => next(err));
+            } else {
+                req.flash('success', flashMessage);
+                res.redirect('back');
+            }
+        })
+        .catch(err => next(err));
 }
